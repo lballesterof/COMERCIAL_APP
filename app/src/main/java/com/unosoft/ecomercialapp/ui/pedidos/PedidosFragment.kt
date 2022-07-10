@@ -1,4 +1,4 @@
-package com.unosoft.ecomercialapp.ui.slideshow
+package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,9 +23,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class SlideshowFragment : Fragment() {
+class PedidosFragment : Fragment() {
     private lateinit var adapterCotizaciones: listcotizacionesadapter
-    private val listacotizaciones = ArrayList<cotizacionesDto>()
+    private val listapedidos = ArrayList<cotizacionesDto>()
     var apiInterface: ApiCotizacion? = null
     var searchview: SearchView? = null
     private var _binding: FragmentSlideshowBinding? = null
@@ -39,8 +39,6 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
 
         _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -56,7 +54,7 @@ class SlideshowFragment : Fragment() {
     fun initRecyclerView() {
         val rv_cotizaciones = view?.findViewById<RecyclerView>(R.id.recyclerCotizaciones)
         rv_cotizaciones?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        adapterCotizaciones = listcotizacionesadapter(listacotizaciones)
+        adapterCotizaciones = listcotizacionesadapter(listapedidos)
         rv_cotizaciones?.adapter = adapterCotizaciones
     }
 
@@ -71,8 +69,8 @@ class SlideshowFragment : Fragment() {
                 val api = retrofit.create(ApiCotizacion::class.java)
                 val response = api.fetchAllCotizaciones()
                 if (response.isSuccessful) {
-                    listacotizaciones.clear()
-                    listacotizaciones.addAll(response.body()!!)
+                    listapedidos.clear()
+                    listapedidos.addAll(response.body()!!)
                     adapterCotizaciones.notifyDataSetChanged()
                 }
             }
@@ -83,8 +81,8 @@ class SlideshowFragment : Fragment() {
             val cotizaciones = apiInterface!!.fetchAllCotizaciones()
             activity?.runOnUiThread {
                 if(cotizaciones.isSuccessful){
-                    listacotizaciones.clear()
-                    listacotizaciones.addAll(cotizaciones.body()!!)
+                    listapedidos.clear()
+                    listapedidos.addAll(cotizaciones.body()!!)
                     adapterCotizaciones.notifyDataSetChanged()
                 }
             }

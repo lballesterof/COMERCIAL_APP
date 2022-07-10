@@ -16,7 +16,7 @@
     <string name="action_settings">Configuración</string>
 
     <string name="menu_home">Inicio</string>
-    <string name="menu_gallery">Pedidos</string>
+    <string name="menu_gallery">Consultar Stocks</string>
     <string name="menu_slideshow">Cotizaciones</string>
     <string name="menu_slideslogut">Cerrar Sesión</string>
     <string name="menu_slidesstocks">Consultar Stocks</string>
