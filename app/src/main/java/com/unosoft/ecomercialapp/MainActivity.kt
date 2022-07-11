@@ -12,10 +12,8 @@ import android.widget.EditText
 import com.unosoft.ecomercialapp.Activity.inicio.InicioActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.api.APIClient.client
-import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
-import com.unosoft.ecomercialapp.api.APIClient.client
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.TablaBasicaApi
 import com.unosoft.ecomercialapp.db.EntityCondicionPago
@@ -26,10 +24,7 @@ import com.unosoft.ecomercialapp.db.EntityFrecuenciaDias
 import com.unosoft.ecomercialapp.db.EntityMoneda
 import com.unosoft.ecomercialapp.db.EntityProvincia
 import com.unosoft.ecomercialapp.db.EntityUnidadMedida
-import com.unosoft.ecomercialapp.db.TablaBasica
-import com.unosoft.ecomercialapp.entity.Login.Login
 import com.unosoft.ecomercialapp.entity.Login.LoginComercialResponse
-import com.unosoft.ecomercialapp.entity.Login.LoginResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.DepartamentoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.DistritoResponse
