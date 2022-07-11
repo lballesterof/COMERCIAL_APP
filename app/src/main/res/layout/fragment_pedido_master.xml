@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/ic_info_ot"
+                            android:id="@+id/ic_cotizacion"
                             android:layout_width="52dp"
                             android:layout_height="52dp"
                             android:layout_centerHorizontal="true"
@@ -62,7 +62,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ic_info_ot"
+                            android:layout_below="@+id/ic_cotizacion"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:text="Cotización" />
@@ -233,7 +233,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/ic_jobs"
+                            android:id="@+id/ic_productos"
                             android:layout_width="52dp"
                             android:layout_height="52dp"
 
@@ -250,7 +250,7 @@
                             style="@style/sizeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ic_jobs"
+                            android:layout_below="@+id/ic_productos"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:singleLine="true"
@@ -302,7 +302,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/ic_solutions"
+                            android:id="@+id/ic_observaciones"
                             android:layout_width="52dp"
                             android:layout_height="52dp"
 
@@ -319,7 +319,7 @@
                             style="@style/sizeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ic_solutions"
+                            android:layout_below="@+id/ic_observaciones"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:singleLine="true"
@@ -410,46 +410,101 @@
                             android:layout_weight="50"
                             android:orientation="vertical">
 
-
-                            <TextView
-                                android:id="@+id/tv_chasis"
-                                style="@style/sizeTextView"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Sub-Total:  S/. 1,271.19"
-                                android:textColor="@color/colorPrimary" />
+                                android:orientation="horizontal">
+                                <TextView
+                                    style="@style/sizeTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="Sub-Total:"
+                                    android:textColor="@color/colorPrimary" />
 
-                            <TextView
-                                android:id="@+id/tv_vventa"
-                                style="@style/sizeTextView"
+                                <TextView
+                                    android:id="@+id/tv_subtotal"
+                                    style="@style/sizeTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="end"
+                                    android:text="S/. 1,271.19"
+                                    android:textColor="@color/colorPrimary" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Valor Venta:  S/. 1,271.19"
-                                android:textColor="@color/colorPrimary" />
+                                android:orientation="horizontal">
+                                <TextView
+                                    style="@style/sizeTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="Valor Venta: "
+                                    android:textColor="@color/colorPrimary" />
 
+                                <TextView
+                                    android:id="@+id/tv_valorventa"
+                                    style="@style/sizeTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="end"
+                                    android:text="S/. 1,271.19"
+                                    android:textColor="@color/colorPrimary" />
+                            </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/tv_motor"
-                                style="@style/sizeTextView"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="IGV 18% :  S/. 228.81"
-                                android:textColor="@color/colorPrimary" />
+                                android:orientation="horizontal">
+                                <TextView
+                                    style="@style/sizeTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="IGV 18%: "
+                                    android:textColor="@color/colorPrimary" />
 
-                            <TextView
-                                style="@style/sizeTextView"
+                                <TextView
+                                    android:id="@+id/tv_igv"
+                                    style="@style/sizeTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="end"
+                                    android:text="S/. 1,271.19"
+                                    android:textColor="@color/colorPrimary" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Importe Total:  S/. 1,500.00"
-                                android:textColor="@color/colorPrimary" />
+                                android:orientation="horizontal">
+                                <TextView
+                                    style="@style/sizeTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="Importe Total:"
+                                    android:textColor="@color/colorPrimary" />
+
+                                <TextView
+                                    android:id="@+id/tv_importe"
+                                    style="@style/sizeTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="end"
+                                    android:text="S/. 1,271.19"
+                                    android:textColor="@color/colorPrimary" />
+                            </LinearLayout>
 
                         </LinearLayout>
 
