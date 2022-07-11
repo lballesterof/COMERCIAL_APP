@@ -10,9 +10,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.unosoft.ecomercialapp.Activity.inicio.InicioActivity
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.api.APIClient.client
 import com.unosoft.ecomercialapp.api.LoginApi
+import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.entity.Login.Login
+import com.unosoft.ecomercialapp.entity.Login.LoginComercialResponse
 import com.unosoft.ecomercialapp.entity.Login.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,16 +42,20 @@ class MainActivity : AppCompatActivity() {
                 return@OnClickListener
             } else {
                 pd.show()
-                val _user = Login(user.text.toString(), pass.text.toString())
+                val _user = DCLoginUser(user.text.toString(), pass.text.toString())
                 val call1 = apiInterface!!.login(_user)
-                call1!!.enqueue(object : Callback<LoginResponse?> {
-                    override fun onResponse(call: Call<LoginResponse?>,response: Response<LoginResponse?>) {
-
+                call1.enqueue(object : Callback<LoginComercialResponse> {
+                    override fun onResponse(
+                        call: Call<LoginComercialResponse>,
+                        response: Response<LoginComercialResponse>
+                    ) {
                         if (response.code() == 400) {
                             AlertMessage("Usuario y/o Contraseña incorrecta")
                             pd.cancel()
                         } else {
-                            val user1 = response.body()
+                            val user1 = response.body()!!
+                            prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
+                            prefs.save_TipoCambio(user1.tipocambio)
                             val i = Intent(applicationContext, InicioActivity::class.java)
                             startActivity(i)
 
@@ -57,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<LoginResponse?>, t: Throwable) {
+                    override fun onFailure(call: Call<LoginComercialResponse>, t: Throwable) {
                         pd.cancel()
                         AlertMessage("Error de Conexión: " + t.message)
                         call.cancel()

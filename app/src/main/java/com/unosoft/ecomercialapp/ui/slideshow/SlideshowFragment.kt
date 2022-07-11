@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
+import com.unosoft.ecomercialapp.DATAGLOBAL
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ApiCotizacion
@@ -49,8 +51,9 @@ class SlideshowFragment : Fragment() {
         apiInterface2 = APIClient.client?.create(LoginApi::class.java) as LoginApi
 
         initRecyclerView()
-        getDataLoginUser("User1","123456")
+        //getDataLoginUser("User1","123456")
         buscarCotizacion()
+        getData(prefs.getCdgVendedor())
     }
 
     private fun buscarCotizacion() {

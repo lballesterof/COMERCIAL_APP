@@ -38,7 +38,7 @@ class listpedidosadapter(var datos: ArrayList<pedidosDto>) : RecyclerView.Adapte
             if (datos.numero_Pedido==null)
             {
                 tv_numeropedido.text = "PED-SINVALOR"
-
+                datos.numero_Pedido = "PED-SINVALOR"
             }
             else
             {
