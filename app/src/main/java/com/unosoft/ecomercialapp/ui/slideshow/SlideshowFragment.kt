@@ -99,8 +99,21 @@ class SlideshowFragment : Fragment() {
     fun initRecyclerView() {
         val rv_cotizaciones = view?.findViewById<RecyclerView>(R.id.recyclerCotizaciones)
         rv_cotizaciones?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        adapterCotizaciones = listcotizacionesadapter(listacotizaciones)
+        adapterCotizaciones = listcotizacionesadapter(listacotizaciones) { dataclassCotizacion -> onItemDatosCotizacion(dataclassCotizacion) }
         rv_cotizaciones?.adapter = adapterCotizaciones
+    }
+
+    fun onItemDatosCotizacion(dataclassCotizacion: cotizacionesDto) {
+
+        prefs.save_IdPedido(dataclassCotizacion.id_cotizacion.toString())
+        println("IDPEDIDO: ${prefs.getIdPedido()}")
+
+        val fragment = com.unosoft.ecomercialapp.ui.pedidomaster.PedidoMaster()
+        val fragmentManager = activity?.supportFragmentManager
+        val transaction = fragmentManager?.beginTransaction()
+
+        //CAMBIAR FRAMENT
+        transaction!!.replace(R.id.nav_host_fragment_content_inicio, fragment).commit()
     }
 
     private fun getData(cdg_ven:String){

@@ -340,7 +340,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:gravity="center_horizontal"
-                            android:text="Inrgese las Observaciones" />
+                            android:text="Despachar antes de 24/12/2021" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -417,7 +417,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
                                 android:gravity="center_vertical"
-                                android:text="Sub-Total:  S/. 1,271.19"
+                                android:text="Sub-Total:                               S/. 1,271.19"
                                 android:textColor="@color/colorPrimary" />
 
                             <TextView
@@ -427,7 +427,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
                                 android:gravity="center_vertical"
-                                android:text="Valor Venta:  S/. 1,271.19"
+                                android:text="Valor Venta:                           S/. 1,271.19"
                                 android:textColor="@color/colorPrimary" />
 
 
@@ -438,7 +438,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
                                 android:gravity="center_vertical"
-                                android:text="IGV 18% :  S/. 228.81"
+                                android:text="IGV 18% :                                   S/. 228.81"
                                 android:textColor="@color/colorPrimary" />
 
                             <TextView
@@ -447,7 +447,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
                                 android:gravity="center_vertical"
-                                android:text="Importe Total:  S/. 1,500.00"
+                                android:text="Importe Total:                       S/. 1,500.00"
                                 android:textColor="@color/colorPrimary" />
 
                         </LinearLayout>

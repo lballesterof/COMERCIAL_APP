@@ -51,9 +51,7 @@ class listpedidosadapter(var datos: ArrayList<pedidosDto>, private val onClickLi
             fechapedido.text = "${datos.fecha_pedido}"
 
             itemView.setOnClickListener {
-                println("${datos.id_pedido}")
-                prefs.save_IdPedido(datos.id_pedido.toString())
-                println(prefs.getIdPedido())
+                onClickListener(datos)
             }
         }
     }
