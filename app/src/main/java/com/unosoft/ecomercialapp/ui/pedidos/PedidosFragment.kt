@@ -20,6 +20,7 @@ import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.PedidoApi
+import com.unosoft.ecomercialapp.api.PedidoMaster
 import com.unosoft.ecomercialapp.databinding.FragmentPedidosBinding
 import com.unosoft.ecomercialapp.databinding.FragmentSlideshowBinding
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
@@ -100,8 +101,18 @@ class PedidosFragment : Fragment() {
     fun initRecyclerView() {
         val rv_pedidos = view?.findViewById<RecyclerView>(R.id.rv_recyclerpedidos)
         rv_pedidos?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        adapterPedidos = listpedidosadapter(listapedidos)
+        adapterPedidos = listpedidosadapter(listapedidos) { dataclassPedido -> onItemDatosZonas(dataclassPedido) }
         rv_pedidos?.adapter = adapterPedidos
+    }
+
+    fun onItemDatosZonas(dataclassPedido: pedidosDto) {
+
+        val fragment = com.unosoft.ecomercialapp.ui.pedidomaster.PedidoMaster()
+        val fragmentManager = activity?.supportFragmentManager
+        val transaction = fragmentManager?.beginTransaction()
+
+        //CAMBIAR FRAMENT
+        transaction!!.replace(R.id.nav_host_fragment_content_inicio, fragment).commit()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -110,12 +121,11 @@ class PedidosFragment : Fragment() {
             val response = apiInterface!!.getPedido("$cdg_ven")
             activity?.runOnUiThread {
                 if(response.isSuccessful){
-                    println("Antes la lista")
-                    println("$listapedidos")
                     listapedidos.clear()
                     listapedidos.addAll(response.body()!!)
-                    println("despues la lista")
-                    println("$listapedidos")
+
+
+
                     adapterPedidos.notifyDataSetChanged()
                 }
             }

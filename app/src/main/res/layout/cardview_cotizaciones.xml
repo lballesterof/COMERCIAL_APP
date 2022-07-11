@@ -21,6 +21,19 @@
             android:layout_width="352dp"
             android:layout_height="102dp">
 
+            <TextView
+                android:id="@+id/fechacotizacion2"
+                style="@style/sizeTextView"
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="220dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="0dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Fecha: 11-22-2021"
+                android:textColor="@color/negro" />
+
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
@@ -67,14 +80,24 @@
             <TextView
                 android:id="@+id/ruc"
                 style="@style/sizeTextView"
-                android:layout_width="282dp"
+                android:layout_width="142dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
                 android:layout_marginTop="44dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="RUC: 20600114299"
-                android:textColor="@color/negro"
-                />
+                android:textColor="@color/negro" />
+
+            <TextView
+                android:id="@+id/ruc2"
+                style="@style/sizeTextView"
+                android:layout_width="142dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="44dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="RUC: 20600114299"
+                android:textColor="@color/negro" />
 
             <TextView
                 android:id="@+id/razonsocial"

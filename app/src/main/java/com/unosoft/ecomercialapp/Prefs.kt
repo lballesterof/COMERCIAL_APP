@@ -7,6 +7,8 @@ class Prefs (contexto:Context){
 
     val SHARE_CDGVENDEDOR = "CDGVENDEDOR"
     val SHARE_TIPOCAMBIO = "TIPOCAMBIO"
+    val SHARE_IDPEDIDO = "IDPEDIDO"
+
 
     val storege = contexto.getSharedPreferences(SHARE_DB,0)
 
@@ -19,12 +21,20 @@ class Prefs (contexto:Context){
         storege.edit().putString(SHARE_TIPOCAMBIO,TIPOCAMBIO).apply()
     }
 
+    fun save_IdPedido(IDPEDIDO:String){
+        storege.edit().putString(SHARE_IDPEDIDO,IDPEDIDO).apply()
+    }
+
     fun getCdgVendedor(): String {
         return storege.getString(SHARE_CDGVENDEDOR,"")!!
     }
 
     fun getTipoCambio(): String {
         return storege.getString(SHARE_TIPOCAMBIO,"")!!
+    }
+
+    fun getIdPedido(): String{
+        return storege.getString(SHARE_IDPEDIDO,"")!!
     }
 
     fun wipe(){

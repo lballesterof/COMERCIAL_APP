@@ -32,6 +32,9 @@ interface DAO {
     @Query("SELECT * FROM EntityUnidadMedida")
     fun getAllUnidadMedida(): List<EntityUnidadMedida>
 
+    @Query("SELECT * FROM EntityPedidoMaster")
+    fun getAllPedidoMaster(): List<EntityPedidoMaster>
+
 
     //*************   INSERT DE TABLAS    *********************
     @Insert
@@ -57,6 +60,9 @@ interface DAO {
 
     @Insert
     fun insertUnidadMedida( insertUnidadMedida: EntityUnidadMedida)
+
+    @Insert
+    fun insertPedidoMaster( insertPedidoMaster: EntityPedidoMaster)
 
 
     //*************   INSERT DE TABLAS    *********************
@@ -92,6 +98,9 @@ interface DAO {
     @Query("DELETE FROM EntityUnidadMedida")
     fun deleteTableUnidadMedida()
 
+    @Query("DELETE FROM EntityPedidoMaster")
+    fun deleteTablePedidoMaster()
+
 
     //*********  REINICIAR LOS ID AUTOGENERADOS   **************
     @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityCondicionPago'")
@@ -117,4 +126,7 @@ interface DAO {
 
     @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityUnidadMedida'")
     fun clearPrimaryKeyUnidadMedida()
+
+    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityPedidoMaster'")
+    fun clearPrimaryKeyPedidoMaster()
 }
