@@ -27,8 +27,6 @@ class listconsultastocks (var data:ArrayList<ConsultaStocksResponseItem>): Recyc
 
     class holderConsultaStock(private val view:View): RecyclerView.ViewHolder(view){
 
-
-
         fun holderConsultaStock (datos: ConsultaStocksResponseItem){
             val tv_nameProducto = view.findViewById<TextView>(R.id.tv_nameProducto)
             val tv_codProducto = view.findViewById<TextView>(R.id.tv_codProducto)

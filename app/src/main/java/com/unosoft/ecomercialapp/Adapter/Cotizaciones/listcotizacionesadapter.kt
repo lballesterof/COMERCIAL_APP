@@ -42,7 +42,7 @@ class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>, priv
             lblntotal.text = StringBuilder().append("IMPORTE TOTAL ").append(cotizaciones.mon+". ").append(String.format("%,.2f", cotizaciones.importe_total))
             lblnrruc.text = StringBuilder().append(cotizaciones.documento+": ").append(cotizaciones.ruc.toString())
 
-            }
+        }
         }
 
     fun filterList(nameCotizacion: ArrayList<cotizacionesDto>) {

@@ -68,7 +68,6 @@ class MainActivity : AppCompatActivity() {
 
         cargarTablaBasica()
 
-
         val pd = ProgressDialog(this)
         pd.setMessage("Validando usuario....")
         pd.setCancelable(false)
@@ -116,269 +115,84 @@ class MainActivity : AppCompatActivity() {
 
     private fun cargarTablaBasica() {
 
-
-        fun inyectarCondicionPago(lista: ArrayList<CondicionPagoResponse>) {
+        fun inyectarDataRoom(
+            listaCondicionPagoResponse: ArrayList<CondicionPagoResponse>,
+            listaDepartamentoResponse: ArrayList<DepartamentoResponse>,
+            listaDistritoResponse: ArrayList<DistritoResponse>,
+            listaDocIdentidadResponse: ArrayList<DocIdentidadResponse>,
+            listaFrecuenciaDiasResponse: ArrayList<FrecuenciaDiasResponse>,
+            listaMonedaResponse: ArrayList<MonedaResponse>,
+            listaProvinciaResponse: ArrayList<ProvinciaResponse>,
+            listaUnidadMedidaResponse: ArrayList<UnidadMedidaResponse>
+        ) {
             GlobalScope.launch(Dispatchers.Default) {
                 database.daoTblBasica().deleteTableCondicionPago()
                 database.daoTblBasica().clearPrimaryKeyCondicionPago()
 
-                println("************ LISTA ***************")
-                println(lista)
+                database.daoTblBasica().deleteTableDepartamento()
+                database.daoTblBasica().clearPrimaryKeyDepartamento()
 
-                lista.forEach {
+                database.daoTblBasica().deleteTableDistrito()
+                database.daoTblBasica().clearPrimaryKeyDistrito()
+
+                database.daoTblBasica().deleteTableDocIdentidad()
+                database.daoTblBasica().clearPrimaryKeyDocIdentidad()
+
+                database.daoTblBasica().deleteTableFrecuenciaDias()
+                database.daoTblBasica().clearPrimaryKeyFrecuenciaDias()
+
+                database.daoTblBasica().deleteTableMoneda()
+                database.daoTblBasica().clearPrimaryKeyMoneda()
+
+                database.daoTblBasica().deleteTableProvincia()
+                database.daoTblBasica().clearPrimaryKeyProvincia()
+
+                database.daoTblBasica().deleteTableUnidadMedida()
+                database.daoTblBasica().clearPrimaryKeyUnidadMedida()
+
+
+                listaCondicionPagoResponse.forEach {
                     database.daoTblBasica().insertCondicionPago(
                         EntityCondicionPago(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1))
                 }
 
-                withContext(Dispatchers.IO) {
-                    println("**************  TABLA CONDICION DE PAGO ***************")
-                    println(database.daoTblBasica().getAllCondicionPago())
-                }
-
-            }
-        }
-
-        fun getDataCondicionPago(){
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getCondicionPago()
-                runOnUiThread {
-                    if(response.isSuccessful){
-                        listCondicionPago.addAll(response.body()!!)
-                        inyectarCondicionPago(listCondicionPago)
-                    }else{
-                        println("Error en la conaulta ")
-                    }
-                }
-            }
-        }
-
-
-        fun inyectarDepartamento(lista: ArrayList<DepartamentoResponse>) {
-            GlobalScope.launch(Dispatchers.Default) {
-                database.daoTblBasica().deleteTableDepartamento()
-                database.daoTblBasica().clearPrimaryKeyDepartamento()
-
-                println("************ LISTA ***************")
-                println(lista)
-
-                lista.forEach {
+                listaDepartamentoResponse.forEach {
                     database.daoTblBasica().insertDepartamento(
                         EntityDepartamento(0,it.Codigo,it.Nombre,it.Numero)
                     )
                 }
 
-                withContext(Dispatchers.IO) {
-                    println("**************  TABLA CONDICION DE PAGO ***************")
-                    println(database.daoTblBasica().getAllDepartamento())
-                }
-
-            }
-        }
-
-
-        fun getDataDepartamento(){
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getDepartamento()
-                runOnUiThread {
-                    if(response.isSuccessful){
-                        listDepartamento.addAll(response.body()!!)
-                        inyectarDepartamento(listDepartamento)
-                    }else{
-                        println("Error en la conaulta ")
-                    }
-                }
-            }
-        }
-
-        fun inyectarDistrito(lista: ArrayList<DistritoResponse>) {
-            GlobalScope.launch(Dispatchers.Default) {
-                database.daoTblBasica().deleteTableDistrito()
-                database.daoTblBasica().clearPrimaryKeyDistrito()
-
-                println("************ LISTA ***************")
-                println(lista)
-
-                lista.forEach {
+                listaDistritoResponse.forEach {
                     database.daoTblBasica().insertDistrito(
                         EntityDistrito(0,it.Codigo,it.Nombre,it.Numero,it.Referencia2,it.Referencia3)
                     )
                 }
 
-                withContext(Dispatchers.IO) {
-                    println("**************  TABLA CONDICION DE PAGO ***************")
-                    println(database.daoTblBasica().getAllDistrito())
-                }
-
-            }
-        }
-
-        fun getDistrito(){
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getDistrito()
-                runOnUiThread {
-                    if(response.isSuccessful){
-                        listDistrito.addAll(response.body()!!)
-                        inyectarDistrito(listDistrito)
-                    }else{
-                        println("Error en la conaulta ")
-                    }
-                }
-            }
-        }
-
-        fun inyectarDocIdentidad(lista: ArrayList<DocIdentidadResponse>) {
-            GlobalScope.launch(Dispatchers.Default) {
-                database.daoTblBasica().deleteTableDocIdentidad()
-                database.daoTblBasica().clearPrimaryKeyDocIdentidad()
-
-                println("************ LISTA ***************")
-                println(lista)
-
-                lista.forEach {
+                listaDocIdentidadResponse.forEach {
                     database.daoTblBasica().insertDocIdentidad(
                         EntityDocIdentidad(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1)
                     )
                 }
 
-                withContext(Dispatchers.IO) {
-                    println("**************  TABLA CONDICION DE PAGO ***************")
-                    println(database.daoTblBasica().getAllDocIdentidad())
-                }
-
-            }
-        }
-
-        fun getDocIdentidad(){
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getDocIdentidad()
-                runOnUiThread {
-                    if(response.isSuccessful){
-                        listDocIdentidad.addAll(response.body()!!)
-                        inyectarDocIdentidad(listDocIdentidad)
-                    }else{
-                        println("Error en la conaulta ")
-                    }
-                }
-            }
-        }
-
-        fun inyectarFrecuenciaDias(lista: ArrayList<FrecuenciaDiasResponse>) {
-            GlobalScope.launch(Dispatchers.Default) {
-                database.daoTblBasica().deleteTableFrecuenciaDias()
-                database.daoTblBasica().clearPrimaryKeyFrecuenciaDias()
-
-                println("************ LISTA ***************")
-                println(lista)
-
-                lista.forEach {
+                listaFrecuenciaDiasResponse.forEach {
                     database.daoTblBasica().insertFrecuenciaDias(
                         EntityFrecuenciaDias(0,it.Codigo,it.Nombre,it.Numero)
                     )
                 }
 
-                withContext(Dispatchers.IO) {
-                    println("**************  TABLA CONDICION DE PAGO ***************")
-                    println(database.daoTblBasica().getAllFrecuenciaDias())
-                }
-
-            }
-        }
-
-        fun getFrecuenciaDias(){
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getFrecuenciaDias()
-                runOnUiThread {
-                    if(response.isSuccessful){
-                        listFrecuenciaDias.addAll(response.body()!!)
-                        inyectarFrecuenciaDias(listFrecuenciaDias)
-                    }else{
-                        println("Error en la conaulta ")
-                    }
-                }
-            }
-        }
-
-        fun inyectarMoneda(lista: ArrayList<MonedaResponse>) {
-            GlobalScope.launch(Dispatchers.Default) {
-                database.daoTblBasica().deleteTableMoneda()
-                database.daoTblBasica().clearPrimaryKeyMoneda()
-
-                println("************ LISTA ***************")
-                println(lista)
-
-                lista.forEach {
+                listaMonedaResponse.forEach {
                     database.daoTblBasica().insertMoneda(
                         EntityMoneda(0,it.Nombre,it.Nombre,it.Referencia1)
                     )
                 }
 
-                withContext(Dispatchers.IO) {
-                    println("**************  TABLA CONDICION DE PAGO ***************")
-                    println(database.daoTblBasica().getAllMoneda())
-                }
-
-            }
-        }
-
-        fun getMoneda(){
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getMoneda()
-                runOnUiThread {
-                    if(response.isSuccessful){
-                        listMoneda.addAll(response.body()!!)
-                        inyectarMoneda(listMoneda)
-                    }else{
-                        println("Error en la conaulta ")
-                    }
-                }
-            }
-        }
-
-        fun inyectarProvincia(lista: ArrayList<ProvinciaResponse>) {
-            GlobalScope.launch(Dispatchers.Default) {
-                database.daoTblBasica().deleteTableProvincia()
-                database.daoTblBasica().clearPrimaryKeyProvincia()
-
-                println("************ LISTA ***************")
-                println(lista)
-
-                lista.forEach {
+                listaProvinciaResponse.forEach {
                     database.daoTblBasica().insertProvincia(
                         EntityProvincia(0,it.Codigo,it.Nombre,it.Numero,it.Referencia2)
                     )
                 }
 
-                withContext(Dispatchers.IO) {
-                    println("**************  TABLA CONDICION DE PAGO ***************")
-                    println(database.daoTblBasica().getAllProvincia())
-                }
-
-            }
-        }
-
-        fun getProvincia(){
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getProvincia()
-                runOnUiThread {
-                    if(response.isSuccessful){
-                        listProvincia.addAll(response.body()!!)
-                        inyectarProvincia(listProvincia)
-                    }else{
-                        println("Error en la conaulta ")
-                    }
-                }
-            }
-        }
-
-        fun inyectarUnidadMedida(lista: ArrayList<UnidadMedidaResponse>) {
-            GlobalScope.launch(Dispatchers.Default) {
-                database.daoTblBasica().deleteTableUnidadMedida()
-                database.daoTblBasica().clearPrimaryKeyUnidadMedida()
-
-                println("************ LISTA ***************")
-                println(lista)
-
-                lista.forEach {
+                listaUnidadMedidaResponse.forEach {
                     database.daoTblBasica().insertUnidadMedida(
                         EntityUnidadMedida(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1)
                     )
@@ -386,33 +200,88 @@ class MainActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.IO) {
                     println("**************  TABLA CONDICION DE PAGO ***************")
+                    println(database.daoTblBasica().getAllCondicionPago())
+                    println("**************  TABLA CONDICION DE PAGO ***************")
+                    println(database.daoTblBasica().getAllDepartamento())
+                    println("**************  TABLA CONDICION DE PAGO ***************")
+                    println(database.daoTblBasica().getAllDistrito())
+                    println("**************  TABLA CONDICION DE PAGO ***************")
+                    println(database.daoTblBasica().getAllDocIdentidad())
+                    println("**************  TABLA CONDICION DE PAGO ***************")
+                    println(database.daoTblBasica().getAllFrecuenciaDias())
+                    println("**************  TABLA CONDICION DE PAGO ***************")
+                    println(database.daoTblBasica().getAllMoneda())
+                    println("**************  TABLA CONDICION DE PAGO ***************")
+                    println(database.daoTblBasica().getAllProvincia())
+                    println("**************  TABLA CONDICION DE PAGO ***************")
                     println(database.daoTblBasica().getAllUnidadMedida())
+
                 }
+
             }
         }
 
-        fun getUnidadMedida(){
+        fun getDataRoom(){
+
             CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getUnidadMedida()
+
+                val response1 = apiInterface2!!.getCondicionPago()
+                val response2 = apiInterface2!!.getDepartamento()
+                val response3 = apiInterface2!!.getDistrito()
+                val response4 = apiInterface2!!.getDocIdentidad()
+                val response5 = apiInterface2!!.getFrecuenciaDias()
+                val response6 = apiInterface2!!.getMoneda()
+                val response7 = apiInterface2!!.getProvincia()
+                val response8 = apiInterface2!!.getUnidadMedida()
+
                 runOnUiThread {
-                    if(response.isSuccessful){
-                        listUnidadMedida.addAll(response.body()!!)
-                        inyectarUnidadMedida(listUnidadMedida)
-                    }else{
-                        println("Error en la conaulta ")
+                    if(response1.isSuccessful){
+                        listCondicionPago.addAll(response1.body()!!)
                     }
+                    if(response2.isSuccessful){
+                        listDepartamento.addAll(response2.body()!!)
+                    }
+                    if(response3.isSuccessful){
+                        listDistrito.addAll(response3.body()!!)
+                    }
+                    if(response4.isSuccessful){
+                        listDocIdentidad.addAll(response4.body()!!)
+                    }
+                    if(response5.isSuccessful){
+                        listFrecuenciaDias.addAll(response5.body()!!)
+                    }
+                    if(response6.isSuccessful){
+                        listMoneda.addAll(response6.body()!!)
+                    }
+                    if(response7.isSuccessful){
+                        listProvincia.addAll(response7.body()!!)
+                    }
+                    if(response8.isSuccessful){
+                        listUnidadMedida.addAll(response8.body()!!)
+                    }
+
+                    inyectarDataRoom(listCondicionPago,
+                        listDepartamento,
+                        listDistrito,
+                        listDocIdentidad,
+                        listFrecuenciaDias,
+                        listMoneda,
+                        listProvincia,
+                        listUnidadMedida)
                 }
             }
         }
 
-        getDataCondicionPago()
-        getDataDepartamento()
-        getDistrito()
-        getDocIdentidad()
-        getFrecuenciaDias()
-        getMoneda()
-        getProvincia()
-        getUnidadMedida()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            println("Valor ${!database.daoTblBasica().isExists()}")
+            if(!database.daoTblBasica().isExists()) {
+                runOnUiThread {
+                    getDataRoom()
+                    println("paso aqui")
+                }
+            }
+        }
 
     }
 
