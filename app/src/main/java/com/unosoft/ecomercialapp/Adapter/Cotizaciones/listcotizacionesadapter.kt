@@ -11,7 +11,7 @@ import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 
 import kotlin.collections.ArrayList
 
-class listcotizacionesadapter(val cotizaciones: ArrayList<cotizacionesDto>) : RecyclerView.Adapter<listcotizacionesadapter.ViewHolder>() {
+class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>) : RecyclerView.Adapter<listcotizacionesadapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,9 +40,14 @@ class listcotizacionesadapter(val cotizaciones: ArrayList<cotizacionesDto>) : Re
             lblnrazonsocial.setTypeface(null, Typeface.BOLD)
             lblntotal.setTypeface(null, Typeface.BOLD)
             lblntotal.text = StringBuilder().append("IMPORTE TOTAL ").append(cotizaciones.mon+". ").append(String.format("%,.2f", cotizaciones.importe_total))
-            lblnrruc.text = StringBuilder().append(cotizaciones.documento+": ").append(cotizaciones.importe_total.toString())
+            lblnrruc.text = StringBuilder().append(cotizaciones.documento+": ").append(cotizaciones.ruc.toString())
 
             }
         }
+
+    fun filterList(nameCotizacion: ArrayList<cotizacionesDto>) {
+        cotizaciones = nameCotizacion
+        notifyDataSetChanged()
+    }
 
 }

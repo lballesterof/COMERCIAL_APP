@@ -11,11 +11,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
+import com.unosoft.ecomercialapp.Adapter.Pedidos.listpedidosadapter
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ApiCotizacion
+import com.unosoft.ecomercialapp.api.LoginApi
+import com.unosoft.ecomercialapp.api.PedidoApi
 import com.unosoft.ecomercialapp.databinding.FragmentSlideshowBinding
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
+import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
+import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,79 +29,93 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PedidosFragment : Fragment() {
-    private lateinit var adapterCotizaciones: listcotizacionesadapter
-    private val listapedidos = ArrayList<cotizacionesDto>()
-    var apiInterface: ApiCotizacion? = null
-    var searchview: SearchView? = null
-    private var _binding: FragmentSlideshowBinding? = null
+    private lateinit var adapterPedidos: listpedidosadapter
+    private val listapedidos = ArrayList<pedidosDto>()
+    var apiInterface: PedidoApi? = null
+    var apiInterface2: LoginApi? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
+    private var _binding: FragmentSlideshowBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
+        inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        //  val textView: TextView = binding.textSlideshow
-        //slideshowViewModel.text.observe(viewLifecycleOwner) {
-        //  textView.text = it
-        // }
         return root
     }
 
-
-    fun initRecyclerView() {
-        val rv_cotizaciones = view?.findViewById<RecyclerView>(R.id.recyclerCotizaciones)
-        rv_cotizaciones?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        adapterCotizaciones = listcotizacionesadapter(listapedidos)
-        rv_cotizaciones?.adapter = adapterCotizaciones
-    }
-
-    private fun loadData(vendedor: String) {
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO)
-            {
-                val retrofit = Retrofit.Builder()
-                    .baseUrl("http://181.224.236.167:6969")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                val api = retrofit.create(ApiCotizacion::class.java)
-                val response = api.fetchAllCotizaciones()
-                if (response.isSuccessful) {
-                    listapedidos.clear()
-                    listapedidos.addAll(response.body()!!)
-                    adapterCotizaciones.notifyDataSetChanged()
-                }
-            }
-        }
-    }
-    private fun getData(){
-        CoroutineScope(Dispatchers.IO).launch {
-            val cotizaciones = apiInterface!!.fetchAllCotizaciones()
-            activity?.runOnUiThread {
-                if(cotizaciones.isSuccessful){
-                    listapedidos.clear()
-                    listapedidos.addAll(cotizaciones.body()!!)
-                    adapterCotizaciones.notifyDataSetChanged()
-                }
-            }
-        }
-    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        apiInterface = APIClient.client?.create(ApiCotizacion::class.java) as ApiCotizacion
+        apiInterface = APIClient.client?.create(PedidoApi::class.java) as PedidoApi
+        apiInterface2 = APIClient.client?.create(LoginApi::class.java) as LoginApi
+
         initRecyclerView()
-        getData()
+        getDataLoginUser("User1","123456")
+        buscarCotizacion()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun buscarCotizacion() {
+        var sv_buscadorPedido = view?.findViewById<androidx.appcompat.widget.SearchView>(R.id.sv_buscadorPedido)
+        sv_buscadorPedido?.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                println("$newText")
+                filter(newText.toString())
+                return false
+            }
+        })
     }
+
+    fun filter(text: String) {
+        val filterdNamePedido: ArrayList<pedidosDto> = ArrayList()
+        for (i in listapedidos.indices) {
+            if (listapedidos[i].numero_Pedido.toString().lowercase().contains(text.lowercase())) {
+                filterdNamePedido.add(listapedidos[i])
+            }
+        }
+        adapterPedidos.filterList(filterdNamePedido)
+    }
+
+    fun getDataLoginUser(usuarioMozo:String,passMozo:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = apiInterface2!!.checkLoginComanda(DCLoginUser("$usuarioMozo","$passMozo"))
+            activity?.runOnUiThread {
+                if(response.isSuccessful){
+                    val DatosUsuario = response.body()
+
+                    println("*******  cdg_ vendedor *********")
+                    println("${DatosUsuario!!.cdG_VENDEDOR}")
+                    getDataPedido(DatosUsuario.cdG_VENDEDOR)
+                }
+            }
+        }
+    }
+
+    fun initRecyclerView() {
+        val rv_pedidos = view?.findViewById<RecyclerView>(R.id.rv_recyclerpedidos)
+        rv_pedidos?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        adapterPedidos = listpedidosadapter(listapedidos)
+        rv_pedidos?.adapter = adapterPedidos
+    }
+
+    private fun getDataPedido(cdg_ven:String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = apiInterface!!.getPedido("$cdg_ven")
+            activity?.runOnUiThread {
+                if(response.isSuccessful){
+                    println("Antes la lista")
+                    println("$listapedidos")
+                    listapedidos.clear()
+                    listapedidos.addAll(response.body()!!)
+                    println("despues la lista")
+                    println("$listapedidos")
+                    adapterPedidos.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
 }
