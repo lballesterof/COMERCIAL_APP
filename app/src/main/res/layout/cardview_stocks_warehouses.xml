@@ -25,7 +25,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/numerocotizacion"
+                android:id="@+id/tv_strock"
                 style="@style/sizeTextView"
                 android:layout_width="266dp"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 
 
             <TextView
-                android:id="@+id/preciocotizacion"
+                android:id="@+id/tv_listaprecio"
                 style="@style/sizeTextView"
                 android:layout_width="282dp"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:textColor="@color/negro" />
 
             <TextView
-                android:id="@+id/ruc"
+                android:id="@+id/tv_precio"
                 style="@style/sizeTextView"
                 android:layout_width="282dp"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:textColor="@color/negro" />
 
             <TextView
-                android:id="@+id/razonsocial"
+                android:id="@+id/tv_almacen"
                 style="@style/sizeTextView"
                 android:layout_width="282dp"
                 android:layout_height="wrap_content"
