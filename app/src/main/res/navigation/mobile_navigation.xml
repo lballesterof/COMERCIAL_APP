@@ -23,7 +23,8 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
-        android:id="@+id/pedidosFragment"
+        android:id="@+id/pedidosFragment2"
         android:name="com.unosoft.ecomercialapp.ui.pedidos.PedidosFragment"
-        android:label="PedidosFragment" />
+        android:label="fragment_pedidos"
+        tools:layout="@layout/fragment_pedidos" />
 </navigation>

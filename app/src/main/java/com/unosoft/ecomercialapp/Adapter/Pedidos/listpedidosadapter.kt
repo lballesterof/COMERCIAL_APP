@@ -31,13 +31,21 @@ class listpedidosadapter(var datos: ArrayList<pedidosDto>) : RecyclerView.Adapte
             val tv_cliente = view.findViewById<TextView>(R.id.tv_cliente)
             val tv_numeropedido = view.findViewById<TextView>(R.id.tv_numeropedido)
             val ruc = view.findViewById<TextView>(R.id.ruc)
-            val preciocotizacion = view.findViewById<TextView>(R.id.preciocotizacion)
+            val preciocotizacion = view.findViewById<TextView>(R.id.preciopedido)
             val fechapedido = view.findViewById<TextView>(R.id.fechapedido)
 
             tv_cliente.text = datos.persona
-            tv_numeropedido.text = datos.numero_Pedido.toString()
+            if (datos.numero_Pedido==null)
+            {
+                tv_numeropedido.text = "PED-SINVALOR"
+
+            }
+            else
+            {
+                tv_numeropedido.text = datos.numero_Pedido.toString()
+            }
             ruc.text = "RUC:  ${datos.ruc}"
-            preciocotizacion.text = "${datos.mon}${datos.importe_Total}"
+            preciocotizacion.text =  StringBuilder().append("IMPORTE TOTAL ").append(datos.mon+". ").append(String.format("%,.2f", datos.importe_Total))
             fechapedido.text = "${datos.fecha_pedido}"
         }
     }
