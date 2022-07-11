@@ -5,7 +5,7 @@ import java.util.*
 
 data class pedidosDto(
     val id_pedido: Int,
-    val numero_Pedido: Any,
+    var numero_Pedido: String,
     val fecha_pedido: String,
     val persona: String,
     val ruc: String,

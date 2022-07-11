@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apppedido.Prefs
 import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
 import com.unosoft.ecomercialapp.Adapter.Pedidos.listpedidosadapter
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ApiCotizacion
@@ -53,8 +55,8 @@ class PedidosFragment : Fragment() {
         apiInterface2 = APIClient.client?.create(LoginApi::class.java) as LoginApi
 
         initRecyclerView()
-        getDataLoginUser("User1","123456")
         buscarCotizacion()
+        getDataPedido(prefs.getCdgVendedor())
     }
 
     private fun buscarCotizacion() {
@@ -74,7 +76,7 @@ class PedidosFragment : Fragment() {
     fun filter(text: String) {
         val filterdNamePedido: ArrayList<pedidosDto> = ArrayList()
         for (i in listapedidos.indices) {
-            if (listapedidos[i].numero_Pedido.toString().lowercase().contains(text.lowercase())) {
+            if (listapedidos[i].numero_Pedido.lowercase().contains(text.lowercase())) {
                 filterdNamePedido.add(listapedidos[i])
             }
         }
@@ -87,10 +89,9 @@ class PedidosFragment : Fragment() {
             activity?.runOnUiThread {
                 if(response.isSuccessful){
                     val DatosUsuario = response.body()
-
                     println("*******  cdg_ vendedor *********")
                     println("${DatosUsuario!!.cdG_VENDEDOR}")
-                    getDataPedido(DatosUsuario.cdG_VENDEDOR)
+
                 }
             }
         }

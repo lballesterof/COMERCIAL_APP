@@ -10,8 +10,8 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 
 interface LoginApi {
-    @POST("api/Users/Login")
-    fun login(@Body data: Login?): Call<LoginResponse?>?
+    @POST("api/Users/LoginComercial")
+    fun login(@Body loginMozo: DCLoginUser): Call<LoginComercialResponse>
 
     @POST("api/Users/LoginComercial")
     suspend fun checkLoginComanda(@Body loginMozo: DCLoginUser) : Response<LoginComercialResponse>
