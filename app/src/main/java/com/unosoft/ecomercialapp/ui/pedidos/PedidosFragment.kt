@@ -1,5 +1,6 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.PedidoApi
+import com.unosoft.ecomercialapp.databinding.FragmentPedidosBinding
 import com.unosoft.ecomercialapp.databinding.FragmentSlideshowBinding
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
@@ -35,12 +37,12 @@ class PedidosFragment : Fragment() {
     var apiInterface2: LoginApi? = null
 
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentPedidosBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentPedidosBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
     }
@@ -101,6 +103,7 @@ class PedidosFragment : Fragment() {
         rv_pedidos?.adapter = adapterPedidos
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getDataPedido(cdg_ven:String){
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getPedido("$cdg_ven")
