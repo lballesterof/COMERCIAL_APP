@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.apppedido.Prefs
 import com.unosoft.ecomercialapp.db.TablaBasica
+import com.unosoft.ecomercialapp.entity.TableBasic.UnidadMedidaResponse
 
 class DATAGLOBAL: Application() {
 

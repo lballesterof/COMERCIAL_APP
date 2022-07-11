@@ -38,12 +38,9 @@ class listpedidosadapter(var datos: ArrayList<pedidosDto>, private val onClickLi
 
             tv_cliente.text = datos.persona
             if (datos.numero_Pedido==null)
-            {
-                tv_numeropedido.text = "PED-SINVALOR"
-                datos.numero_Pedido = "PED-SINVALOR"
-            }
-            else
-            {
+            {   tv_numeropedido.text = "PED-SINVALOR"
+                datos.numero_Pedido = "PED-SINVALOR" }
+            else {
                 tv_numeropedido.text = datos.numero_Pedido.toString()
             }
             ruc.text = "RUC:  ${datos.ruc}"
@@ -51,9 +48,7 @@ class listpedidosadapter(var datos: ArrayList<pedidosDto>, private val onClickLi
             fechapedido.text = "${datos.fecha_pedido}"
 
             itemView.setOnClickListener {
-                println("${datos.id_pedido}")
-                prefs.save_IdPedido(datos.id_pedido.toString())
-                println(prefs.getIdPedido())
+                onClickListener(datos)
             }
         }
     }

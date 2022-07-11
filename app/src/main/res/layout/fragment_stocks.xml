@@ -114,6 +114,8 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_consultastocks"
         android:layout_width="match_parent"

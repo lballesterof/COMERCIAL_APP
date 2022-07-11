@@ -11,7 +11,7 @@ import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 
 import kotlin.collections.ArrayList
 
-class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>) : RecyclerView.Adapter<listcotizacionesadapter.ViewHolder>() {
+class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>, private val onClickListener: (cotizacionesDto) -> Unit) : RecyclerView.Adapter<listcotizacionesadapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,13 +21,13 @@ class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>) : Re
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.render(cotizaciones[position])
+        holder.render(cotizaciones[position],onClickListener)
     }
 
     override fun getItemCount(): Int = cotizaciones.size
 
     class ViewHolder(private val view: View):RecyclerView.ViewHolder(view){
-        fun render (cotizaciones: cotizacionesDto){
+        fun render (cotizaciones: cotizacionesDto,onClickListener: (cotizacionesDto) -> Unit){
             val lblnrocotizacion = view.findViewById<TextView>(R.id.numerocotizacion)
 
             val lblnrazonsocial = view.findViewById<TextView>(R.id.razonsocial)

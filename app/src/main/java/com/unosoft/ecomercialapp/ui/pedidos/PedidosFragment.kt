@@ -9,6 +9,9 @@ import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.navigateUp
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apppedido.Prefs
@@ -101,18 +104,27 @@ class PedidosFragment : Fragment() {
     fun initRecyclerView() {
         val rv_pedidos = view?.findViewById<RecyclerView>(R.id.rv_recyclerpedidos)
         rv_pedidos?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        adapterPedidos = listpedidosadapter(listapedidos) { dataclassPedido -> onItemDatosZonas(dataclassPedido) }
+        adapterPedidos = listpedidosadapter(listapedidos) { dataclassPedido -> onItemDatosPedidos(dataclassPedido) }
         rv_pedidos?.adapter = adapterPedidos
     }
 
-    fun onItemDatosZonas(dataclassPedido: pedidosDto) {
+    fun onItemDatosPedidos(dataclassPedido: pedidosDto) {
 
+        prefs.save_IdPedido(dataclassPedido.id_pedido.toString())
+        println("IDPEDIDO: ${prefs.getIdPedido()}")
+
+        val enviarDatos = Bundle()
         val fragment = com.unosoft.ecomercialapp.ui.pedidomaster.PedidoMaster()
         val fragmentManager = activity?.supportFragmentManager
         val transaction = fragmentManager?.beginTransaction()
 
+
+        enviarDatos.putSerializable("DATOSPEDIDOS",dataclassPedido)
+
+        fragment.arguments = enviarDatos
         //CAMBIAR FRAMENT
-        transaction!!.replace(R.id.nav_host_fragment_content_inicio, fragment).commit()
+        transaction!!.replace(R.id.nav_host_fragment_content_inicio, fragment ).commit()
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
