@@ -42,10 +42,8 @@ class MainActivity : AppCompatActivity() {
                 val _user = Login(user.text.toString(), pass.text.toString())
                 val call1 = apiInterface!!.login(_user)
                 call1!!.enqueue(object : Callback<LoginResponse?> {
-                    override fun onResponse(
-                        call: Call<LoginResponse?>,
-                        response: Response<LoginResponse?>
-                    ) {
+                    override fun onResponse(call: Call<LoginResponse?>,response: Response<LoginResponse?>) {
+
                         if (response.code() == 400) {
                             AlertMessage("Usuario y/o Contraseña incorrecta")
                             pd.cancel()
@@ -53,7 +51,6 @@ class MainActivity : AppCompatActivity() {
                             val user1 = response.body()
                             val i = Intent(applicationContext, InicioActivity::class.java)
                             startActivity(i)
-
 
                             // Toast.makeText(getApplicationContext(), user1.nombreusuario + " " + user1.jwtToken + " " + user1.poR_IGV + " " + user1.refreshToken, Toast.LENGTH_SHORT).show();
                             pd.cancel()

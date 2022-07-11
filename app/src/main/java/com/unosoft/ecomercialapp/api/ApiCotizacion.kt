@@ -1,12 +1,11 @@
 package com.unosoft.ecomercialapp.api
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Url
+import retrofit2.http.*
 
 interface ApiCotizacion {
-    @GET("/api/Cotizacion/0005")
-    @Headers("Content-Type:application/json")
-    suspend fun fetchAllCotizaciones() : Response<List<cotizacionesDto>>
+
+    @GET("/api/Cotizacion/{cdg_ven}")
+    suspend fun fetchAllCotizaciones(@Path("cdg_ven") cdg_ven:String) : Response<List<cotizacionesDto>>
+
 }
