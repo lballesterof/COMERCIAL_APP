@@ -85,7 +85,6 @@ class PedidosFragment : Fragment() {
                     val DatosUsuario = response.body()
                     println("*******  cdg_ vendedor *********")
                     println("${DatosUsuario!!.cdG_VENDEDOR}")
-
                 }
             }
         }

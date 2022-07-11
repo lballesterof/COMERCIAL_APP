@@ -129,4 +129,9 @@ interface DAO {
 
     @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityPedidoMaster'")
     fun clearPrimaryKeyPedidoMaster()
+
+
+    //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
+    @Query("SELECT EXISTS(SELECT * FROM EntityCondicionPago)")
+    fun isExists(): Boolean
 }
