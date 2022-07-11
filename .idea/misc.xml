@@ -3,36 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/activity_detalle_cotizacion.xml" value="0.11979166666666667" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/activity_inicio.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/app_bar_inicio.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/cardview_clientes.xml" value="0.20555555555555555" />
+        <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/cardview_consultastocks.xml" value="0.22" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/cardview_cotizaciones.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/cardview_stocks.xml" value="0.7150259067357513" />
+        <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/cardview_stocks.xml" value="0.5" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/cardview_stocks_warehouses.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/content_inicio.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/fragment_gallery.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/fragment_home.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/fragment_pedidos.xml" value="0.2864583333333333" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/fragment_slideshow.xml" value="0.20555555555555555" />
+        <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/fragment_stocks.xml" value="0.10677083333333333" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/nav_header_inicio.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/menu/activity_home_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/menu/inicio.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/card_layout_item_cotizacion.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/cardview_clientes.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/cardview_consultastocks.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/cardview_cotizaciones.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/cardview_pedido.xml" value="0.5" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/cardview_stocks.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/cardview_stocks_warehouses.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/content_inicio.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/fragment_gallery.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/fragment_home.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/fragment_pedidos.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/fragment_slideshow.xml" value="0.3078125" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/fragment_stocks.xml" value="0.3078125" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/layout/item_filtro.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/buhor/StudioProjects/COMERCIAL_APP/app/src/main/res/menu/activity_home_drawer.xml" value="0.371875" />
       </map>
     </option>
   </component>

@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.unosoft.ecomercialapp">
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+
+        android:name=".DATAGLOBAL"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,12 +17,13 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31"
         android:usesCleartextTraffic="true"
+
         >
         <activity
             android:name=".Activity.inicio.InicioActivity"
             android:exported="false"
             android:label="@string/title_activity_inicio"
-      />
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true">
