@@ -1,40 +1,30 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.navigateUp
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.apppedido.Prefs
-import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
+import com.unosoft.ecomercialapp.Activity.inicio.InicioActivity
 import com.unosoft.ecomercialapp.Adapter.Pedidos.listpedidosadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
-import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.PedidoApi
-import com.unosoft.ecomercialapp.api.PedidoMaster
 import com.unosoft.ecomercialapp.databinding.FragmentPedidosBinding
-import com.unosoft.ecomercialapp.databinding.FragmentSlideshowBinding
-import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
+import com.unosoft.ecomercialapp.ui.slideshow.ActivityEditCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 class PedidosFragment : Fragment() {
     private lateinit var adapterPedidos: listpedidosadapter
@@ -117,13 +107,14 @@ class PedidosFragment : Fragment() {
         val fragment = com.unosoft.ecomercialapp.ui.pedidomaster.PedidoMaster()
         val fragmentManager = activity?.supportFragmentManager
         val transaction = fragmentManager?.beginTransaction()
+        val i = Intent(activity, ActivityEditCotizacion::class.java)
+        startActivity(i)
 
+        //enviarDatos.putSerializable("DATOSPEDIDOS",dataclassPedido)
 
-        enviarDatos.putSerializable("DATOSPEDIDOS",dataclassPedido)
-
-        fragment.arguments = enviarDatos
+        //fragment.arguments = enviarDatos
         //CAMBIAR FRAMENT
-        transaction!!.replace(R.id.nav_host_fragment_content_inicio, fragment ).commit()
+       // transaction!!.replace(R.id.nav_host_fragment_content_inicio, fragment ).commit()
 
     }
 

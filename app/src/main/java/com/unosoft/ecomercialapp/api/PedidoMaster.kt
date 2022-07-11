@@ -1,5 +1,6 @@
 package com.unosoft.ecomercialapp.api
 
+import com.unosoft.ecomercialapp.entity.Pedidos.pedidocabDTO
 import com.unosoft.ecomercialapp.entity.Stocks.ConsultaStocksResponseItem
 import retrofit2.Response
 import retrofit2.http.GET
@@ -9,5 +10,5 @@ import retrofit2.http.Query
 interface PedidoMaster {
 
     @GET("/api/PedidoComercial/MS/{Id_pedido}")
-    suspend fun getStockForCdgBarra(@Path("Id_pedido") Id_pedido:String): Response<List<ConsultaStocksResponseItem>>
+    suspend fun getbyIdPedidoCab(@Path("Id_pedido") Id_pedido:String): Response<pedidocabDTO>
 }
