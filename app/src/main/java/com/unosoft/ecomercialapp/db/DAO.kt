@@ -1,8 +1,10 @@
 package com.unosoft.ecomercialapp.db
 
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 
 @Dao
 interface DAO {
@@ -65,11 +67,12 @@ interface DAO {
     fun insertPedidoMaster( insertPedidoMaster: EntityPedidoMaster)
 
 
-    //*************   INSERT DE TABLAS    *********************
+    //*************   Datos    *********************
+    @Query("SELECT Nombre,Numero,Referencia1  FROM EntityMoneda WHERE id= :id")
+    fun getTipoMoneda(id:Int): MonedaResponse
 
-
-
-
+    @Query("SELECT COUNT(*) from EntityMoneda")
+    fun getSizeMoneda(): Int
 
 
 
@@ -134,4 +137,12 @@ interface DAO {
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
     @Query("SELECT EXISTS(SELECT * FROM EntityCondicionPago)")
     fun isExists(): Boolean
+
+
+
+
+
+    //*****************  CONSULTA TABLAS BASICAS *******************
+    @Query("SELECT Nombre FROM EntityCondicionPago WHERE Codigo = :Numero  ")
+    fun findnamecategoriapagowithnumero(Numero :String): String
 }

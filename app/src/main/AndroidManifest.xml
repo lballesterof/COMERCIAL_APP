@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.unosoft.ecomercialapp">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,21 +15,23 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:targetApi="31"
         android:usesCleartextTraffic="true"
-
-        >
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.cotizacion.ActivityDetalleCotizacion"
+            android:exported="false" />
+        <activity
+            android:name=".ui.cotizacion.ActivityEditCotizacion"
+            android:exported="false"
+            android:label=".ui.cotizacion.ActivityEditCotizacion" />
         <activity
             android:name=".Activity.inicio.InicioActivity"
             android:exported="false"
-            android:label="@string/title_activity_inicio"
-            />
-
+            android:label="@string/title_activity_inicio" />
         <activity
             android:name=".ui.pedidos.ActivityEditPedido"
             android:exported="false"
-            android:label="ActivityEditPedido"
-            />
+            android:label="ActivityEditPedido" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

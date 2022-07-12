@@ -215,9 +215,7 @@ class MainActivity : AppCompatActivity() {
                     println(database.daoTblBasica().getAllProvincia())
                     println("**************  TABLA CONDICION DE PAGO ***************")
                     println(database.daoTblBasica().getAllUnidadMedida())
-
                 }
-
             }
         }
 
@@ -233,6 +231,8 @@ class MainActivity : AppCompatActivity() {
                 val response6 = apiInterface2!!.getMoneda()
                 val response7 = apiInterface2!!.getProvincia()
                 val response8 = apiInterface2!!.getUnidadMedida()
+                //val response9 = apiInterface2!!.getAllListaPrecio()
+
 
                 runOnUiThread {
                     if(response1.isSuccessful){

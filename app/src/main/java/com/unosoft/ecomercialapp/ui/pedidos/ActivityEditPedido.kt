@@ -28,9 +28,6 @@ class ActivityEditPedido : AppCompatActivity() {
                 if(cotizacion.isSuccessful){
                     var response = cotizacion.body()!!
                 }
-
         }
     }
-
-
 }

@@ -1,7 +1,6 @@
 package com.unosoft.ecomercialapp.entity.Cotizacion
 
-import java.time.LocalDateTime
-import java.util.*
+import java.io.Serializable
 
 data class cotizacionesDto (val id_cotizacion: Int,
                             val numero_Cotizacion: String,
@@ -12,4 +11,4 @@ data class cotizacionesDto (val id_cotizacion: Int,
                             val importe_descuento: Double,
                             val importe_igv: Double,
                             val importe_total: Double,
-                            val eSTADO: String)
+                            val eSTADO: String) : Serializable

@@ -34,4 +34,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="search_hint">RUC,NRO COTIZACION, RAZON SOCIAL</string>
     <string name="title_activity_inicio">InicioActivity</string>
+    <string name="title_activity_productos">Productos</string>
 </resources>

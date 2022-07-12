@@ -74,19 +74,6 @@ class PedidosFragment : Fragment() {
         adapterPedidos.filterList(filterdNamePedido)
     }
 
-    fun getDataLoginUser(usuarioMozo:String,passMozo:String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = apiInterface2!!.checkLoginComanda(DCLoginUser("$usuarioMozo","$passMozo"))
-            activity?.runOnUiThread {
-                if(response.isSuccessful){
-                    val DatosUsuario = response.body()
-                    println("*******  cdg_ vendedor *********")
-                    println("${DatosUsuario!!.cdG_VENDEDOR}")
-                }
-            }
-        }
-    }
-
     fun initRecyclerView() {
         val rv_pedidos = view?.findViewById<RecyclerView>(R.id.rv_recyclerpedidos)
         rv_pedidos?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
@@ -95,22 +82,11 @@ class PedidosFragment : Fragment() {
     }
 
     fun onItemDatosPedidos(dataclassPedido: pedidosDto) {
-
         prefs.save_IdPedido(dataclassPedido.id_pedido.toString())
         println("IDPEDIDO: ${prefs.getIdPedido()}")
 
-        val enviarDatos = Bundle()
-        val fragment = com.unosoft.ecomercialapp.ui.pedidomaster.PedidoMaster()
-        val fragmentManager = activity?.supportFragmentManager
-        val transaction = fragmentManager?.beginTransaction()
         val i = Intent(activity, ActivityEditPedido::class.java)
         startActivity(i)
-
-        //enviarDatos.putSerializable("DATOSPEDIDOS",dataclassPedido)
-
-        //fragment.arguments = enviarDatos
-        //CAMBIAR FRAMENT
-       // transaction!!.replace(R.id.nav_host_fragment_content_inicio, fragment ).commit()
 
     }
 
