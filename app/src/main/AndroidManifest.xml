@@ -27,7 +27,7 @@
         <activity
             android:name=".ui.pedidos.ActivityEditPedido"
             android:exported="false"
-            android:label="ActivityEditCotizacion"
+            android:label="ActivityEditPedido"
             />
         <activity
             android:name=".MainActivity"
