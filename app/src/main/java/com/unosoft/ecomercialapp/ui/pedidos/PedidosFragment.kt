@@ -1,7 +1,6 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.unosoft.ecomercialapp.Activity.inicio.InicioActivity
 import com.unosoft.ecomercialapp.Adapter.Pedidos.listpedidosadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
@@ -20,7 +18,6 @@ import com.unosoft.ecomercialapp.api.PedidoApi
 import com.unosoft.ecomercialapp.databinding.FragmentPedidosBinding
 import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
-import com.unosoft.ecomercialapp.ui.slideshow.ActivityEditCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -106,7 +103,7 @@ class PedidosFragment : Fragment() {
         val fragment = com.unosoft.ecomercialapp.ui.pedidomaster.PedidoMaster()
         val fragmentManager = activity?.supportFragmentManager
         val transaction = fragmentManager?.beginTransaction()
-        val i = Intent(activity, ActivityEditCotizacion::class.java)
+        val i = Intent(activity, ActivityEditPedido::class.java)
         startActivity(i)
 
         //enviarDatos.putSerializable("DATOSPEDIDOS",dataclassPedido)

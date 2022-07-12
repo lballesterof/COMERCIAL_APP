@@ -25,7 +25,7 @@
             />
 
         <activity
-            android:name=".ui.slideshow.ActivityEditCotizacion"
+            android:name=".ui.pedidos.ActivityEditPedido"
             android:exported="false"
             android:label="ActivityEditCotizacion"
             />

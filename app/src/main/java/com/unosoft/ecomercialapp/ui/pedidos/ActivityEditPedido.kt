@@ -1,25 +1,23 @@
-package com.unosoft.ecomercialapp.ui.slideshow
+package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.R
-import com.unosoft.ecomercialapp.api.ApiCotizacion
+import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.PedidoMaster
-import com.unosoft.ecomercialapp.api.TablaBasicaApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ActivityEditCotizacion : AppCompatActivity() {
+class ActivityEditPedido : AppCompatActivity() {
 
     var apiInterface: PedidoMaster? = null
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        setContentView(R.layout.activity_cotizacion_generar)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        apiInterface = APIClient.client?.create(PedidoMaster::class.java) as PedidoMaster
+        setContentView(R.layout.activity_pedido_editar)
         getData(DATAGLOBAL.prefs.getIdPedido())
     }
 
