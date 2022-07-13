@@ -12,14 +12,14 @@
 
     <LinearLayout
         android:layout_width="402dp"
-        android:layout_height="155dp"
+        android:layout_height="198dp"
         android:background="#e4e4e4"
         android:orientation="vertical"
         android:padding="20dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="153dp">
 
             <ImageView
                 android:layout_width="36dp"
@@ -30,7 +30,7 @@
                 app:tint="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/tv_nameProducto"
                 style="@style/sizeTextView"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
@@ -42,22 +42,22 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/document"
+                android:id="@+id/tv_codProducto"
                 style="@style/sizeTextView"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/tv_nameProducto"
                 android:layout_marginStart="70dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="MOUS0001"
                 android:textColor="@color/negro" />
 
             <TextView
-                android:id="@+id/document3"
+                android:id="@+id/tv_precioUnidad"
                 style="@style/sizeTextView"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/tv_nameProducto"
                 android:layout_marginStart="70dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-condensed"
@@ -65,17 +65,60 @@
                 android:textColor="@color/negro" />
 
             <TextView
-                android:id="@+id/document4"
+                android:id="@+id/tv_precioTotal"
                 style="@style/sizeTextView"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/tv_nameProducto"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="42dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Precio Total: S/. 150.00"
+                android:text="Precio Total: S/. 350.00"
                 android:textColor="@color/negro" />
+
+            <LinearLayout
+
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_nameProducto"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="60dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_btnAutementar"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/btn_image_view"
+                    android:src="@drawable/ic_add"
+                    app:tint="@color/colorPrimaryDark" />
+
+                <TextView
+                    android:id="@+id/tv_cantidad"
+                    style="@style/sizeTextView"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/negro" />
+
+                <ImageView
+                    android:id="@+id/iv_btnDisminuir"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/btn_image_view"
+                    android:src="@drawable/ic_less"
+                    app:tint="@color/colorPrimaryDark" />
+
+
+            </LinearLayout>
 
 
         </RelativeLayout>

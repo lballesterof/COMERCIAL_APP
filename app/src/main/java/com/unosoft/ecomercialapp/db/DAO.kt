@@ -37,6 +37,9 @@ interface DAO {
     @Query("SELECT * FROM EntityPedidoMaster")
     fun getAllPedidoMaster(): List<EntityPedidoMaster>
 
+    @Query("SELECT * FROM EntityListaPrecio")
+    fun getAllListaPrecio(): List<EntityListaPrecio>
+
 
     //*************   INSERT DE TABLAS    *********************
     @Insert
@@ -65,6 +68,10 @@ interface DAO {
 
     @Insert
     fun insertPedidoMaster( insertPedidoMaster: EntityPedidoMaster)
+
+    @Insert
+    fun insertListaPrecio( insertListaPrecio: EntityListaPrecio)
+
 
 
     //*************   Datos    *********************
@@ -104,6 +111,9 @@ interface DAO {
     @Query("DELETE FROM EntityPedidoMaster")
     fun deleteTablePedidoMaster()
 
+    @Query("DELETE FROM EntityListaPrecio")
+    fun deleteTableListaPrecio()
+
 
     //*********  REINICIAR LOS ID AUTOGENERADOS   **************
     @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityCondicionPago'")
@@ -132,6 +142,9 @@ interface DAO {
 
     @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityPedidoMaster'")
     fun clearPrimaryKeyPedidoMaster()
+
+    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityListaPrecio'")
+    fun clearPrimaryKeyListaPrecio()
 
 
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************

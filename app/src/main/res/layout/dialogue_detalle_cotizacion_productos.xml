@@ -23,7 +23,7 @@
         app:queryHint="Busqueda productos" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cunsultaprocustos"
+        android:id="@+id/rv_productos"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="match_parent"

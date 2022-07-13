@@ -43,7 +43,8 @@ class FramentCotizacion : Fragment() {
 
         initRecyclerView()
         buscarCotizacion()
-        getData(prefs.getCdgVendedor())
+        //getData(prefs.getCdgVendedor())
+        getData("0009")
     }
 
 

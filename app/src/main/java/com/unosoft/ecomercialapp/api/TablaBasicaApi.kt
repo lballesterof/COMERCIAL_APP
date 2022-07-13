@@ -31,10 +31,10 @@ interface TablaBasicaApi {
     @GET("api/TablasBasicas/Detail?filter=codigo eq 'MONEDA'&select=nombre,numero,referencia1")
     suspend fun getMoneda(): Response<List<MonedaResponse>>
 
-    @GET("api/TablasBasicas/Detail?filter=codigo eq 'PROVINCIA' and estado eq  '1'&select=codigo,nombre,numero,referencia2&orderby=nombre asc")
+    @GET("api/TablasBasicas/Detail?filter=codigo eq 'PROVINCIA' and estado eq '1'&select=codigo,nombre,numero,referencia2&orderby=nombre asc")
     suspend fun getProvincia(): Response<List<ProvinciaResponse>>
 
-    @GET("api/TablasBasicas/Detail?filter=codigo eq 'UNID_MEDI' and estado eq  '1'&select=codigo,nombre,numero, referencia1")
+    @GET("api/TablasBasicas/Detail?filter=codigo eq 'UNID_MEDI' and estado eq '1'&select=codigo,nombre,numero, referencia1")
     suspend fun getUnidadMedida(): Response<List<UnidadMedidaResponse>>
 
 

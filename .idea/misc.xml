@@ -21,7 +21,7 @@
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_condiciondepago.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_consultastocks.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_cotizaciones.xml" value="0.22" />
-        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_pedido.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_pedido.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_stocks.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_stocks_warehouses.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/content_inicio.xml" value="0.296195652173913" />
@@ -37,6 +37,8 @@
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/frament_producto_cotizacion.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_detalle_cotizacion_producto.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_filtro.xml" value="0.2" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_productocomercial.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_productocomericaldetallado.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/nav_header_inicio.xml" value="0.1" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/menu/activity_home_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/menu/inicio.xml" value="0.36666666666666664" />

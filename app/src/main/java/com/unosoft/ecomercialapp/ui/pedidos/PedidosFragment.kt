@@ -98,9 +98,6 @@ class PedidosFragment : Fragment() {
                 if(response.isSuccessful){
                     listapedidos.clear()
                     listapedidos.addAll(response.body()!!)
-
-
-
                     adapterPedidos.notifyDataSetChanged()
                 }
             }

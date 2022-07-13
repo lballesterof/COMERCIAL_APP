@@ -135,7 +135,6 @@ class ActivityEditCotizacion : AppCompatActivity() {
             if(response.isSuccessful){
 
             }
-
         }
     }
 
