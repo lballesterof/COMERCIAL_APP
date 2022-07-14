@@ -7,9 +7,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="#C6CCD6"
     android:orientation="vertical"
-    tools:context=".ui.pedidos.ActivityEditPedido">
-
-
+    tools:context=".Activity.Cotizacion.ActivityCotizacion">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -1,8 +1,10 @@
 package com.unosoft.ecomercialapp.db
 
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 
 @Dao
 interface DAO {
@@ -35,6 +37,9 @@ interface DAO {
     @Query("SELECT * FROM EntityPedidoMaster")
     fun getAllPedidoMaster(): List<EntityPedidoMaster>
 
+    @Query("SELECT * FROM EntityListaPrecio")
+    fun getAllListaPrecio(): List<EntityListaPrecio>
+
 
     //*************   INSERT DE TABLAS    *********************
     @Insert
@@ -64,12 +69,17 @@ interface DAO {
     @Insert
     fun insertPedidoMaster( insertPedidoMaster: EntityPedidoMaster)
 
-
-    //*************   INSERT DE TABLAS    *********************
-
-
+    @Insert
+    fun insertListaPrecio( insertListaPrecio: EntityListaPrecio)
 
 
+
+    //*************   Datos    *********************
+    @Query("SELECT Nombre,Numero,Referencia1  FROM EntityMoneda WHERE id= :id")
+    fun getTipoMoneda(id:Int): MonedaResponse
+
+    @Query("SELECT COUNT(*) from EntityMoneda")
+    fun getSizeMoneda(): Int
 
 
 
@@ -101,6 +111,9 @@ interface DAO {
     @Query("DELETE FROM EntityPedidoMaster")
     fun deleteTablePedidoMaster()
 
+    @Query("DELETE FROM EntityListaPrecio")
+    fun deleteTableListaPrecio()
+
 
     //*********  REINICIAR LOS ID AUTOGENERADOS   **************
     @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityCondicionPago'")
@@ -130,8 +143,19 @@ interface DAO {
     @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityPedidoMaster'")
     fun clearPrimaryKeyPedidoMaster()
 
+    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityListaPrecio'")
+    fun clearPrimaryKeyListaPrecio()
+
 
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
     @Query("SELECT EXISTS(SELECT * FROM EntityCondicionPago)")
     fun isExists(): Boolean
+
+
+
+
+
+    //*****************  CONSULTA TABLAS BASICAS *******************
+    @Query("SELECT Nombre FROM EntityCondicionPago WHERE Codigo = :Numero  ")
+    fun findnamecategoriapagowithnumero(Numero :String): String
 }

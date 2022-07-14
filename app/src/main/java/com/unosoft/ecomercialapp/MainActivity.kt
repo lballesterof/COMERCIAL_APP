@@ -14,6 +14,7 @@ import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.api.APIClient.client
 import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.api.ListaPrecio
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.TablaBasicaApi
 import com.unosoft.ecomercialapp.db.EntityCondicionPago
@@ -21,9 +22,11 @@ import com.unosoft.ecomercialapp.db.EntityDepartamento
 import com.unosoft.ecomercialapp.db.EntityDistrito
 import com.unosoft.ecomercialapp.db.EntityDocIdentidad
 import com.unosoft.ecomercialapp.db.EntityFrecuenciaDias
+import com.unosoft.ecomercialapp.db.EntityListaPrecio
 import com.unosoft.ecomercialapp.db.EntityMoneda
 import com.unosoft.ecomercialapp.db.EntityProvincia
 import com.unosoft.ecomercialapp.db.EntityUnidadMedida
+import com.unosoft.ecomercialapp.entity.ListaPrecio.ListaPrecioRespuesta
 import com.unosoft.ecomercialapp.entity.Login.LoginComercialResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.DepartamentoResponse
@@ -44,6 +47,8 @@ import retrofit2.Response
 
 var apiInterface: LoginApi? = null
 var apiInterface2: TablaBasicaApi? = null
+var apiInterface3: ListaPrecio? = null
+
 
 private val listCondicionPago = ArrayList<CondicionPagoResponse>()
 private val listDepartamento = ArrayList<DepartamentoResponse>()
@@ -53,6 +58,7 @@ private val listFrecuenciaDias = ArrayList<FrecuenciaDiasResponse>()
 private val listMoneda = ArrayList<MonedaResponse>()
 private val listProvincia = ArrayList<ProvinciaResponse>()
 private val listUnidadMedida = ArrayList<UnidadMedidaResponse>()
+private val listPrecio = ArrayList<ListaPrecioRespuesta>()
 
 
 class MainActivity : AppCompatActivity() {
@@ -65,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         val pass = findViewById<EditText>(R.id.pass)
         apiInterface = client!!.create(LoginApi::class.java)
         apiInterface2 = client!!.create(TablaBasicaApi::class.java)
+        apiInterface3 = client!!.create(ListaPrecio::class.java)
+
 
         cargarTablaBasica()
 
@@ -78,25 +86,32 @@ class MainActivity : AppCompatActivity() {
                 return@OnClickListener
             } else {
                 pd.show()
+
+                val i = Intent(applicationContext, InicioActivity::class.java)
+                startActivity(i)
+
+                pd.cancel()
+
+                //*******  MANTENER
+                /*
                 val _user = DCLoginUser(user.text.toString(), pass.text.toString())
                 val call1 = apiInterface!!.login(_user)
                 call1.enqueue(object : Callback<LoginComercialResponse> {
-                    override fun onResponse(
-                        call: Call<LoginComercialResponse>,
-                        response: Response<LoginComercialResponse>
-
-                    ) {
+                    override fun onResponse(call: Call<LoginComercialResponse>,response: Response<LoginComercialResponse>) {
                         if (response.code() == 400) {
                             AlertMessage("Usuario y/o Contraseña incorrecta")
                             pd.cancel()
-                        } else {
+                        }else {
+                            val user1 = response.body()!!
 
-                           val user1 = response.body()!!
+                            println(user1.cdG_VENDEDOR)
+                            println(user1.tipocambio)
+
                             prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
                             prefs.save_TipoCambio(user1.tipocambio)
+
                             val i = Intent(applicationContext, InicioActivity::class.java)
                             startActivity(i)
-
 
                             // Toast.makeText(getApplicationContext(), user1.nombreusuario + " " + user1.jwtToken + " " + user1.poR_IGV + " " + user1.refreshToken, Toast.LENGTH_SHORT).show();
                             pd.cancel()
@@ -109,6 +124,13 @@ class MainActivity : AppCompatActivity() {
                         call.cancel()
                     }
                 })
+
+                 */
+                //*******  MANTENER
+
+
+
+
             }
         })
     }
@@ -123,7 +145,9 @@ class MainActivity : AppCompatActivity() {
             listaFrecuenciaDiasResponse: ArrayList<FrecuenciaDiasResponse>,
             listaMonedaResponse: ArrayList<MonedaResponse>,
             listaProvinciaResponse: ArrayList<ProvinciaResponse>,
-            listaUnidadMedidaResponse: ArrayList<UnidadMedidaResponse>
+            listaUnidadMedidaResponse: ArrayList<UnidadMedidaResponse>,
+            ListaPrecioRespuesta : ArrayList<ListaPrecioRespuesta>
+
         ) {
             GlobalScope.launch(Dispatchers.Default) {
                 database.daoTblBasica().deleteTableCondicionPago()
@@ -150,6 +174,8 @@ class MainActivity : AppCompatActivity() {
                 database.daoTblBasica().deleteTableUnidadMedida()
                 database.daoTblBasica().clearPrimaryKeyUnidadMedida()
 
+                database.daoTblBasica().deleteTableListaPrecio()
+                database.daoTblBasica().clearPrimaryKeyListaPrecio()
 
                 listaCondicionPagoResponse.forEach {
                     database.daoTblBasica().insertCondicionPago(
@@ -198,6 +224,13 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
 
+                ListaPrecioRespuesta.forEach {
+                    database.daoTblBasica().insertListaPrecio(
+                        EntityListaPrecio(0,it.codigo,it.nombre,it.moneda)
+                    )
+                }
+
+
                 withContext(Dispatchers.IO) {
                     println("**************  TABLA CONDICION DE PAGO ***************")
                     println(database.daoTblBasica().getAllCondicionPago())
@@ -215,9 +248,9 @@ class MainActivity : AppCompatActivity() {
                     println(database.daoTblBasica().getAllProvincia())
                     println("**************  TABLA CONDICION DE PAGO ***************")
                     println(database.daoTblBasica().getAllUnidadMedida())
-
+                    println("**************  TABLA CONDICION DE PAGO ***************")
+                    println(database.daoTblBasica().getAllListaPrecio())
                 }
-
             }
         }
 
@@ -233,6 +266,8 @@ class MainActivity : AppCompatActivity() {
                 val response6 = apiInterface2!!.getMoneda()
                 val response7 = apiInterface2!!.getProvincia()
                 val response8 = apiInterface2!!.getUnidadMedida()
+                val response9 = apiInterface3!!.getListaPrecio()
+
 
                 runOnUiThread {
                     if(response1.isSuccessful){
@@ -259,6 +294,9 @@ class MainActivity : AppCompatActivity() {
                     if(response8.isSuccessful){
                         listUnidadMedida.addAll(response8.body()!!)
                     }
+                    if(response9.isSuccessful){
+                        listPrecio.addAll(response9.body()!!)
+                    }
 
                     inyectarDataRoom(listCondicionPago,
                         listDepartamento,
@@ -267,7 +305,9 @@ class MainActivity : AppCompatActivity() {
                         listFrecuenciaDias,
                         listMoneda,
                         listProvincia,
-                        listUnidadMedida)
+                        listUnidadMedida,
+                        listPrecio
+                    )
                 }
             }
         }
@@ -286,7 +326,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.inicio, menu)
         return true
     }

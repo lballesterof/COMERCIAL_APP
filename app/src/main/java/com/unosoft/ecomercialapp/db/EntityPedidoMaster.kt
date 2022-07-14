@@ -107,7 +107,6 @@ data class EntityPedidoMaster(
     val tipO_CAMBIO: Double,
     @ColumnInfo
     val sucursal: String,
-
 )
 
 data class DetDevolucion(

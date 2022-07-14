@@ -5,23 +5,40 @@
       <map>
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_cotizacion_generar.xml" value="0.2821557971014493" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_detalle_cotizacion.xml" value="0.25" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_detalle_cotizacion2.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_detalle_cotizacion_mock.xml" value="0.3569230769230769" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_detalle_pedido.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_edit_cotizacion.xml" value="0.2848731884057971" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_inicio.xml" value="0.1" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_pedido_editar.xml" value="0.27760416666666665" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_productos.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/app_bar_inicio.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/card_layout_item_cotizacion.xml" value="0.3625" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/card_layout_item_listado.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/card_layout_item_listado_mock.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_clientes.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_condiciondepago.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_consultastocks.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_cotizaciones.xml" value="0.67" />
-        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_pedido.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_cotizaciones.xml" value="0.22" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_pedido.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_stocks.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_stocks_warehouses.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/content_inicio.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/dialogue_detalle_cotizacion_productos.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/dialogue_editarinformacion.xml" value="0.28177083333333336" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/dialogue_productos.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_gallery.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_home.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_pedido_master.xml" value="0.5" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_pedidos.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_slideshow.xml" value="0.1" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_stocks.xml" value="0.25" />
-        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_filtro.xml" value="0.1" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/frament_producto_cotizacion.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_detalle_cotizacion_producto.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_filtro.xml" value="0.2" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_productocomercial.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_productocomericaldetallado.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/nav_header_inicio.xml" value="0.1" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/menu/activity_home_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/menu/inicio.xml" value="0.36666666666666664" />

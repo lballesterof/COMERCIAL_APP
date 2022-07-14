@@ -30,7 +30,7 @@
                 app:tint="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/tv_nameProductoComercial"
                 style="@style/sizeTextView"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
@@ -42,22 +42,22 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/document"
+                android:id="@+id/tv_codProductoComercial"
                 style="@style/sizeTextView"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/tv_nameProductoComercial"
                 android:layout_marginStart="70dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="MOUS0001"
                 android:textColor="@color/negro" />
 
             <TextView
-                android:id="@+id/document3"
+                android:id="@+id/tv_precioUnit"
                 style="@style/sizeTextView"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/tv_nameProductoComercial"
                 android:layout_marginStart="70dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-condensed"
@@ -65,11 +65,11 @@
                 android:textColor="@color/negro" />
 
             <TextView
-                android:id="@+id/document4"
+                android:id="@+id/tv_precioTotal"
                 style="@style/sizeTextView"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/tv_nameProductoComercial"
                 android:layout_marginStart="70dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="20dp"
