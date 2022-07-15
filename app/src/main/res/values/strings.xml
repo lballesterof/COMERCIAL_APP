@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ecomercialapp</string>
 
     <!-- Login -->
@@ -35,4 +35,10 @@
     <string name="search_hint">RUC,NRO COTIZACION, RAZON SOCIAL</string>
     <string name="title_activity_inicio">InicioActivity</string>
     <string name="title_activity_productos">Productos</string>
+
+    <!-- Queries -->
+    <string name="clearPrimaryKeyCondicionPago" tools:ignore="StringEscaping">UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityCondicionPago'</string>
+    <string name="NUMEROCOTIZACION">COTI-00000010</string>
+    <string name="fecha_11_22_2021">Fecha: 11-22-2021</string>
+
 </resources>
