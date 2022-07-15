@@ -22,6 +22,7 @@ import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.ProductoComercial
 import com.unosoft.ecomercialapp.db.EntityListProctCot
+import com.unosoft.ecomercialapp.db.cotizacion.EntityEditQuotationDetail
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
@@ -52,6 +53,8 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         iniciarLista()
+        getData()
+
         productosListado()
         abrirListProductos()
 
@@ -59,6 +62,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
 
     private fun iniciarLista() {
 
+        /*
         CoroutineScope(Dispatchers.IO).launch {
             if (database.daoTblBasica().isExistsEntityListProctCot())
             {
@@ -67,7 +71,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
             }
 
         }
-
+        */
 
 
     }
@@ -78,6 +82,108 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         productlistcotadarte = productlistcotadarte(listaProductoListados) { data -> onItemDatosProductList(data) }
         rv_listproductcot?.adapter = productlistcotadarte
     }
+
+    fun getData() {
+        CoroutineScope(Dispatchers.IO).launch {
+
+            println("Data: ")
+            println(database.daoTblBasica().getAllQuotation())
+            println("Valor boleano: ")
+            println(database.daoTblBasica().isExistsEntityProductListCot())
+
+
+            if (database.daoTblBasica().isExistsEntityProductListCot()){
+                println("Todo los datos Guardados: ")
+                println(database.daoTblBasica().getAllListProctCot())
+
+                database.daoTblBasica().getAllListProctCot().forEach {
+                    listaProductoListados.add(
+                        productlistcot(
+                        it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,
+                            it.cdg_Unidad,it.unidad,it.moneda_Lp,it.cantidad,it.precioUnidad,it.precioTotal
+                        )
+                    )
+                }
+
+                database.daoTblBasica().deleteTableListProctCot()
+                database.daoTblBasica().clearPrimaryKeyListProctCot()
+            }
+
+
+            /*
+            if (database.daoTblBasica().isExistsEntityListProctCot()) {
+                println("corrutine")
+
+                database.daoTblBasica().getAllQuotation().forEach {
+
+                    listaProductoListados.add(
+                        productlistcot(it.iD_PRODUCTO,
+                        "",
+                        it.codigO_BARRA,
+                        it.nombre,
+                        "",
+                        it.precio,
+                        0.0,
+                        "",
+                        it.unidad,
+                        "",
+                            it.cantidad,
+                        0.0,
+                        it.precio*it.cantidad.toDouble())
+                    )
+
+                    println(it)
+
+                }
+                calcularMontoTotal()
+                productlistcotadarte.notifyDataSetChanged()
+            }
+            */
+
+        }
+
+    }
+
+    //************* FUNCIONES ADICIONALES  ****************
+    fun guardarListRoom(){
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            database.daoTblBasica().deleteTableListProctCot()
+            database.daoTblBasica().clearPrimaryKeyListProctCot()
+
+            if(listaProductoListados.size>0){
+
+                listaProductoListados.forEach {
+                    database.daoTblBasica().insertListProctCot(
+                        EntityListProctCot(
+                            0,
+                            it.id_Producto,
+                            it.codigo!!,
+                            it.codigo_Barra,
+                            it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,it.cdg_Unidad,it.unidad,
+                            it.moneda_Lp,it.cantidad,it.precioUnidad,it.precioTotal,subtotal,igvTotal,montoTotal
+                        )
+                    )
+                }
+
+            }
+
+            println(database.daoTblBasica().getAllListProctCot())
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
     fun onItemDatosProductList(data: productlistcot) {
         //***********  Alerta de Dialogo  ***********
         val builder = AlertDialog.Builder(this)
@@ -101,7 +207,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         val iv_btnDisminuir = vista.findViewById<ImageView>(R.id.iv_btnDisminuir)
 
         //********   SETEA VALORES INICIALES
-        val evalua = buscaCoincidencia(data.codigo)
+        val evalua = buscaCoincidencia(data.codigo!!)
         val action = evalua[0]
         val pos = evalua[1]
 
@@ -260,7 +366,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
             rv_productos.adapter = adapterProductoComercial
 
             CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getProductoComercial("LPR0000001", "0001", "4.00")
+                val response = apiInterface2!!.getProductoComercial("LPR0000002", "0001", "4.00")
                 runOnUiThread {
                     if (response.isSuccessful) {
                         listaProductoCotizacion.clear()
@@ -321,7 +427,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
 
         tv_nameProducto.text = data.nombre
         tv_codProducto.text = data.codigo
-        tv_precioUnidad.text = "${data.mon} ${pricetostringformat(data.precio_Venta)}"
+        tv_precioUnidad.text = "${data.mon} ${pricetostringformat(data.precio_Venta!!)}"
         tv_precioTotal.text = "${data.mon} ${ pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
 
         if (action == 0) {
@@ -449,35 +555,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
     }
 
 
-    //************* FUNCIONES ADICIONALES  ****************
-    fun guardarListRoom(){
 
-        CoroutineScope(Dispatchers.IO).launch {
-
-            database.daoTblBasica().deleteTableListProctCot()
-            database.daoTblBasica().clearPrimaryKeyListProctCot()
-
-            listaProductoListados.forEach {
-                database.daoTblBasica().insertListProctCot(
-                    EntityListProctCot(
-                        0,
-                        it.id_Producto,
-                        it.codigo,
-                        it.codigo_Barra,
-                        it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,it.cdg_Unidad,it.unidad,
-                        it.moneda_Lp,it.cantidad,it.precioUnidad,it.precioTotal,subtotal,igvTotal,montoTotal
-                    )
-                )
-            }
-
-
-            withContext(Dispatchers.IO) {
-                println(database.daoTblBasica().getAllListProctCot())
-            }
-
-        }
-
-    }
 
     fun calcularMontoTotal(){
         montoTotal = listaProductoListados.sumOf { it.precioTotal }

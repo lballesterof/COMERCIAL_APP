@@ -6,8 +6,8 @@ data class productocomercial(
     val codigo_Barra: String,
     val nombre: String,
     val mon: String,
-    val precio_Venta: Double,
-    val factor_Conversion: Int,
+    val precio_Venta: Double?,
+    val factor_Conversion: Double?,
     val cdg_Unidad: String,
     val unidad: String,
     val moneda_Lp: String

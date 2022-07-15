@@ -29,7 +29,6 @@ class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>, priv
     class ViewHolder(private val view: View):RecyclerView.ViewHolder(view){
         fun render (cotizaciones: cotizacionesDto,onClickListener: (cotizacionesDto) -> Unit){
             val lblnrocotizacion = view.findViewById<TextView>(R.id.numerocotizacion)
-
             val lblnrazonsocial = view.findViewById<TextView>(R.id.razonsocial)
             val lblnrruc = view.findViewById<TextView>(R.id.ruc)
             val lblntotal = view.findViewById<TextView>(R.id.preciocotizacion)

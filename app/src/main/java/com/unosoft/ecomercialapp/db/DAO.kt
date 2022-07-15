@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.unosoft.ecomercialapp.db.cotizacion.EntityEditQuotationDetail
+import com.unosoft.ecomercialapp.db.cotizacion.EntityQuotationMaster
 import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
@@ -125,6 +127,9 @@ interface DAO {
     @Query("DELETE FROM EntityPedidoMaster")
     fun deleteTablePedidoMaster()
 
+    @Query("DELETE FROM EntityQuotationMaster")
+    fun deleteTableQuotationMaster()
+
     @Query("DELETE FROM EntityListaPrecio")
     fun deleteTableListaPrecio()
 
@@ -162,6 +167,10 @@ interface DAO {
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityPedidoMaster'")
     fun clearPrimaryKeyPedidoMaster()
 
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityQuotationMaster'")
+    fun clearPrimaryKeyQuotationMaster()
+
+
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityListaPrecio'")
     fun clearPrimaryKeyListaPrecio()
 
@@ -179,8 +188,6 @@ interface DAO {
 
 
 
-
-
     //*****************  CONSULTA TABLAS BASICAS *******************
     @Query("SELECT Nombre FROM EntityCondicionPago WHERE Codigo = :Numero  ")
     fun findnamecategoriapagowithnumero(Numero :String): String
@@ -195,10 +202,8 @@ interface DAO {
     fun insertEditPedidoDetail( insertEditPedidoDetail: EntityEditPedidoDetail)
 
     //--Gets
-
     @Query("SELECT * FROM EntityEditPedidoDetail")
     fun getAllDetail(): List<EntityEditPedidoDetail>
-
 
     //--Exists
     @Query("SELECT EXISTS(SELECT * FROM EntityEditPedidoDetail)")
@@ -207,4 +212,31 @@ interface DAO {
     //--Deletes
     @Query("DELETE FROM EntityEditPedidoDetail")
     fun deleteTableEntityEditPedidoDetail()
+
+
+
+    //*****************  Gestion de Cotizacion Cruds *******************//
+    //--Inserts
+    @Insert
+    fun insertQuotationMaster( insertQuotationMaster: EntityQuotationMaster)
+    @Insert
+    fun insertEditQuotatiDetail( insertEditQuotationDetail: EntityEditQuotationDetail)
+
+    //--Gets
+    @Query("SELECT * FROM EntityEditQuotationDetail")
+    fun getAllQuotation(): List<EntityEditQuotationDetail>
+
+    //--Exists
+    @Query("SELECT EXISTS(SELECT * FROM EntityEditQuotationDetail)")
+    fun isExistsEntityListEditQuotation(): Boolean
+
+    //--Deletes
+    @Query("DELETE FROM EntityEditQuotationDetail")
+    fun deleteTableEntityEditQuotationDetail()
+
+
+    //--Exists
+    @Query("SELECT EXISTS(SELECT * FROM EntityListProctCot)")
+    fun isExistsEntityProductListCot(): Boolean
+
 }
