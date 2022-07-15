@@ -115,7 +115,6 @@ class ActivityEditCotizacion : AppCompatActivity() {
             dialogue.show()
 
         }
-
         iv_productosCot?.setOnClickListener {
             val intent = Intent(this, ActivityDetalleCotizacion::class.java)
 
@@ -128,8 +127,6 @@ class ActivityEditCotizacion : AppCompatActivity() {
             startActivity(intent)
 
         }
-
-
     }
 
     private fun iniciarDataProductos() {

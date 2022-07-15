@@ -232,7 +232,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/ic_jobs"
+                            android:id="@+id/ic_products"
                             android:layout_width="52dp"
                             android:layout_height="52dp"
 
@@ -249,7 +249,7 @@
                             style="@style/sizeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ic_jobs"
+                            android:layout_below="@+id/ic_products"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:singleLine="true"
@@ -484,8 +484,8 @@
                 android:padding="1dp"
                 android:textColor="@color/colorBackground"
                 android:background="@color/colorPrimary"
-                android:layout_width="180dp"
-                android:text="Guardar y Salir"
+                android:layout_width="160dp"
+                android:text="Guardar"
                 android:layout_height="wrap_content"/>
             <Button
                 android:id="@+id/btn_cancel"
@@ -495,7 +495,7 @@
                 android:padding="1dp"
                 android:textColor="@color/colorPrimary"
                 android:background="@color/colorBackground"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:text="Cancelar"
                 android:layout_height="wrap_content"/>
 

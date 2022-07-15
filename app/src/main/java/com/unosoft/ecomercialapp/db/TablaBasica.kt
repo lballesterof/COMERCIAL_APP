@@ -2,6 +2,7 @@ package com.unosoft.ecomercialapp.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
 
 @Database(
     entities = [EntityCondicionPago::class,
@@ -14,8 +15,8 @@ import androidx.room.RoomDatabase
                 EntityUnidadMedida::class,
                 EntityPedidoMaster::class,
                 EntityListaPrecio::class,
-                EntityListProctCot::class],
-    version = 6)
+                EntityListProctCot::class,EntityEditPedidoDetail::class],
+    version = 8)
 
 abstract class TablaBasica : RoomDatabase() {
     abstract fun daoTblBasica(): DAO

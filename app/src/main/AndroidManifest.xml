@@ -30,8 +30,12 @@
             android:label="@string/title_activity_inicio" />
         <activity
             android:name=".ui.pedidos.ActivityEditPedido"
-            android:exported="false"
-            android:label="ActivityEditPedido" />
+            android:exported="false" />
+
+
+        <activity
+            android:name=".ui.pedidos.ActivityEditDetallePedido"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
