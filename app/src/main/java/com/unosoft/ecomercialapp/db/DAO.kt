@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 
@@ -69,9 +70,6 @@ interface DAO {
 
     @Insert
     fun insertUnidadMedida( insertUnidadMedida: EntityUnidadMedida)
-
-    @Insert
-    fun insertPedidoMaster( insertPedidoMaster: EntityPedidoMaster)
 
     @Insert
     fun insertListaPrecio( insertListaPrecio: EntityListaPrecio)
@@ -186,4 +184,27 @@ interface DAO {
     //*****************  CONSULTA TABLAS BASICAS *******************
     @Query("SELECT Nombre FROM EntityCondicionPago WHERE Codigo = :Numero  ")
     fun findnamecategoriapagowithnumero(Numero :String): String
+
+
+
+//*****************  Gestion de Pedidos Cruds *******************//
+    //--Inserts
+    @Insert
+    fun insertPedidoMaster( insertPedidoMaster: EntityPedidoMaster)
+    @Insert
+    fun insertEditPedidoDetail( insertEditPedidoDetail: EntityEditPedidoDetail)
+
+    //--Gets
+
+    @Query("SELECT * FROM EntityEditPedidoDetail")
+    fun getAllDetail(): List<EntityEditPedidoDetail>
+
+
+    //--Exists
+    @Query("SELECT EXISTS(SELECT * FROM EntityEditPedidoDetail)")
+    fun isExistsEntityListEditPedido(): Boolean
+
+    //--Deletes
+    @Query("DELETE FROM EntityEditPedidoDetail")
+    fun deleteTableEntityEditPedidoDetail()
 }

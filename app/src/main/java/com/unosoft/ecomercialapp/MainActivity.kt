@@ -301,8 +301,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
         CoroutineScope(Dispatchers.IO).launch {
             println("Valor ${!database.daoTblBasica().isExists()}")
             if(!database.daoTblBasica().isExists()) {
