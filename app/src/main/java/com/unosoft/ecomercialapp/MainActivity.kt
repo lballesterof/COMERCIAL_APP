@@ -87,13 +87,8 @@ class MainActivity : AppCompatActivity() {
             } else {
                 pd.show()
 
-                val i = Intent(applicationContext, InicioActivity::class.java)
-                startActivity(i)
-
-                pd.cancel()
-
                 //*******  MANTENER
-                /*
+
                 val _user = DCLoginUser(user.text.toString(), pass.text.toString())
                 val call1 = apiInterface!!.login(_user)
                 call1.enqueue(object : Callback<LoginComercialResponse> {
@@ -125,12 +120,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
 
-                 */
                 //*******  MANTENER
-
-
-
-
             }
         })
     }

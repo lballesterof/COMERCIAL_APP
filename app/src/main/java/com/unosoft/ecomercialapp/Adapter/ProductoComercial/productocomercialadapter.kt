@@ -30,12 +30,12 @@ class productocomercialadapter (var datos: ArrayList<productocomercial>, private
             val tv_nameProductoComercial = view.findViewById<TextView>(R.id.tv_nameProductoComercial)
             val tv_codProductoComercial = view.findViewById<TextView>(R.id.tv_codProductoComercial)
             val tv_precioUnit = view.findViewById<TextView>(R.id.tv_precioUnit)
-            val tv_precioTotal = view.findViewById<TextView>(R.id.tv_precioTotal)
+     //       val tv_precioTotal = view.findViewById<TextView>(R.id.tv_precioTotal)
 
             tv_nameProductoComercial.text = datos.nombre
             tv_codProductoComercial.text = datos.codigo
             tv_precioUnit.text = "${datos.mon} ${datos.precio_Venta}"
-            tv_precioTotal.text = "${datos.mon} ${datos.precio_Venta}"
+          //  tv_precioTotal.text = "${datos.mon} ${datos.precio_Venta}"
 
             itemView.setOnClickListener { onClickListener(datos) }
 

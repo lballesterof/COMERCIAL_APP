@@ -39,7 +39,6 @@ class ActivityEditCotizacion : AppCompatActivity() {
         iniciarData()
     }
 
-
     private fun iniciarData() {
 
         val datos = intent.getSerializableExtra("DATOSCOTIZACION") as cotizacionesDto
@@ -64,8 +63,8 @@ class ActivityEditCotizacion : AppCompatActivity() {
         tv_tipoMonedaCot?.text = "Moneda ${datos.mon}"
         //database.daoTblBasica().findnamecategoriapagowithnumero(datos.pa)
         tv_CondPagoCot?.text = "Consicion Pago: ------ "
-        tv_subtotalCot?.text = "S./ ${datos.importe_total-datos.importe_igv}"
-        tv_valorventaCot?.text = "S./ ${datos.importe_total-datos.importe_igv}"
+        tv_subtotalCot?.text = "S./ ${datos.importe_total - datos.importe_igv}"
+        tv_valorventaCot?.text = "S./ ${datos.importe_total - datos.importe_igv}"
         tv_igvCot?.text = "S./ ${datos.importe_igv}"
         tv_importe?.text = "S./ ${datos.importe_total}"
 
@@ -76,7 +75,9 @@ class ActivityEditCotizacion : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch {
                 val size = database.daoTblBasica().getSizeMoneda()
                 listaTipoMoneda.clear()
-                for (i in 1..size){listaTipoMoneda.add(database.daoTblBasica().getTipoMoneda(i))}
+                for (i in 1..size) {
+                    listaTipoMoneda.add(database.daoTblBasica().getTipoMoneda(i))
+                }
             }
 
             val dialogue = Dialog(this)
@@ -84,20 +85,26 @@ class ActivityEditCotizacion : AppCompatActivity() {
             dialogue.show()
 
 
-
-
-
             //**************** SPINNER *****************
             listaTipoMoneda.forEach { listaspinner.add(it.Nombre) }
 
             val sp_filtroMoneda = dialogue.findViewById<Spinner>(R.id.sp_filtroMoneda)
-            val Adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item,listaspinner)
+            val Adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaspinner)
             sp_filtroMoneda?.adapter = Adaptador
-            sp_filtroMoneda.onItemSelectedListener = object  :
-            AdapterView.OnItemSelectedListener{
-                override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
+            sp_filtroMoneda.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
                     val itemSelect = listaspinner[position]
-                    Toast.makeText(this@ActivityEditCotizacion, "Lista $itemSelect", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ActivityEditCotizacion,
+                        "Lista $itemSelect",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -124,15 +131,17 @@ class ActivityEditCotizacion : AppCompatActivity() {
 
 
     }
+
     private fun iniciarDataProductos() {
 
 
     }
-    private fun getData(IDPEDIDO:String){
+
+    private fun getData(IDPEDIDO: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getbyIdPedidoCab("$IDPEDIDO")
 
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
 
             }
         }

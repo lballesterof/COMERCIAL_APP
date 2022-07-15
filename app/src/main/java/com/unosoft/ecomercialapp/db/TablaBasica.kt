@@ -13,8 +13,9 @@ import androidx.room.RoomDatabase
                 EntityProvincia::class,
                 EntityUnidadMedida::class,
                 EntityPedidoMaster::class,
-                EntityListaPrecio::class],
-    version = 4)
+                EntityListaPrecio::class,
+                EntityListProctCot::class],
+    version = 6)
 
 abstract class TablaBasica : RoomDatabase() {
     abstract fun daoTblBasica(): DAO

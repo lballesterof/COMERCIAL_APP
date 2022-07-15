@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 
 @Dao
@@ -40,6 +41,9 @@ interface DAO {
     @Query("SELECT * FROM EntityListaPrecio")
     fun getAllListaPrecio(): List<EntityListaPrecio>
 
+    @Query("SELECT * FROM EntityListProctCot")
+    fun getAllListProctCot(): List<EntityListProctCot>
+
 
     //*************   INSERT DE TABLAS    *********************
     @Insert
@@ -72,6 +76,9 @@ interface DAO {
     @Insert
     fun insertListaPrecio( insertListaPrecio: EntityListaPrecio)
 
+    @Insert
+    fun insertListProctCot( insertListProctCot: EntityListProctCot)
+
 
 
     //*************   Datos    *********************
@@ -80,6 +87,15 @@ interface DAO {
 
     @Query("SELECT COUNT(*) from EntityMoneda")
     fun getSizeMoneda(): Int
+
+
+    @Query("SELECT id_Producto,codigo,codigo_Barra,nombre,mon,precio_Venta,factor_Conversion,cdg_Unidad,unidad,moneda_Lp,cantidad,precioUnidad,precioTotal  FROM EntityListProctCot WHERE id= :id")
+    fun getEntityListProctCot(id:Int): productlistcot
+
+    @Query("SELECT COUNT(*) from EntityListProctCot")
+    fun getSizeListProctCot(): Int
+
+
 
 
 
@@ -114,42 +130,54 @@ interface DAO {
     @Query("DELETE FROM EntityListaPrecio")
     fun deleteTableListaPrecio()
 
+    @Query("DELETE FROM EntityListProctCot")
+    fun deleteTableListProctCot()
+
+
 
     //*********  REINICIAR LOS ID AUTOGENERADOS   **************
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityCondicionPago'")
+
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityCondicionPago'")
     fun clearPrimaryKeyCondicionPago()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityDepartamento'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityDepartamento'")
     fun clearPrimaryKeyDepartamento()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityDistrito'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityDistrito'")
     fun clearPrimaryKeyDistrito()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityDocIdentidad'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityDocIdentidad'")
     fun clearPrimaryKeyDocIdentidad()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityFrecuenciaDias'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityFrecuenciaDias'")
     fun clearPrimaryKeyFrecuenciaDias()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityMoneda'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityMoneda'")
     fun clearPrimaryKeyMoneda()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityProvincia'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityProvincia'")
     fun clearPrimaryKeyProvincia()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityUnidadMedida'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityUnidadMedida'")
     fun clearPrimaryKeyUnidadMedida()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityPedidoMaster'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityPedidoMaster'")
     fun clearPrimaryKeyPedidoMaster()
 
-    @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'EntityListaPrecio'")
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityListaPrecio'")
     fun clearPrimaryKeyListaPrecio()
+
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityListProctCot'")
+    fun clearPrimaryKeyListProctCot()
 
 
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
     @Query("SELECT EXISTS(SELECT * FROM EntityCondicionPago)")
     fun isExists(): Boolean
+
+    //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
+    @Query("SELECT EXISTS(SELECT * FROM EntityListProctCot)")
+    fun isExistsEntityListProctCot(): Boolean
 
 
 
