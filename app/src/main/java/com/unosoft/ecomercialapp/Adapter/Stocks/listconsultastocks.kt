@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.entity.Stocks.Almacen
 import com.unosoft.ecomercialapp.entity.Stocks.ConsultaStocksResponseItem
+import java.lang.StringBuilder
 
 class listconsultastocks (var data:ArrayList<ConsultaStocksResponseItem>): RecyclerView.Adapter<listconsultastocks.holderConsultaStock>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): holderConsultaStock {
@@ -28,21 +29,21 @@ class listconsultastocks (var data:ArrayList<ConsultaStocksResponseItem>): Recyc
     class holderConsultaStock(private val view:View): RecyclerView.ViewHolder(view){
 
         fun holderConsultaStock (datos: ConsultaStocksResponseItem){
-            val tv_nameProducto = view.findViewById<TextView>(R.id.tv_nameProducto)
+            val tv_nameProducto = view.findViewById<TextView>(R.id.nombreproductostocks)
             val tv_codProducto = view.findViewById<TextView>(R.id.tv_codProducto)
             val tv_CodBarra = view.findViewById<TextView>(R.id.tv_CodBarra)
             val tv_codReferente = view.findViewById<TextView>(R.id.tv_codReferente)
             val rv_cunsultaStocks = view.findViewById<RecyclerView>(R.id.rv_recyclerstocksalmacenes)
 
             val childlistconsultastocks = childlistconsultastocks(datos.almacen)
-
+            val newname = StringBuilder().append(datos.producto!!.replace("""[$,.,/]""".toRegex(), " "))
             tv_nameProducto.text = datos.producto
             tv_codProducto.text = datos.codigo
 
-            if (datos.codigoBarra.isNotEmpty()){
+            if (datos.codigoBarra!!.isNotEmpty()){
                 tv_CodBarra.text = datos.codigoBarra
             }
-            if (datos.codRef.isNotEmpty()){
+            if (datos.codRef!!.isNotEmpty()){
                 tv_codReferente.text = datos.codRef
             }
 

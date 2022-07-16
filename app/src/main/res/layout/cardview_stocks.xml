@@ -69,7 +69,7 @@
                 android:textColor="@color/negro" />
 
             <TextView
-                android:id="@+id/razonsocial"
+                android:id="@+id/nombreproductostocks"
                 style="@style/sizeTextView"
                 android:layout_width="282dp"
                 android:layout_height="wrap_content"

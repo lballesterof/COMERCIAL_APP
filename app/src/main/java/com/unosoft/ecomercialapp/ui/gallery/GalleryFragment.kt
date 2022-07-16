@@ -175,7 +175,7 @@ class GalleryFragment : Fragment() {
     fun filter(text: String) {
         val filterdNomeProducto: ArrayList<ConsultaStocksResponseItem> = ArrayList()
         for (i in listaConsultaStocks.indices) {
-            if (listaConsultaStocks[i].producto.lowercase().contains(text.lowercase())) {
+            if (listaConsultaStocks[i].producto!!.lowercase().contains(text.lowercase())) {
                 filterdNomeProducto.add(listaConsultaStocks[i])
             }
         }

@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/ic_info_ot"
+                            android:id="@+id/iv_datosClientAddCot"
                             android:layout_width="52dp"
                             android:layout_height="52dp"
                             android:layout_centerHorizontal="true"
@@ -60,7 +60,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ic_info_ot"
+                            android:layout_below="@+id/iv_datosClientAddCot"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:text="Cotización" />
@@ -230,10 +230,9 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/ic_jobs"
+                            android:id="@+id/iv_productoAddCot"
                             android:layout_width="52dp"
                             android:layout_height="52dp"
-
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/ic_base"
@@ -247,7 +246,7 @@
                             style="@style/sizeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ic_jobs"
+                            android:layout_below="@+id/iv_productoAddCot"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:singleLine="true"
