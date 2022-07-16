@@ -7,7 +7,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="#C6CCD6"
     android:orientation="vertical"
-    tools:context=".Activity.Cotizacion.ActivityCotizacion">
+    tools:context=".ui.cotizacion.ActivityAddCotizacion">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,191 +17,191 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <!--sección Cabecera-->
+            <!--sección Cabecera-->
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_cotizacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="#FFF"
-            android:elevation="20dp"
-            android:minHeight="70dp"
-            card_view:cardCornerRadius="10dp"
-            card_view:contentPadding="15dp">
-
-            <LinearLayout
-
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_cotizacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:orientation="horizontal"
-                android:weightSum="100">
-
-
-                <RelativeLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/iv_infoQuotation"
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/ic_base"
-                        android:fontFamily="sans-serif-condensed"
-                        android:padding="15dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_user"
-                        app:tint="@color/colorPrimary" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ic_info_ot"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:text="Cotización" />
-                </RelativeLayout>
+                android:layout_margin="5dp"
+                android:background="#FFF"
+                android:elevation="20dp"
+                android:minHeight="70dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:contentPadding="15dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="100"
-                    android:orientation="vertical"
 
-                    android:animateLayoutChanges="true"
-                    android:layoutDirection="ltr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
+                    android:orientation="horizontal"
                     android:weightSum="100">
 
+
+                    <RelativeLayout
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ic_info_ot"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/ic_base"
+                            android:fontFamily="sans-serif-condensed"
+                            android:padding="15dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_user"
+                            app:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ic_info_ot"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Cotización" />
+                    </RelativeLayout>
+
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:orientation="horizontal">
+                        android:layout_weight="100"
+                        android:orientation="vertical"
+
+                        android:animateLayoutChanges="true"
+                        android:layoutDirection="ltr"
+                        android:weightSum="100">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:maxLines="2"
-                                android:text="Numero: COT-0000145271"
-                                android:textColor="@color/colorPrimary"
-                                style="@style/sizeTextView"  />
+                                android:layout_weight="50"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:visibility="gone"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:maxLines="2"
-                                android:text="Técnico Asignado"
-                                android:textColor="@color/colorPrimary"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:maxLines="2"
+                                    android:text="Numero: COT-0000145271"
+                                    android:textColor="@color/colorPrimary"
+                                    style="@style/sizeTextView"  />
 
-                            <TextView
-                                android:visibility="gone"
-                                android:id="@+id/tv_tecnico"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text=""
-                                android:textStyle="bold"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:maxLines="2"
+                                    android:text="Técnico Asignado"
+                                    android:textColor="@color/colorPrimary"
+                                    style="@style/sizeTextView"  />
 
-                            <TextView
-                                android:id="@+id/tv_fec_orden"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:maxLines="2"
-                                android:text="Fecha Creación: 17/12/2021"
-                                android:textColor="@color/colorPrimary"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:visibility="gone"
+                                    android:id="@+id/tv_tecnico"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text=""
+                                    android:textStyle="bold"
+                                    style="@style/sizeTextView"  />
 
-                            <TextView
-                                android:id="@+id/tv_desc"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Nombre Cliente: ARTEUS COMP SAC"
-                                android:textColor="@color/colorPrimary"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:id="@+id/tv_fec_orden"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:maxLines="2"
+                                    android:text="Fecha Creación: 17/12/2021"
+                                    android:textColor="@color/colorPrimary"
+                                    style="@style/sizeTextView"  />
 
-                            <TextView
-                                android:id="@+id/tv_2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="RUC: 20600114299"
-                                android:textColor="@color/colorPrimary"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:id="@+id/tv_desc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="Nombre Cliente: ARTEUS COMP SAC"
+                                    android:textColor="@color/colorPrimary"
+                                    style="@style/sizeTextView"  />
 
-                            <TextView
-                                android:id="@+id/tv_3"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Moneda: SOLES"
-                                android:textColor="@color/colorPrimary"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:id="@+id/tv_2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="RUC: 20600114299"
+                                    android:textColor="@color/colorPrimary"
+                                    style="@style/sizeTextView"  />
 
-                            <TextView
-                                android:visibility="gone"
-                                android:id="@+id/tv_4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Comentario de aprobación"
-                                android:textColor="@color/colorPrimary"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:id="@+id/tv_3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="Moneda: SOLES"
+                                    android:textColor="@color/colorPrimary"
+                                    style="@style/sizeTextView"  />
 
-                            <TextView
-                                android:visibility="gone"
-                                android:id="@+id/tv_comentario_aprov"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text=""
-                                android:textStyle="bold"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:visibility="gone"
+                                    android:id="@+id/tv_4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="Comentario de aprobación"
+                                    android:textColor="@color/colorPrimary"
+                                    style="@style/sizeTextView"  />
 
-                            <TextView
-                                android:id="@+id/TV_STD_DOC"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Condicion Pago: CONTADO TRANSFERENCIA"
-                                android:textColor="@color/colorPrimary"
-                                style="@style/sizeTextView"  />
+                                <TextView
+                                    android:visibility="gone"
+                                    android:id="@+id/tv_comentario_aprov"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text=""
+                                    android:textStyle="bold"
+                                    style="@style/sizeTextView"  />
+
+                                <TextView
+                                    android:id="@+id/TV_STD_DOC"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="Condicion Pago: CONTADO TRANSFERENCIA"
+                                    android:textColor="@color/colorPrimary"
+                                    style="@style/sizeTextView"  />
+
+                            </LinearLayout>
+
 
                         </LinearLayout>
 
 
                     </LinearLayout>
-
-
                 </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <!--FIN CABECERA-->
             <!--sección PRODUCTOS-->
@@ -468,33 +468,32 @@
         android:rotation="90"
         android:layout_marginBottom="16dp"
         app:srcCompat="@drawable/ic_more" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp"
-                android:textColor="@color/colorBackground"
-                android:background="@color/colorPrimary"
-                android:layout_width="180dp"
-                android:text="Guardar y Salir"
-                android:layout_height="wrap_content"/>
-            <Button
-                android:id="@+id/btn_cancel"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp"
-                android:textColor="@color/colorPrimary"
-                android:background="@color/colorBackground"
-                android:layout_width="180dp"
-                android:text="Cancelar"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/colorBackground"
+            android:background="@color/colorPrimary"
+            android:layout_width="180dp"
+            android:text="Guardar y Salir"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/colorBackground"
+            android:layout_width="180dp"
+            android:text="Cancelar"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+</LinearLayout>

@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 
 @Entity
 data class EntityPedidoMaster(
-
     @PrimaryKey(autoGenerate = true)
     val id: Int = 1,
 

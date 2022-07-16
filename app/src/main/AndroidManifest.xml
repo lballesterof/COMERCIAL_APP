@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.cotizacion.ActivityAddCotizacion"
+            android:exported="false" />
+        <activity
             android:name=".ui.cotizacion.ActivityDetalleCotizacion"
             android:exported="false" />
         <activity
@@ -31,8 +34,6 @@
         <activity
             android:name=".ui.pedidos.ActivityEditPedido"
             android:exported="false" />
-
-
         <activity
             android:name=".ui.pedidos.ActivityEditDetallePedido"
             android:exported="false" />

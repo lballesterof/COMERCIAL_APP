@@ -1,11 +1,6 @@
 package com.unosoft.ecomercialapp.entity.Cotizacion
 
-import java.math.BigDecimal
-import java.util.*
-
-class CotizacionCabDTO : ArrayList<CotizacionCabDTOItem>()
-
-data class CotizacionCabDTOItem(
+data class CotizacionCabDTO(
     val centrO_COSTO: String,
     val codigO_CPAGO: String,
     val codigO_EMPRESA: String,
@@ -18,7 +13,6 @@ data class CotizacionCabDTOItem(
     val contacto: String,
     val correlativo: String,
     val costo:String?,
-    val detCotizacion:String?,
     val diaS_ENTREGA: Int,
     val diaS_ENTREGA2: Int,
     val direccion:String?,

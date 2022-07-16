@@ -22,7 +22,7 @@ data class EntityListProctCot (
     @ColumnInfo
     val precio_Venta: Double,
     @ColumnInfo
-    val factor_Conversion: Int,
+    val factor_Conversion: Double?,
     @ColumnInfo
     val cdg_Unidad: String,
     @ColumnInfo

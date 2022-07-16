@@ -44,7 +44,17 @@ class FramentCotizacion : Fragment() {
         initRecyclerView()
         buscarCotizacion()
         //getData(prefs.getCdgVendedor())
-        getData("0009")
+        getData(prefs.getCdgVendedor())
+        eventsHandlers()
+    }
+
+    private fun eventsHandlers() {
+        _binding?.iconAgregarCotizacion?.setOnClickListener { addNewQuatation() }
+    }
+
+    private fun addNewQuatation() {
+        val intent = Intent(activity, ActivityAddCotizacion::class.java)
+        startActivity(intent)
     }
 
 
@@ -81,6 +91,7 @@ class FramentCotizacion : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val cotizaciones = apiInterface!!.fetchAllCotizaciones("$cdg_ven")
             activity?.runOnUiThread {
+                println("paso por aca")
                 if(cotizaciones.isSuccessful){
                     listacotizaciones.clear()
                     listacotizaciones.addAll(cotizaciones.body()!!)

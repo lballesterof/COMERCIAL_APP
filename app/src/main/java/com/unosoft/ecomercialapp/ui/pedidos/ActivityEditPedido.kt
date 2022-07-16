@@ -24,7 +24,9 @@ class ActivityEditPedido : AppCompatActivity() {
 
     var apiInterface: PedidoMaster? = null
     var iv_productosCot :ImageView? = null
+
     private lateinit var binding : ActivityPedidoEditarBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPedidoEditarBinding .inflate(layoutInflater)
@@ -43,7 +45,6 @@ class ActivityEditPedido : AppCompatActivity() {
 
                 //Insert Cabecera ROOM
                 with(database) {
-
                     //Insert Cabecera ROOM
                     daoTblBasica().deleteTablePedidoMaster()
                     daoTblBasica().insertPedidoMaster(
@@ -169,6 +170,7 @@ class ActivityEditPedido : AppCompatActivity() {
             }
         }
     }
+
     private fun InitializeUI() {
         val tv_idCotizacion = findViewById<TextView>(R.id.tv_idCotizacion)
         val tv_nameClientCot = findViewById<TextView>(R.id.tv_nameClientCot)
