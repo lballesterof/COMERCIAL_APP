@@ -14,35 +14,35 @@ data class EntityEditPedidoDetail(
         @ColumnInfo
         val iD_PRODUCTO: Int?,
         @ColumnInfo
-        val cantidad: Int?,
+        val cantidad: Double?,
         @ColumnInfo
         val nombre:String?,
         @ColumnInfo
-        val precio: Int?,
+        val precio: Double?,
         @ColumnInfo
-        val descuento: Int?,
+        val descuento: Double?,
         @ColumnInfo
         val igv: Double,
         @ColumnInfo
         val importe: Int?,
         @ColumnInfo
-        val canT_DESPACHADA: Int?,
+        val canT_DESPACHADA: Double?,
         @ColumnInfo
-        val canT_FACTURADA: Int?,
+        val canT_FACTURADA: Double?,
         @ColumnInfo
         val observacion:String?,
         @ColumnInfo
         val secuencia: Int?,
         @ColumnInfo
-        val preciO_ORIGINAL: Int?,
+        val preciO_ORIGINAL: Double?,
         @ColumnInfo
         val tipo:String?,
         @ColumnInfo
-        val importE_DSCTO: Int?,
+        val importE_DSCTO: Double?,
         @ColumnInfo
         val afectO_IGV:String?,
         @ColumnInfo
-        val comision: Int?,
+        val comision: Double?,
         @ColumnInfo
         val iD_PRESUPUESTO: Int?,
         @ColumnInfo
@@ -64,17 +64,17 @@ data class EntityEditPedidoDetail(
         @ColumnInfo
         val codigO_BARRA:String?,
         @ColumnInfo
-        val poR_PERCEPCION: Int?,
+        val poR_PERCEPCION: Double?,
         @ColumnInfo
-        val percepcion: Int?,
+        val percepcion: Double?,
         @ColumnInfo
-        val valoR_VEN: Int?,
+        val valoR_VEN: Double?,
         @ColumnInfo
         val uniD_VEN:String?,
         @ColumnInfo
         val fechA_VEN:String?,
         @ColumnInfo
-        val factoR_CONVERSION: Int?,
+        val factoR_CONVERSION: Double?,
         @ColumnInfo
         val cdG_KIT:String?,
         @ColumnInfo
@@ -94,17 +94,17 @@ data class EntityEditPedidoDetail(
         @ColumnInfo
         val seC_PROD:String?,
         @ColumnInfo
-        val poR_DETRACCION:String?,
+        val poR_DETRACCION:Double?,
         @ColumnInfo
-        val detraccion:String?,
+        val detraccion:Double?,
         @ColumnInfo
         val usuariO_ANULA:String?,
         @ColumnInfo
         val fechA_ANULA:String?,
         @ColumnInfo
-        val margen: Double,
+        val margen: Double?,
         @ColumnInfo
-        val importE_MARGEN: Double,
+        val importE_MARGEN: Double?,
         @ColumnInfo
-        val costO_ADIC: Double
+        val costO_ADIC: Double?
     )
