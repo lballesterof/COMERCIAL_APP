@@ -38,7 +38,11 @@ class GalleryFragment : Fragment() {
     var itemSelect: String? = null
 
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View{
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.fragment_stocks, container, false)
         return view
     }
@@ -52,115 +56,110 @@ class GalleryFragment : Fragment() {
         busquedaSpinner()
     }
 
+
     private fun busquedaSpinner() {
         val sp_filtro = view?.findViewById<Spinner>(R.id.sp_filtro)
         val et_filtro = view?.findViewById<EditText>(R.id.et_filtro)
         val bt_buscar = view?.findViewById<Button>(R.id.bt_buscar)
 
 
-        val lista = listOf( "Nombre", "Codigo de barra", "Codigo de referente")
-        val Adaptador = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item,lista)
+        val lista = listOf("Nombre", "Codigo de barra", "Codigo de referente")
+        val Adaptador = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, lista)
 
         sp_filtro?.adapter = Adaptador
 
         sp_filtro?.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 itemSelect = lista[position]
-                Toast.makeText(activity, "Selecciono: $itemSelect", Toast.LENGTH_SHORT).show()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
 
 
         bt_buscar?.setOnClickListener {
-            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(requireView().windowToken, 0)
 
             val filtro = et_filtro?.text.toString()
 
-            if (itemSelect == "Nombre"){
+            if (itemSelect == "Nombre") {
                 getDataForName(filtro)
-                println("Nombre")
-                println("$itemSelect")
             }
-            if (itemSelect == "Codigo de barra"){
+            if (itemSelect == "Codigo de barra") {
                 getDataForCdgBarra(filtro)
-                println("Codigo de barra")
-                println("$itemSelect")
             }
-            if (itemSelect == "Codigo de referente"){
+            if (itemSelect == "Codigo de referente") {
                 getDataForCdgRef(filtro)
-                println("Codigo de referente")
-                println("$itemSelect")
             }
         }
 
     }
 
-
-
-
-    fun initStocks(){
+    fun initStocks() {
         val rv_cunsultaStocks = view?.findViewById<RecyclerView>(R.id.rv_cunsultaStocks)
-        rv_cunsultaStocks?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL,false)
+        rv_cunsultaStocks?.layoutManager =
+            LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         adapterStocks = listconsultastocks(listaConsultaStocks)
         rv_cunsultaStocks?.adapter = adapterStocks
     }
 
-    fun getDataForName(nomeProducto:String){
+    fun getDataForName(nomeProducto: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForName("$nomeProducto")
             activity?.runOnUiThread {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     listaConsultaStocks.clear()
                     listaConsultaStocks.addAll(response!!.body()!!)
                     adapterStocks.notifyDataSetChanged()
-                }else{
+                } else {
                     println("Error en la conaulta ")
                 }
             }
         }
     }
 
-    fun getDataForCdgBarra(cdgBarra:String){
+    fun getDataForCdgBarra(cdgBarra: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForCdgBarra("$cdgBarra")
             activity?.runOnUiThread {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     listaConsultaStocks.clear()
                     listaConsultaStocks.addAll(response!!.body()!!)
                     adapterStocks.notifyDataSetChanged()
-                }else{
+                } else {
                     println("Error en la conaulta ")
                 }
             }
         }
     }
 
-    fun getDataForCdgRef(CdgRef:String){
+    fun getDataForCdgRef(CdgRef: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForCdgRef("$CdgRef")
             activity?.runOnUiThread {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     listaConsultaStocks.clear()
                     listaConsultaStocks.addAll(response!!.body()!!)
                     adapterStocks.notifyDataSetChanged()
-                }else{
+                } else {
                     println("Error en la conaulta ")
                 }
             }
         }
     }
 
-
-
-
-
     fun buscaStock() {
         val sv_buscador = view?.findViewById<SearchView>(R.id.sv_consultastocks)
-        sv_buscador?.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        sv_buscador?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -182,7 +181,6 @@ class GalleryFragment : Fragment() {
         }
         adapterStocks.filterList(filterdNomeProducto)
     }
-
 
 
 }

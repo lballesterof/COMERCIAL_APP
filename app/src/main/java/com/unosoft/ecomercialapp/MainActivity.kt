@@ -86,9 +86,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnClickListener
             } else {
                 pd.show()
-
                 //*******  MANTENER
-
                 val _user = DCLoginUser(user.text.toString(), pass.text.toString())
                 val call1 = apiInterface!!.login(_user)
                 call1.enqueue(object : Callback<LoginComercialResponse> {
@@ -119,7 +117,6 @@ class MainActivity : AppCompatActivity() {
                         call.cancel()
                     }
                 })
-
                 //*******  MANTENER
             }
         })
@@ -142,84 +139,69 @@ class MainActivity : AppCompatActivity() {
             GlobalScope.launch(Dispatchers.Default) {
                 database.daoTblBasica().deleteTableCondicionPago()
                 database.daoTblBasica().clearPrimaryKeyCondicionPago()
-
                 database.daoTblBasica().deleteTableDepartamento()
                 database.daoTblBasica().clearPrimaryKeyDepartamento()
-
                 database.daoTblBasica().deleteTableDistrito()
                 database.daoTblBasica().clearPrimaryKeyDistrito()
-
                 database.daoTblBasica().deleteTableDocIdentidad()
                 database.daoTblBasica().clearPrimaryKeyDocIdentidad()
-
                 database.daoTblBasica().deleteTableFrecuenciaDias()
                 database.daoTblBasica().clearPrimaryKeyFrecuenciaDias()
-
                 database.daoTblBasica().deleteTableMoneda()
                 database.daoTblBasica().clearPrimaryKeyMoneda()
-
                 database.daoTblBasica().deleteTableProvincia()
                 database.daoTblBasica().clearPrimaryKeyProvincia()
-
                 database.daoTblBasica().deleteTableUnidadMedida()
                 database.daoTblBasica().clearPrimaryKeyUnidadMedida()
-
                 database.daoTblBasica().deleteTableListaPrecio()
                 database.daoTblBasica().clearPrimaryKeyListaPrecio()
-
-                listaCondicionPagoResponse.forEach {
-                    database.daoTblBasica().insertCondicionPago(
-                        EntityCondicionPago(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1))
+                withContext(Dispatchers.IO)
+                {
+                    listaCondicionPagoResponse.forEach {
+                        database.daoTblBasica().insertCondicionPago(
+                            EntityCondicionPago(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1))
+                    }
+                    listaDepartamentoResponse.forEach {
+                        database.daoTblBasica().insertDepartamento(
+                            EntityDepartamento(0,it.Codigo,it.Nombre,it.Numero)
+                        )
+                    }
+                    listaDistritoResponse.forEach {
+                        database.daoTblBasica().insertDistrito(
+                            EntityDistrito(0,it.Codigo,it.Nombre,it.Numero,it.Referencia2,it.Referencia3)
+                        )
+                    }
+                    listaDocIdentidadResponse.forEach {
+                        database.daoTblBasica().insertDocIdentidad(
+                            EntityDocIdentidad(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1)
+                        )
+                    }
+                    listaFrecuenciaDiasResponse.forEach {
+                        database.daoTblBasica().insertFrecuenciaDias(
+                            EntityFrecuenciaDias(0,it.Codigo,it.Nombre,it.Numero)
+                        )
+                    }
+                    listaMonedaResponse.forEach {
+                        database.daoTblBasica().insertMoneda(
+                            EntityMoneda(0,it.Nombre,it.Nombre,it.Referencia1)
+                        )
+                    }
+                    listaProvinciaResponse.forEach {
+                        database.daoTblBasica().insertProvincia(
+                            EntityProvincia(0,it.Codigo,it.Nombre,it.Numero,it.Referencia2)
+                        )
+                    }
+                    listaUnidadMedidaResponse.forEach {
+                        database.daoTblBasica().insertUnidadMedida(
+                            EntityUnidadMedida(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1)
+                        )
+                    }
+                    ListaPrecioRespuesta.forEach {
+                        database.daoTblBasica().insertListaPrecio(
+                            EntityListaPrecio(0,it.codigo,it.nombre,it.moneda)
+                        )
+                    }
                 }
-
-                listaDepartamentoResponse.forEach {
-                    database.daoTblBasica().insertDepartamento(
-                        EntityDepartamento(0,it.Codigo,it.Nombre,it.Numero)
-                    )
-                }
-
-                listaDistritoResponse.forEach {
-                    database.daoTblBasica().insertDistrito(
-                        EntityDistrito(0,it.Codigo,it.Nombre,it.Numero,it.Referencia2,it.Referencia3)
-                    )
-                }
-
-                listaDocIdentidadResponse.forEach {
-                    database.daoTblBasica().insertDocIdentidad(
-                        EntityDocIdentidad(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1)
-                    )
-                }
-
-                listaFrecuenciaDiasResponse.forEach {
-                    database.daoTblBasica().insertFrecuenciaDias(
-                        EntityFrecuenciaDias(0,it.Codigo,it.Nombre,it.Numero)
-                    )
-                }
-
-                listaMonedaResponse.forEach {
-                    database.daoTblBasica().insertMoneda(
-                        EntityMoneda(0,it.Nombre,it.Nombre,it.Referencia1)
-                    )
-                }
-
-                listaProvinciaResponse.forEach {
-                    database.daoTblBasica().insertProvincia(
-                        EntityProvincia(0,it.Codigo,it.Nombre,it.Numero,it.Referencia2)
-                    )
-                }
-
-                listaUnidadMedidaResponse.forEach {
-                    database.daoTblBasica().insertUnidadMedida(
-                        EntityUnidadMedida(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1)
-                    )
-                }
-
-                ListaPrecioRespuesta.forEach {
-                    database.daoTblBasica().insertListaPrecio(
-                        EntityListaPrecio(0,it.codigo,it.nombre,it.moneda)
-                    )
-                }
-
 
                 withContext(Dispatchers.IO) {
                     println("**************  TABLA CONDICION DE PAGO ***************")
@@ -243,7 +225,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
         fun getDataRoom(){
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -257,8 +238,6 @@ class MainActivity : AppCompatActivity() {
                 val response7 = apiInterface2!!.getProvincia()
                 val response8 = apiInterface2!!.getUnidadMedida()
                 val response9 = apiInterface3!!.getListaPrecio()
-
-
                 runOnUiThread {
                     if(response1.isSuccessful){
                         listCondicionPago.addAll(response1.body()!!)
@@ -310,7 +289,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
