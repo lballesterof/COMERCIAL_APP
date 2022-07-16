@@ -15,6 +15,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding = ActivityAddCotizacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         eventsHandlers()
     }
 
