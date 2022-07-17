@@ -1,38 +1,34 @@
 package com.unosoft.ecomercialapp.ui.cotizacion
 
-import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
 import com.unosoft.ecomercialapp.Adapter.ProductoComercial.productocomercialadapter
-import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
-import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
+import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
-import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.ProductoComercial
+import com.unosoft.ecomercialapp.databinding.ActivityAddCotizacionBinding
+import com.unosoft.ecomercialapp.databinding.ActivityCardQuotationBinding
 import com.unosoft.ecomercialapp.db.EntityListProctCot
-import com.unosoft.ecomercialapp.db.cotizacion.EntityEditQuotationDetail
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
-import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class ActivityDetalleCotizacion : AppCompatActivity() {
+class ActivityCardQuotation : AppCompatActivity() {
+
+    private lateinit var binding: ActivityCardQuotationBinding
 
     private lateinit var adapterProductoComercial: productocomercialadapter
     private lateinit var productlistcotadarte: productlistcotadarte
@@ -49,7 +45,9 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalle_cotizacion)
+        binding = ActivityCardQuotationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         iniciarLista()
@@ -57,62 +55,55 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
 
         productosListado()
         abrirListProductos()
-
     }
+
 
     private fun iniciarLista() {
 
+        /*
         CoroutineScope(Dispatchers.IO).launch {
-
-            println(database.daoTblBasica().isExistsEntityListProctCot())
-            println(database.daoTblBasica().getAllListProctCot())
-
-            if (database.daoTblBasica().isExistsEntityListProctCot()){
-
+            if (database.daoTblBasica().isExistsEntityListProctCot())
+            {
                 database.daoTblBasica().deleteTableListProctCot()
                 database.daoTblBasica().clearPrimaryKeyListProctCot()
-
             }
 
         }
-
+        */
 
 
     }
 
     fun productosListado() {
-        val rv_listproductcot = findViewById<RecyclerView>(R.id.rv_listproductcot)
-        rv_listproductcot?.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        val rv_listproductcot = binding.rvListProdut
+        rv_listproductcot.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         productlistcotadarte = productlistcotadarte(listaProductoListados) { data -> onItemDatosProductList(data) }
-        rv_listproductcot?.adapter = productlistcotadarte
+        rv_listproductcot.adapter = productlistcotadarte
     }
 
     fun getData() {
-
-    /*
         CoroutineScope(Dispatchers.IO).launch {
 
             println("Data: ")
-            println(database.daoTblBasica().getAllQuotation())
+            println(DATAGLOBAL.database.daoTblBasica().getAllQuotation())
             println("Valor boleano: ")
-            println(database.daoTblBasica().isExistsEntityProductListCot())
+            println(DATAGLOBAL.database.daoTblBasica().isExistsEntityProductListCot())
 
-
-            if (database.daoTblBasica().isExistsEntityProductListCot()){
+            if (DATAGLOBAL.database.daoTblBasica().isExistsEntityProductListCot()){
                 println("Todo los datos Guardados: ")
-                println(database.daoTblBasica().getAllListProctCot())
+                println(DATAGLOBAL.database.daoTblBasica().getAllListProctCot())
 
-                database.daoTblBasica().getAllListProctCot().forEach {
+                DATAGLOBAL.database.daoTblBasica().getAllListProctCot().forEach {
                     listaProductoListados.add(
                         productlistcot(
-                        it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,
+                            it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,
                             it.cdg_Unidad,it.unidad,it.moneda_Lp,it.cantidad,it.precioUnidad,it.precioTotal
                         )
                     )
                 }
 
-                database.daoTblBasica().deleteTableListProctCot()
-                database.daoTblBasica().clearPrimaryKeyListProctCot()
+                DATAGLOBAL.database.daoTblBasica().deleteTableListProctCot()
+                DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProctCot()
             }
 
 
@@ -147,7 +138,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
             */
 
         }
-        */
+
     }
 
     //************* FUNCIONES ADICIONALES  ****************
@@ -155,18 +146,15 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            database.daoTblBasica().deleteTableListProctCot()
-            database.daoTblBasica().clearPrimaryKeyListProctCot()
+            DATAGLOBAL.database.daoTblBasica().deleteTableListProctCot()
+            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProctCot()
 
             if(listaProductoListados.size>0){
 
                 listaProductoListados.forEach {
-                    database.daoTblBasica().insertListProctCot(
+                    DATAGLOBAL.database.daoTblBasica().insertListProctCot(
                         EntityListProctCot(
-                            0,
-                            it.id_Producto,
-                            it.codigo!!,
-                            it.codigo_Barra,
+                            0, it.id_Producto, it.codigo!!, it.codigo_Barra,
                             it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,it.cdg_Unidad,it.unidad,
                             it.moneda_Lp,it.cantidad,it.precioUnidad,it.precioTotal,subtotal,igvTotal,montoTotal
                         )
@@ -175,7 +163,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
 
             }
 
-            println(database.daoTblBasica().getAllListProctCot())
+            println(DATAGLOBAL.database.daoTblBasica().getAllListProctCot())
 
         }
 
@@ -235,7 +223,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
 
         //********   AUMENTA PRODUCTOS O AGREGA    *************
         iv_btnAutementar.setOnClickListener {
-            val rv_listproductcot = findViewById<RecyclerView>(R.id.rv_listproductcot)
+            val rv_listproductcot = binding.rvListProdut
 
             val buscador = buscaCoincidencia(data.codigo)
             val action = buscador[0]
@@ -297,7 +285,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         }
         //********   DISMINUYE PRODUCTOS O ELIMINA    *************
         iv_btnDisminuir.setOnClickListener {
-            val rv_listproductcot = findViewById<RecyclerView>(R.id.rv_listproductcot)
+            val rv_listproductcot = binding.rvListProdut
 
             val buscador = buscaCoincidencia(data.codigo)
             val action = buscador[0]
@@ -321,8 +309,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
                     data.moneda_Lp,
                     cantidad,
                     data.precio_Venta,
-                    precioTotal
-                )
+                    precioTotal)
                 tv_cantidad.text = cantidad.toString()
                 tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
                 rv_listproductcot?.adapter?.notifyDataSetChanged()
@@ -339,8 +326,8 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         }
     }
     fun abrirListProductos() {
-        val icon_agregarProductosCotizacion = findViewById<FloatingActionButton>(R.id.icon_agregarProductosCotizacion)
-        icon_agregarProductosCotizacion.setOnClickListener {
+
+        binding.iconAddMoreProductList.setOnClickListener {
 
             //***********  Alerta de Dialogo  ***********
             val builder = AlertDialog.Builder(this)
@@ -384,6 +371,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
                     return false
                 }
             })
+
         }
     }
     fun filter(text: String) {
@@ -432,18 +420,12 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
             tv_precioTotal.text = "0"
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
-            tv_precioTotal.text = "${data.mon} ${
-                pricetostringformat(
-                    calculatepricebyqty(
-                        tv_cantidad.text.toString().toInt(), data.precio_Venta
-                    )
-                )
-            }"
+            tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
         }
 
         //********   AUMENTA PRODUCTOS O AGREGA    *************
         iv_btnAutementar.setOnClickListener {
-            val rv_listproductcot = findViewById<RecyclerView>(R.id.rv_listproductcot)
+            val rv_listproductcot = binding.rvListProdut
 
             val buscador = buscaCoincidencia(data.codigo)
             val action = buscador[0]
@@ -509,7 +491,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
 
         //********   DISMINUYE PRODUCTOS O ELIMINA    *************
         iv_btnDisminuir.setOnClickListener {
-            val rv_listproductcot = findViewById<RecyclerView>(R.id.rv_listproductcot)
+            val rv_listproductcot = binding.rvListProdut
 
             val buscador = buscaCoincidencia(data.codigo)
             val action = buscador[0]
@@ -557,9 +539,9 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         igvTotal = montoTotal*0.18
         subtotal = montoTotal - igvTotal
 
-        val tv_subtotalCot = findViewById<TextView>(R.id.tv_subtotalCot)
-        val tv_igvCot = findViewById<TextView>(R.id.tv_igvCot)
-        val tv_totalCot = findViewById<TextView>(R.id.tv_totalCot)
+        val tv_subtotalCot = binding.tvSubTotalAddCart
+        val tv_igvCot = binding.tvIgvCotAddCart
+        val tv_totalCot = binding.tvTotalCotAddCart
 
         tv_totalCot.text = utils().pricetostringformat(montoTotal)
         tv_igvCot.text = utils().pricetostringformat(igvTotal)
@@ -591,7 +573,6 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
     private fun pricetostringformat(valuenumeric: Double): String {
         return String.format("%,.2f", valuenumeric)
     }
-
     override fun onBackPressed() {
         guardarListRoom()
         super.onBackPressed()
