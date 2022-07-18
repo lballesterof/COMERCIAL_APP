@@ -223,8 +223,11 @@ interface DAO {
     fun insertEditQuotatiDetail( insertEditQuotationDetail: EntityEditQuotationDetail)
 
     //--Gets
+    @Query("SELECT * FROM EntityQuotationMaster")
+    fun getAllQuotationMaster(): List<EntityQuotationMaster>
+
     @Query("SELECT * FROM EntityEditQuotationDetail")
-    fun getAllQuotation(): List<EntityEditQuotationDetail>
+    fun getAllQuotationDetail(): List<EntityEditQuotationDetail>
 
     //--Exists
     @Query("SELECT EXISTS(SELECT * FROM EntityEditQuotationDetail)")

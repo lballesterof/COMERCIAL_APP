@@ -55,11 +55,6 @@ class ActivityEditCotizacion : AppCompatActivity() {
         eventsHandlers()
 
 
-        CoroutineScope(Dispatchers.IO).launch {
-            println("Datos de la tabla getAllQuotation: ")
-            println(database.daoTblBasica().getAllQuotation())
-        }
-
     }
 
     override fun onBackPressed() {
@@ -71,10 +66,9 @@ class ActivityEditCotizacion : AppCompatActivity() {
     }
 
 
-
     private fun eventsHandlers() {
         binding.ivProductosCot.setOnClickListener { showactivitydetail() }
-        binding.ivPersonCot.setOnClickListener { editDetailQuotation() }
+        //binding.ivPersonCot.setOnClickListener { editDetailQuotation() }
     }
 
     //**************   EVENTS HANDLERS   ****************
@@ -131,6 +125,7 @@ class ActivityEditCotizacion : AppCompatActivity() {
 
         val datos = intent.getSerializableExtra("DATOSCOTIZACION") as cotizacionesDto
 
+        binding.tvFechaCreacionCot.text = "00/00/00"
         //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
         binding.tvIdCotizacion.text = StringBuilder().append("NUMERO: ").append(datos.id_cotizacion)
         binding.tvNameClientCot.text = StringBuilder().append("NOMBRE CLIENTE: ").append(datos.persona)
@@ -266,6 +261,16 @@ class ActivityEditCotizacion : AppCompatActivity() {
                         }
                     }
                 }
+            }
+
+
+
+
+            CoroutineScope(Dispatchers.IO).launch {
+                println("********* TODOS LAS COTIZACIONES ************")
+                println(database.daoTblBasica().getAllQuotationMaster())
+                println("********** DETALLE DE COTIZACION ************")
+                println(database.daoTblBasica().getAllQuotationDetail())
             }
         }
     }

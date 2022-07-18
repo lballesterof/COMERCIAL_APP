@@ -51,7 +51,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16dp" />
                 <TextView
-                    android:id="@+id/tv_subtotalCot"
+                    android:id="@+id/tv_subtotalCotDetailQuotation"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginRight="30dp"
@@ -76,7 +76,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16dp" />
                 <TextView
-                    android:id="@+id/tv_igvCot"
+                    android:id="@+id/tv_igvCotDetailQuotation"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginRight="30dp"
@@ -103,7 +103,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16dp" />
                 <TextView
-                    android:id="@+id/tv_totalCot"
+                    android:id="@+id/tv_totalCotDetailQuotation"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginRight="30dp"

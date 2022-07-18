@@ -84,14 +84,7 @@ class ActivityCardQuotation : AppCompatActivity() {
     fun getData() {
         CoroutineScope(Dispatchers.IO).launch {
 
-            println("Data: ")
-            println(DATAGLOBAL.database.daoTblBasica().getAllQuotation())
-            println("Valor boleano: ")
-            println(DATAGLOBAL.database.daoTblBasica().isExistsEntityProductListCot())
-
             if (DATAGLOBAL.database.daoTblBasica().isExistsEntityProductListCot()){
-                println("Todo los datos Guardados: ")
-                println(DATAGLOBAL.database.daoTblBasica().getAllListProctCot())
 
                 DATAGLOBAL.database.daoTblBasica().getAllListProctCot().forEach {
                     listaProductoListados.add(
@@ -106,37 +99,9 @@ class ActivityCardQuotation : AppCompatActivity() {
                 DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProctCot()
             }
 
-
-            /*
-            if (database.daoTblBasica().isExistsEntityListProctCot()) {
-                println("corrutine")
-
-                database.daoTblBasica().getAllQuotation().forEach {
-
-                    listaProductoListados.add(
-                        productlistcot(it.iD_PRODUCTO,
-                        "",
-                        it.codigO_BARRA,
-                        it.nombre,
-                        "",
-                        it.precio,
-                        0.0,
-                        "",
-                        it.unidad,
-                        "",
-                            it.cantidad,
-                        0.0,
-                        it.precio*it.cantidad.toDouble())
-                    )
-
-                    println(it)
-
-                }
+            CoroutineScope(Dispatchers.IO).launch {
                 calcularMontoTotal()
-                productlistcotadarte.notifyDataSetChanged()
             }
-            */
-
         }
 
     }
@@ -547,6 +512,7 @@ class ActivityCardQuotation : AppCompatActivity() {
         tv_igvCot.text = utils().pricetostringformat(igvTotal)
         tv_subtotalCot.text = utils().pricetostringformat(subtotal)
     }
+
     private fun buscaCoincidencia(dataCodigo:String): List<Int> {
         //-------------Evalua POSICION Y ACCION DE AGREGAR-------------------
         //println("------- Evalua POSICION Y ACCION DE AGREGAR-------------")

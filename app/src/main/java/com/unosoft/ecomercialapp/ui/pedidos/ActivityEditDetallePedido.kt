@@ -51,7 +51,6 @@ class ActivityEditDetallePedido : AppCompatActivity() {
                 adapterdetailpedido.notifyDataSetChanged()
             }
         }
-
     }
 
 }
