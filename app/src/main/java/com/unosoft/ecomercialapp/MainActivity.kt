@@ -17,6 +17,7 @@ import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.api.ListaPrecio
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.TablaBasicaApi
+import com.unosoft.ecomercialapp.api.VendedorApi
 import com.unosoft.ecomercialapp.db.EntityCondicionPago
 import com.unosoft.ecomercialapp.db.EntityDepartamento
 import com.unosoft.ecomercialapp.db.EntityDistrito
@@ -26,6 +27,7 @@ import com.unosoft.ecomercialapp.db.EntityListaPrecio
 import com.unosoft.ecomercialapp.db.EntityMoneda
 import com.unosoft.ecomercialapp.db.EntityProvincia
 import com.unosoft.ecomercialapp.db.EntityUnidadMedida
+import com.unosoft.ecomercialapp.db.EntityVendedor
 import com.unosoft.ecomercialapp.entity.ListaPrecio.ListaPrecioRespuesta
 import com.unosoft.ecomercialapp.entity.Login.LoginComercialResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
@@ -36,6 +38,7 @@ import com.unosoft.ecomercialapp.entity.TableBasic.FrecuenciaDiasResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.ProvinciaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.UnidadMedidaResponse
+import com.unosoft.ecomercialapp.entity.Vendedor.VendedorResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -48,6 +51,8 @@ import retrofit2.Response
 var apiInterface: LoginApi? = null
 var apiInterface2: TablaBasicaApi? = null
 var apiInterface3: ListaPrecio? = null
+var apiInterface4: VendedorApi? = null
+
 
 
 private val listCondicionPago = ArrayList<CondicionPagoResponse>()
@@ -59,6 +64,8 @@ private val listMoneda = ArrayList<MonedaResponse>()
 private val listProvincia = ArrayList<ProvinciaResponse>()
 private val listUnidadMedida = ArrayList<UnidadMedidaResponse>()
 private val listPrecio = ArrayList<ListaPrecioRespuesta>()
+private val listVendedores = ArrayList<VendedorResponse>()
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -72,6 +79,8 @@ class MainActivity : AppCompatActivity() {
         apiInterface = client!!.create(LoginApi::class.java)
         apiInterface2 = client!!.create(TablaBasicaApi::class.java)
         apiInterface3 = client!!.create(ListaPrecio::class.java)
+        apiInterface4 = client!!.create(VendedorApi::class.java)
+
 
 
         cargarTablaBasica()
@@ -133,7 +142,8 @@ class MainActivity : AppCompatActivity() {
             listaMonedaResponse: ArrayList<MonedaResponse>,
             listaProvinciaResponse: ArrayList<ProvinciaResponse>,
             listaUnidadMedidaResponse: ArrayList<UnidadMedidaResponse>,
-            ListaPrecioRespuesta : ArrayList<ListaPrecioRespuesta>
+            ListaPrecioRespuesta : ArrayList<ListaPrecioRespuesta>,
+            listVendedores: ArrayList<VendedorResponse>
 
         ) {
             GlobalScope.launch(Dispatchers.Default) {
@@ -155,6 +165,8 @@ class MainActivity : AppCompatActivity() {
                 database.daoTblBasica().clearPrimaryKeyUnidadMedida()
                 database.daoTblBasica().deleteTableListaPrecio()
                 database.daoTblBasica().clearPrimaryKeyListaPrecio()
+                database.daoTblBasica().deleteTableVendedor()
+                database.daoTblBasica().clearPrimaryKeyVendedor()
                 withContext(Dispatchers.IO)
                 {
                     listaCondicionPagoResponse.forEach {
@@ -183,7 +195,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     listaMonedaResponse.forEach {
                         database.daoTblBasica().insertMoneda(
-                            EntityMoneda(0,it.Nombre,it.Nombre,it.Referencia1)
+                            EntityMoneda(0,it.Nombre,it.Numero,it.Referencia1)
                         )
                     }
                     listaProvinciaResponse.forEach {
@@ -199,6 +211,11 @@ class MainActivity : AppCompatActivity() {
                     ListaPrecioRespuesta.forEach {
                         database.daoTblBasica().insertListaPrecio(
                             EntityListaPrecio(0,it.codigo,it.nombre,it.moneda)
+                        )
+                    }
+                    listVendedores.forEach {
+                        database.daoTblBasica().insertVendedor(
+                            EntityVendedor(0,it.Codigo,it.Nombre,it.Numero)
                         )
                     }
                 }
@@ -222,6 +239,8 @@ class MainActivity : AppCompatActivity() {
                     println(database.daoTblBasica().getAllUnidadMedida())
                     println("**************  TABLA CONDICION DE PAGO ***************")
                     println(database.daoTblBasica().getAllListaPrecio())
+                    println("**************  TABLA VENDEDOR ***************")
+                    println(database.daoTblBasica().getAllVendedor())
                 }
             }
         }
@@ -238,6 +257,8 @@ class MainActivity : AppCompatActivity() {
                 val response7 = apiInterface2!!.getProvincia()
                 val response8 = apiInterface2!!.getUnidadMedida()
                 val response9 = apiInterface3!!.getListaPrecio()
+                val response10 = apiInterface4!!.getListaVendedor()
+
                 runOnUiThread {
                     if(response1.isSuccessful){
                         listCondicionPago.addAll(response1.body()!!)
@@ -266,6 +287,10 @@ class MainActivity : AppCompatActivity() {
                     if(response9.isSuccessful){
                         listPrecio.addAll(response9.body()!!)
                     }
+                    if(response10.isSuccessful){
+                        listVendedores.addAll(response10.body()!!)
+                    }
+
 
                     inyectarDataRoom(listCondicionPago,
                         listDepartamento,
@@ -275,7 +300,8 @@ class MainActivity : AppCompatActivity() {
                         listMoneda,
                         listProvincia,
                         listUnidadMedida,
-                        listPrecio
+                        listPrecio,
+                        listVendedores
                     )
                 }
             }

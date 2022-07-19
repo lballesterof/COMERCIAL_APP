@@ -47,6 +47,12 @@ interface DAO {
     @Query("SELECT * FROM EntityListProctCot")
     fun getAllListProctCot(): List<EntityListProctCot>
 
+    @Query("SELECT * FROM EntityVendedor")
+    fun getAllVendedor(): List<EntityVendedor>
+
+    @Query("SELECT * FROM EntityDataCabezera")
+    fun getAllDataCabezera(): List<EntityDataCabezera>
+
 
     //*************   INSERT DE TABLAS    *********************
     @Insert
@@ -78,6 +84,12 @@ interface DAO {
 
     @Insert
     fun insertListProctCot( insertListProctCot: EntityListProctCot)
+
+    @Insert
+    fun insertVendedor( insertVendedor: EntityVendedor)
+
+    @Insert
+    fun insertDataCabezera( insertDataCabezera: EntityDataCabezera)
 
 
 
@@ -136,6 +148,12 @@ interface DAO {
     @Query("DELETE FROM EntityListProctCot")
     fun deleteTableListProctCot()
 
+    @Query("DELETE FROM EntityVendedor")
+    fun deleteTableVendedor()
+
+    @Query("DELETE FROM EntityDataCabezera")
+    fun deleteTableDataCabezera()
+
 
 
     //*********  REINICIAR LOS ID AUTOGENERADOS   **************
@@ -176,6 +194,12 @@ interface DAO {
 
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityListProctCot'")
     fun clearPrimaryKeyListProctCot()
+
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityVendedor'")
+    fun clearPrimaryKeyVendedor()
+
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityDataCabezera'")
+    fun clearPrimaryKeyDataCabezera()
 
 
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
@@ -242,4 +266,9 @@ interface DAO {
     @Query("SELECT EXISTS(SELECT * FROM EntityListProctCot)")
     fun isExistsEntityProductListCot(): Boolean
 
+
+    //*****************  CABEZERA COTIZACION *******************//
+    //--Inserts
+    @Query("SELECT EXISTS(SELECT * FROM EntityDataCabezera)")
+    fun isExistsEntityDataCabezera(): Boolean
 }
