@@ -37,8 +37,8 @@ class productlisteditorderadapter(var datos: ArrayList<EntityEditPedidoDetail>) 
             tv_cantidad.text = "${datos.cantidad.toString()} ${datos.unidad}"
             tv_nameProducto.text = datos.nombre
             tv_codProducto.text = datos.iD_PRODUCTO.toString()
-            tv_precioUnidad.text = "${utils().pricetostringformat(datos.precio!!.toDouble())}"
-            tv_preciototal.text = StringBuilder().append(utils().pricetostringformat(datos.precio.toDouble()))
+            tv_precioUnidad.text = "${datos.precio!!.toString()}"
+            tv_preciototal.text = "${datos.precio!!.toString()}"
         }
     }
 }

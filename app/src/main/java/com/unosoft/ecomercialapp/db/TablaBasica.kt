@@ -21,7 +21,7 @@ import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
                 EntityEditPedidoDetail::class,
                 EntityQuotationMaster::class,
                 EntityEditQuotationDetail::class],
-    version = 14)
+                version = 15)
 
 abstract class TablaBasica : RoomDatabase() {
     abstract fun daoTblBasica(): DAO
