@@ -24,7 +24,7 @@ data class EntityEditPedidoDetail(
         @ColumnInfo
         val igv: Double,
         @ColumnInfo
-        val importe: Int?,
+        val importe: Double?,
         @ColumnInfo
         val canT_DESPACHADA: Double?,
         @ColumnInfo
