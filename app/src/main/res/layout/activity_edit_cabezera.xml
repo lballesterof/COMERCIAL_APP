@@ -9,7 +9,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,6 +70,8 @@
                         android:layout_weight="100"
                         android:orientation="vertical"
 
+                        android:layout_gravity="center_vertical"
+
                         android:animateLayoutChanges="true"
                         android:layoutDirection="ltr"
                         android:weightSum="100">
@@ -77,54 +80,35 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            >
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="50"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
 
-                                <TextView
-                                    android:visibility="gone"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:maxLines="2"
-                                    android:text="Técnico Asignado"
-                                    android:textColor="@color/colorPrimary"
-                                    style="@style/sizeTextView"  />
-
-                                <TextView
-                                    android:visibility="gone"
-                                    android:id="@+id/tv_tecnico"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:text=""
-                                    android:textStyle="bold"
-                                    style="@style/sizeTextView"  />
+                                >
 
                                 <TextView
                                     android:id="@+id/tv_cliente"
+                                    android:layout_margin="3dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ellipsize="marquee"
                                     android:gravity="center_vertical"
-                                    android:text="Nombre Cliente: ARTEUS COMP SAC"
-                                    android:textColor="@color/colorPrimary"
+                                    android:text="Nombre: "
                                     style="@style/sizeTextView"  />
 
                                 <TextView
                                     android:id="@+id/tv_ruc"
+                                    android:layout_margin="3dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ellipsize="marquee"
                                     android:gravity="center_vertical"
-                                    android:text="RUC: 20600114299"
-                                    android:textColor="@color/colorPrimary"
+                                    android:text="RUC: "
                                     style="@style/sizeTextView"  />
 
                             </LinearLayout>
@@ -151,28 +135,23 @@
                 <LinearLayout
 
                     android:layout_width="match_parent"
-                    android:layout_height="103dp"
+                    android:layout_height="wrap_content"
                     android:minHeight="40dp"
                     android:orientation="horizontal"
                     android:weightSum="100">
 
 
-                    <RelativeLayout
-                        android:layout_width="120dp"
-                        android:layout_height="match_parent">
 
-                        <ImageView
-                            android:id="@+id/iv_productoAddCot"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/ic_base"
-                            android:fontFamily="sans-serif-condensed"
-                            android:padding="15dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/ic_almacen"
-                            app:tint="@color/colorPrimary" />
+                    <LinearLayout
+                        android:id="@+id/list_jobs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="100"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:paddingStart="10dp"
+                        android:paddingBottom="6dp">
 
                         <TextView
                             style="@style/sizeTextView"
@@ -182,60 +161,54 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:singleLine="true"
-                            android:text="Dato comercial" />
-                    </RelativeLayout>
+                            android:layout_marginBottom="10dp"
+                            android:text="Datos comerciales"
 
-                    <LinearLayout
-                        android:id="@+id/list_jobs"
-                        android:layout_width="0dp"
-                        android:layout_height="90dp"
-                        android:layout_weight="100"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="100">
+                            />
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_height="35dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            >
 
                             <TextView
+                                android:id="@+id/tv_monedaCabezera"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="center_horizontal"
                                 android:text="Moneda" />
 
                             <Spinner
                                 android:id="@+id/sp_monedaCabezera"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="center_horizontal"
-                                android:text="Spinner" />
+                                android:layout_height="match_parent" />
+
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            >
 
                             <TextView
+                                android:id="@+id/tv_listPrecioCabezera"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="center_horizontal"
-                                android:text="Lista de precio" />
+                                android:layout_height="26dp"
+                                android:text="Precio" />
 
                             <Spinner
                                 android:id="@+id/sp_listPrecioCabezera"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="center_horizontal"
-                                android:text="Spinner" />
+                                android:layout_height="35dp"/>
 
                         </LinearLayout>
 
@@ -243,20 +216,23 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            >
 
                             <TextView
+                                android:id="@+id/tv_validezCabezera"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="center_horizontal"
-                                android:text="Validez" />
+                                android:text="Validez"
+                                />
 
                             <Spinner
                                 android:id="@+id/sp_validezCabezera"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
+                                android:layout_height="30dp"
                                 android:gravity="center_horizontal"
                                 android:text="Spinner" />
 
@@ -265,19 +241,22 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            >
 
                             <TextView
+                                android:id="@+id/tv_CondPagoCabezera"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="center_horizontal"
                                 android:text="Condicion de Pago" />
 
                             <Spinner
                                 android:id="@+id/sp_CondicionpagoCabezera"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
                                 android:text="Spinner" />
@@ -307,26 +286,19 @@
                     android:layout_height="wrap_content"
                     android:minHeight="40dp"
                     android:orientation="horizontal"
-                    android:weightSum="100">
+                    android:weightSum="100"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="6dp">
 
-
-                    <RelativeLayout
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/ic_observacion"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/ic_base"
-                            android:fontFamily="sans-serif-condensed"
-                            android:padding="15dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/ic_add_photo"
-                            app:tint="@color/colorPrimary" />
+                    <LinearLayout
+                        android:id="@+id/list_solutions"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="100"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="100">
 
                         <TextView
                             style="@style/sizeTextView"
@@ -334,37 +306,31 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ic_observacion"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
                             android:singleLine="true"
-                            android:text="Vendedor" />
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/list_solutions"
-                        android:layout_width="0dp"
-                        android:layout_height="61dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="100"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="100">
+                            android:text="Vendedor"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            >
 
                             <TextView
+                                android:id="@+id/tv_vendedorCabezera"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="center_horizontal"
                                 android:text="Vendedor Asignado" />
 
                             <Spinner
                                 android:id="@+id/sp_vendedorasignadoCabezera"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
                                 android:text="Spinner" />
@@ -380,32 +346,34 @@
 
         </LinearLayout>
 
+
         <!---->
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal">
+
         <Button
-            android:id="@+id/btn_save"
+            android:id="@+id/btn_guardarCabeceraCot"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="12dp"
             android:textColor="@color/colorBackground"
             android:background="@color/colorPrimary"
-            android:layout_width="180dp"
+            android:layout_width="170dp"
             android:text="Guardar y Salir"
             android:layout_height="wrap_content"/>
+
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_cancelCabezeraCot"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="12dp"
             android:textColor="@color/colorPrimary"
             android:background="@color/colorBackground"
-            android:layout_width="180dp"
+            android:layout_width="170dp"
             android:text="Cancelar"
             android:layout_height="wrap_content"/>
 

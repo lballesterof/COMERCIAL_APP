@@ -30,6 +30,7 @@ import com.unosoft.ecomercialapp.api.ProductoComercial
 import com.unosoft.ecomercialapp.databinding.ActivityAddCotizacionBinding
 import com.unosoft.ecomercialapp.entity.Cliente.ClientListResponse
 import com.unosoft.ecomercialapp.entity.Cliente.Cliente
+import com.unosoft.ecomercialapp.entity.DatosCabezeraCotizacion.datosCabezeraCotizacion
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.helpers.utils
@@ -49,12 +50,11 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
     private val listaTipoMoneda = ArrayList<MonedaResponse>()
     private val listaCondicionPago = ArrayList<CondicionPagoResponse>()
-
-    private lateinit var adapterCliente : listclientesadapter
     private val listaClient = ArrayList<ClientListResponse>()
 
-    var apiInterface2: ClientApi? = null
+    private lateinit var adapterCliente : listclientesadapter
 
+    var apiInterface2: ClientApi? = null
     var nombreCliente: String? = null
 
 
@@ -72,7 +72,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
     private fun inicialDatos() {
 
-
         val date = Date()
         val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
 
@@ -83,15 +82,35 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding.tvMoneda.text = "Moneda: "
         binding.tvCondicionPago.text = "Condición de Pago"
 
+
         CoroutineScope(Dispatchers.IO).launch {
+            println("***********  VALOR  *************")
+            println(database.daoTblBasica().isExistsEntityProductListCot())
+
+
             if(database.daoTblBasica().isExistsEntityProductListCot()){
+
                 database.daoTblBasica().getAllListProctCot().forEach {
                     withContext(Dispatchers.IO){
-                        binding.tvSubTotalAddCotizacion.text = it.montoSubTotal.toString()
-                        binding.tvValorVentaAddCotizacion.text = it.montoSubTotal.toString()
-                        binding.tvValorIGVAddCotizacion.text = it.montoTotalIGV.toString()
-                        binding.tvImporteTotal.text = it.montoTotal.toString()
 
+                        binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
+                        binding.tvValorVentaAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
+                        binding.tvValorIGVAddCotizacion.text = utils().pricetostringformat(it.montoTotalIGV)
+                        binding.tvImporteTotal.text = utils().pricetostringformat(it.montoTotal)
+
+                    }
+                }
+            }
+
+            if(database.daoTblBasica().isExistsEntityDataCabezera()){
+                database.daoTblBasica().getAllDataCabezera().forEach {
+                    withContext(Dispatchers.IO){
+                        binding.tvFecOrden.text = "Fecha y hora: ${formatter.format(date)}"
+                        binding.tvCodCotizacion.text = "Numero: "
+                        binding.tvCliente.text = "Nombre Cliente ${it.nombreCliente}"
+                        binding.tvRuc.text = "RUC: ${it.rucCliente}"
+                        binding.tvMoneda.text = "Moneda: ${it.tipoMoneda}"
+                        binding.tvCondicionPago.text = "Condición de Pago ${it.condicionPago}"
                     }
                 }
             }
@@ -319,10 +338,13 @@ class ActivityAddCotizacion : AppCompatActivity() {
     private fun clearTable() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            DATAGLOBAL.database.daoTblBasica().deleteTableListProctCot()
-            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProctCot()
+            database.daoTblBasica().deleteTableListProctCot()
+            database.daoTblBasica().clearPrimaryKeyListProctCot()
 
-            println(DATAGLOBAL.database.daoTblBasica().getAllListProctCot())
+            database.daoTblBasica().deleteTableDataCabezera()
+            database.daoTblBasica().clearPrimaryKeyDataCabezera()
+
+            println(database.daoTblBasica().getAllListProctCot())
         }
 
     }

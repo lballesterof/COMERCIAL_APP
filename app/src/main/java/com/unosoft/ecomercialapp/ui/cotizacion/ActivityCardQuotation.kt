@@ -1,5 +1,6 @@
 package com.unosoft.ecomercialapp.ui.cotizacion
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -541,6 +542,11 @@ class ActivityCardQuotation : AppCompatActivity() {
     }
     override fun onBackPressed() {
         guardarListRoom()
+
+        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
+
         super.onBackPressed()
     }
 }
