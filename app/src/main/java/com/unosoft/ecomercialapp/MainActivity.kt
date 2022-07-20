@@ -19,6 +19,7 @@ import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.TablaBasicaApi
 import com.unosoft.ecomercialapp.api.VendedorApi
 import com.unosoft.ecomercialapp.db.EntityCondicionPago
+import com.unosoft.ecomercialapp.db.EntityDataLogin
 import com.unosoft.ecomercialapp.db.EntityDepartamento
 import com.unosoft.ecomercialapp.db.EntityDistrito
 import com.unosoft.ecomercialapp.db.EntityDocIdentidad
@@ -106,17 +107,39 @@ class MainActivity : AppCompatActivity() {
                         }else {
                             val user1 = response.body()!!
 
-                            println(user1.cdG_VENDEDOR)
-                            println(user1.tipocambio)
+                            CoroutineScope(Dispatchers.IO).launch {
 
-                            prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
-                            prefs.save_TipoCambio(user1.tipocambio)
+                                database.daoTblBasica().deleteTableDataLogin()
+                                database.daoTblBasica().clearPrimaryKeyDataLogin()
 
-                            val i = Intent(applicationContext, InicioActivity::class.java)
-                            startActivity(i)
+                                database.daoTblBasica().insertDataLogin(EntityDataLogin(
+                                    0,user1.usuario,user1.codigO_EMPRESA,user1.iD_CLIENTE,user1.cdgmoneda,user1.validez,user1.cdgpago,
+                                    user1.sucursal,user1.usuarioautoriza,user1.usuariocreacion,user1.tipocambio.toDouble(),user1.iD_COTIZACION,
+                                    user1.redondeo,user1.cdG_VENDEDOR
+                                ))
 
-                            // Toast.makeText(getApplicationContext(), user1.nombreusuario + " " + user1.jwtToken + " " + user1.poR_IGV + " " + user1.refreshToken, Toast.LENGTH_SHORT).show();
-                            pd.cancel()
+                                println("***************  IMPRIMIENDO DATOS USUARIO  *****************")
+                                println(database.daoTblBasica().getAllDataLogin())
+
+                                runOnUiThread {
+
+                                    println(user1.cdG_VENDEDOR)
+                                    println(user1.tipocambio)
+
+                                    prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
+                                    prefs.save_TipoCambio(user1.tipocambio)
+
+                                    val i = Intent(applicationContext, InicioActivity::class.java)
+                                    startActivity(i)
+
+                                    // Toast.makeText(getApplicationContext(), user1.nombreusuario + " " + user1.jwtToken + " " + user1.poR_IGV + " " + user1.refreshToken, Toast.LENGTH_SHORT).show();
+                                    pd.cancel()
+
+                                }
+                            }
+
+
+
                         }
                     }
 

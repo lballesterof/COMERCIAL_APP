@@ -59,8 +59,8 @@ class ActivityEditCotizacion : AppCompatActivity() {
 
     override fun onBackPressed() {
         CoroutineScope(Dispatchers.IO).launch {
-            database.daoTblBasica().deleteTableListProctCot()
-            database.daoTblBasica().clearPrimaryKeyListProctCot()
+            database.daoTblBasica().deleteTableListProct()
+            database.daoTblBasica().clearPrimaryKeyListProct()
         }
         super.onBackPressed()
     }

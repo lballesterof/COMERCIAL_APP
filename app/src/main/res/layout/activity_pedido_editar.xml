@@ -91,6 +91,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_NumPedido"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
@@ -123,7 +124,7 @@
                                 style="@style/sizeTextView"  />
 
                             <TextView
-                                android:id="@+id/tv_fec_orden"
+                                android:id="@+id/tv_fechaCreacionPedido"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
@@ -134,7 +135,7 @@
                                 style="@style/sizeTextView"  />
 
                             <TextView
-                                android:id="@+id/tv_desc"
+                                android:id="@+id/tv_NomClientePedido"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
@@ -144,7 +145,7 @@
                                 style="@style/sizeTextView"  />
 
                             <TextView
-                                android:id="@+id/tv_2"
+                                android:id="@+id/tv_rucPedido"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
@@ -154,7 +155,7 @@
                                 style="@style/sizeTextView"  />
 
                             <TextView
-                                android:id="@+id/tv_3"
+                                android:id="@+id/tv_tipoMonedaPedido"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
@@ -186,7 +187,7 @@
                                 style="@style/sizeTextView"  />
 
                             <TextView
-                                android:id="@+id/TV_STD_DOC"
+                                android:id="@+id/tv_CondPagoPedido"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
@@ -409,46 +410,104 @@
                             android:layout_weight="50"
                             android:orientation="vertical">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/tv_chasis"
+                                style="@style/sizeTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:gravity="center_vertical"
+                                android:text="Sub-Total: "
+                                android:textColor="@color/colorPrimary" />
+                            <TextView
+                                android:id="@+id/tv_subTotalPedido"
                                 style="@style/sizeTextView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Sub-Total:                               S/. 1,271.19"
+                                android:textAlignment="textEnd"
+                                android:text="S/ 0.0"
                                 android:textColor="@color/colorPrimary" />
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
                             <TextView
-                                android:id="@+id/tv_vventa"
+                                style="@style/sizeTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:gravity="center_vertical"
+                                android:text="Valor Venta: "
+                                android:textColor="@color/colorPrimary" />
+                            <TextView
+                                android:id="@+id/tv_valorVentaPedido"
                                 style="@style/sizeTextView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Valor Venta:                           S/. 1,271.19"
+                                android:textAlignment="textEnd"
+                                android:text="S/. 0.0"
                                 android:textColor="@color/colorPrimary" />
+                        </LinearLayout>
 
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/tv_motor"
+                                    style="@style/sizeTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="IGV: "
+                                    android:textColor="@color/colorPrimary" />
+
+                            <TextView
+                                android:id="@+id/tv_igvPedido"
+                                style="@style/sizeTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="textEnd"
+                                android:text="S/ 0.0"
+                                android:textColor="@color/colorPrimary" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    style="@style/sizeTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:gravity="center_vertical"
+                                    android:text="Importe Total: "
+                                    android:textColor="@color/colorPrimary" />
+
+                            <TextView
+                                android:id="@+id/tv_importeTotalPedido"
                                 style="@style/sizeTextView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="IGV 18% :                                   S/. 228.81"
+                                android:textAlignment="textEnd"
+                                android:text="S/. 0.0"
                                 android:textColor="@color/colorPrimary" />
+                        </LinearLayout>
 
-                            <TextView
-                                style="@style/sizeTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:gravity="center_vertical"
-                                android:text="Importe Total:                       S/. 1,500.00"
-                                android:textColor="@color/colorPrimary" />
 
                         </LinearLayout>
 
@@ -461,15 +520,6 @@
 
         <!---->
     </ScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:rotation="90"
-        app:srcCompat="@drawable/ic_more" />
 
     <LinearLayout
             android:layout_width="wrap_content"

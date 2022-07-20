@@ -1,36 +1,22 @@
 package com.unosoft.ecomercialapp.ui.cotizacion
 
-import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
 import com.unosoft.ecomercialapp.Adapter.ProductoComercial.productocomercialadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
-import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
-import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.ProductoComercial
-import com.unosoft.ecomercialapp.db.EntityListProctCot
-import com.unosoft.ecomercialapp.db.cotizacion.EntityEditQuotationDetail
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
-import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ActivityDetalleCotizacion : AppCompatActivity() {
 
@@ -61,11 +47,8 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         productlistcotadarte = productlistcotadarte(listaProductoListados) { data -> onItemDatosProductList(data) }
         rv_listproductcot?.adapter = productlistcotadarte
     }
-
     private fun onItemDatosProductList(data: productlistcot) {
-
     }
-
     fun getData() {
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -91,9 +74,7 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         }
 
 
-
     //************* FUNCIONES ADICIONALES  ****************
-
     fun calcularMontoTotal(){
         montoTotal = listaProductoListados.sumOf { it.precioTotal }
         igvTotal = montoTotal*0.18
@@ -106,14 +87,6 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         tv_totalCot.text = utils().pricetostringformat(montoTotal)
         tv_igvCot.text = utils().pricetostringformat(igvTotal)
         tv_subtotalCot.text = utils().pricetostringformat(subtotal)
-    }
-
-
-    private fun calculatepricebyqty(Qty: Int, Price: Double): Double {
-        return (Price * Qty.toDouble())
-    }
-    private fun pricetostringformat(valuenumeric: Double): String {
-        return String.format("%,.2f", valuenumeric)
     }
 
 }

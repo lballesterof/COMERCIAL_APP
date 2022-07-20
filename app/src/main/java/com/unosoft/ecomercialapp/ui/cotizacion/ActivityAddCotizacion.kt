@@ -21,16 +21,16 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
-import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
+import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.ClientApi
-import com.unosoft.ecomercialapp.api.ProductoComercial
 import com.unosoft.ecomercialapp.databinding.ActivityAddCotizacionBinding
 import com.unosoft.ecomercialapp.entity.Cliente.ClientListResponse
-import com.unosoft.ecomercialapp.entity.Cliente.Cliente
-import com.unosoft.ecomercialapp.entity.DatosCabezeraCotizacion.datosCabezeraCotizacion
+import com.unosoft.ecomercialapp.entity.Cotizacion.DetCotizacion
+import com.unosoft.ecomercialapp.entity.Cotizacion.EnviarCotizacion
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.helpers.utils
@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.LocalTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -55,16 +55,20 @@ class ActivityAddCotizacion : AppCompatActivity() {
     private lateinit var adapterCliente : listclientesadapter
 
     var apiInterface2: ClientApi? = null
+    var apiInterface: ApiCotizacion? = null
     var nombreCliente: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        apiInterface2 = APIClient.client?.create(ClientApi::class.java)
-
         binding = ActivityAddCotizacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //****************************************************************
+        apiInterface2 = APIClient.client?.create(ClientApi::class.java)
+        apiInterface = APIClient.client?.create(ApiCotizacion::class.java)
+
+
+
 
         eventsHandlers()
         inicialDatos()
@@ -90,7 +94,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
             if(database.daoTblBasica().isExistsEntityProductListCot()){
 
-                database.daoTblBasica().getAllListProctCot().forEach {
+                database.daoTblBasica().getAllListProct().forEach {
                     withContext(Dispatchers.IO){
 
                         binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
@@ -308,6 +312,158 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding.ivDatosClientAddCot.setOnClickListener { editDateClient() }
         binding.ivProductoAddCot.setOnClickListener { addressCartQuotation() }
         binding.icObservacion.setOnClickListener { observacion() }
+
+        //** CONSULTAR **
+        val btnsaveCotizacion = findViewById<Button>(R.id.btn_saveCotizacion)
+        btnsaveCotizacion.setOnClickListener { enviarCotizacion() }
+    }
+
+    private fun enviarCotizacion() {
+
+        val listaCotizado = ArrayList<DetCotizacion>()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val datosLista = database.daoTblBasica().getAllListProct()
+            runOnUiThread {
+                datosLista.forEach {
+                    listaCotizado.add(DetCotizacion(
+                        0,
+                        it.id_Producto,
+                        it.cantidad,
+                        it.precioUnidad,
+                        0,
+                        it.precioUnidad*it.cantidad*1.18,
+                        it.precioUnidad*it.cantidad,
+                        "",
+                        0,
+                        it.precio_Venta,
+                        "1",
+                        1,
+                        "1",
+                        0,
+                        0,
+                        "",
+                        "",
+                        "",
+                        it.cdg_Unidad,
+                        0,
+                        0,
+                        it.precioUnidad,
+                        it.cdg_Unidad,
+                        "2022-07-19T23:38:40.713Z",
+                        "",
+                        "S",
+                        0,
+                        0,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ))
+                }
+            }
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val datosCabezera = database.daoTblBasica().getAllDataCabezera()
+            val datoslogin = database.daoTblBasica().getAllDataLogin()[0]
+
+
+
+                var datosCotizacion:EnviarCotizacion
+                datosCabezera.forEach {
+                    datosCotizacion = EnviarCotizacion(
+                        datoslogin.iD_COTIZACION.toInt(),
+                        "",
+                        datoslogin.cdG_VENDEDOR,
+                        it.codVendedor!!,
+                        datoslogin.cdgpago,
+                        it.codMoneda!!,
+                        "2022-07-19T23:38:40.713Z",
+                        "",
+                        database.daoTblBasica().getAllListProct()[0].montoSubTotal,
+                        0,
+                        database.daoTblBasica().getAllListProct()[0].montoSubTotal,
+                        database.daoTblBasica().getAllListProct()[0].montoTotalIGV,
+                        database.daoTblBasica().getAllListProct()[0].montoTotal,
+                        0,
+                        0,
+                        "",
+                        "",
+                        datoslogin.iD_CLIENTE,
+                        datoslogin.iD_CLIENTE,
+                        0,
+                        "",
+                        "",
+                        datoslogin.usuariocreacion,
+                        "2022-07-19T23:38:40.713Z",
+                        "",
+                        "2022-07-19T23:38:40.713Z",
+                        datoslogin.codigO_EMPRESA,
+                        datoslogin.sucursal,
+                        "",
+                        0,
+                        "2022-07-19T23:38:40.713Z",
+                        datoslogin.usuarioautoriza,
+                        "2022-07-19T23:38:40.713Z",
+                        "",
+                        0,
+                        datoslogin.redondeo,
+                        datoslogin.validez,
+                        "",
+                        "",
+                        "",
+                        datoslogin.tipocambio,
+                        0,
+                        "",
+                        datoslogin.sucursal,
+                        "",
+                        0,
+                        "",
+                        0,
+                        0,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        0,
+                        "",
+                        prefs.getCdgVendedor(),
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        listaCotizado
+                    )
+
+                    runOnUiThread {
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val response = apiInterface!!.postCreateCotizacion(datosCotizacion)
+                        runOnUiThread {
+                            if(response.isSuccessful){
+                                println("**********************************")
+                                println("********      EXITO        *******")
+                                println("**********************************")
+                                Toast.makeText(this@ActivityAddCotizacion, "Exito", Toast.LENGTH_SHORT).show()
+                            }else{
+                                println("**********************************")
+                                println("********      ERROR        *******")
+                                println("**********************************")
+                                Toast.makeText(this@ActivityAddCotizacion, "ERROR", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+
     }
 
     private fun observacion() {
@@ -338,13 +494,13 @@ class ActivityAddCotizacion : AppCompatActivity() {
     private fun clearTable() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            database.daoTblBasica().deleteTableListProctCot()
-            database.daoTblBasica().clearPrimaryKeyListProctCot()
+            database.daoTblBasica().deleteTableListProct()
+            database.daoTblBasica().clearPrimaryKeyListProct()
 
             database.daoTblBasica().deleteTableDataCabezera()
             database.daoTblBasica().clearPrimaryKeyDataCabezera()
 
-            println(database.daoTblBasica().getAllListProctCot())
+            println(database.daoTblBasica().getAllListProct())
         }
 
     }

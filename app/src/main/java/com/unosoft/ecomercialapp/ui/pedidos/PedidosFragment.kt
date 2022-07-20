@@ -18,6 +18,7 @@ import com.unosoft.ecomercialapp.api.PedidoApi
 import com.unosoft.ecomercialapp.databinding.FragmentPedidosBinding
 import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
+import com.unosoft.ecomercialapp.ui.cotizacion.ActivityAddCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,6 +49,17 @@ class PedidosFragment : Fragment() {
         initRecyclerView()
         buscarCotizacion()
         getDataPedido(prefs.getCdgVendedor())
+
+        eventsHandlers()
+    }
+
+    private fun eventsHandlers() {
+        _binding?.iconAgregarPedido?.setOnClickListener { addNewQuatation() }
+    }
+
+    private fun addNewQuatation() {
+        val intent = Intent(activity, ActivityAddPedido::class.java)
+        startActivity(intent)
     }
 
     private fun buscarCotizacion() {
@@ -83,11 +95,15 @@ class PedidosFragment : Fragment() {
 
     fun onItemDatosPedidos(dataclassPedido: pedidosDto) {
         prefs.save_IdPedido(dataclassPedido.id_pedido.toString())
-        println("IDPEDIDO: ${prefs.getIdPedido()}")
+        //**********************************************************************
+        val intent = Intent(activity, ActivityEditPedido::class.java)
 
-        val i = Intent(activity, ActivityEditPedido::class.java)
-        startActivity(i)
+        //ENVIAR DATOS
+        val bundle = Bundle()
+        bundle.putSerializable("DATOSPEDIDOS", dataclassPedido)
+        intent.putExtras(bundle)
 
+        startActivity(intent)
     }
 
     @SuppressLint("NotifyDataSetChanged")

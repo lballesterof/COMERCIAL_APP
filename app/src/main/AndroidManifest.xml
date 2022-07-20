@@ -18,6 +18,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.pedidos.EditCabezeraPedido"
+            android:exported="false" />
+        <activity
+            android:name=".ui.pedidos.ActivityCartPedido"
+            android:exported="false" />
+        <activity
+            android:name=".ui.pedidos.ActivityAddPedido"
+            android:exported="false"
+            android:label="@string/title_activity_add_pedido"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.cotizacion.EditCabezera"
             android:exported="false" />
         <activity
