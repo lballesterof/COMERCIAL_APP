@@ -8,7 +8,11 @@
     android:background="#C6CCD6"
     tools:context=".ui.cotizacion.ActivityEditCotizacion"
     android:orientation="vertical">
-
+    <include
+        android:id="@+id/app_bar_inicio"
+        layout="@layout/app_bar_inicio"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -483,30 +487,30 @@
         app:srcCompat="@drawable/ic_more" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_save"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="5dp"
             android:padding="1dp"
             android:textColor="@color/colorBackground"
             android:background="@color/colorPrimary"
-            android:layout_width="180dp"
-            android:text="Guardar y Salir"
+            android:layout_width="160dp"
+            android:text="Guardar"
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:padding="1dp"
             android:textColor="@color/colorPrimary"
             android:background="@color/colorBackground"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:text="Cancelar"
             android:layout_height="wrap_content"/>
 
