@@ -62,6 +62,7 @@ class listconsultastocks (var data:ArrayList<ConsultaStocksResponseItem>): Recyc
 
 
     }
+
     fun filterList(nameProducto: ArrayList<ConsultaStocksResponseItem>) {
         data = nameProducto
         notifyDataSetChanged()

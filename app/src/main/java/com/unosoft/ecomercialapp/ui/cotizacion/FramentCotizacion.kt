@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
+import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
@@ -81,12 +82,14 @@ class FramentCotizacion : Fragment() {
         }
         adapterCotizaciones.filterList(filterdNamePlato)
     }
+
     fun initRecyclerView() {
         val rv_cotizaciones = view?.findViewById<RecyclerView>(R.id.recyclerCotizaciones)
         rv_cotizaciones?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         adapterCotizaciones = listcotizacionesadapter(listacotizaciones) { dataclassCotizacion -> onItemDatosCotizacion(dataclassCotizacion) }
         rv_cotizaciones?.adapter = adapterCotizaciones
     }
+
     private fun getData(cdg_ven:String){
         CoroutineScope(Dispatchers.IO).launch {
             val cotizaciones = apiInterface!!.fetchAllCotizaciones("$cdg_ven")
@@ -100,6 +103,7 @@ class FramentCotizacion : Fragment() {
             }
         }
     }
+
     fun onItemDatosCotizacion(dataclassCotizacion: cotizacionesDto) {
         prefs.save_IdPedido(dataclassCotizacion.id_cotizacion.toString())
         val intent = Intent(activity, ActivityEditCotizacion::class.java)

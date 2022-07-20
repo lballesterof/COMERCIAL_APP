@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:background="#C6CCD6"
     android:orientation="vertical"
-    tools:context=".ui.cotizacion.ActivityAddCotizacion">
+    tools:context=".ui.cotizacion.EditCabezera">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,8 +25,7 @@
                 android:background="#FFF"
                 android:elevation="20dp"
                 android:minHeight="70dp"
-                card_view:cardCornerRadius="10dp"
-                card_view:contentPadding="15dp">
+                >
 
                 <LinearLayout
 
@@ -45,7 +42,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/iv_datosClientAddCot"
+                            android:id="@+id/iv_datosClientCabezera"
                             android:layout_width="52dp"
                             android:layout_height="52dp"
                             android:layout_centerHorizontal="true"
@@ -60,10 +57,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/iv_datosClientAddCot"
+                            android:layout_below="@+id/iv_datosClientCabezera"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:text="Cotización" />
+                            android:text="Info cliente" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -89,17 +86,6 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/tv_CodCotizacion"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:maxLines="2"
-                                    android:text="Numero: COT-0000145271"
-                                    android:textColor="@color/colorPrimary"
-                                    style="@style/sizeTextView"  />
-
-                                <TextView
                                     android:visibility="gone"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -122,17 +108,6 @@
                                     style="@style/sizeTextView"  />
 
                                 <TextView
-                                    android:id="@+id/tv_fec_orden"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:maxLines="2"
-                                    android:text="Fecha Creación: 17/12/2021"
-                                    android:textColor="@color/colorPrimary"
-                                    style="@style/sizeTextView"  />
-
-                                <TextView
                                     android:id="@+id/tv_cliente"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -149,26 +124,6 @@
                                     android:ellipsize="marquee"
                                     android:gravity="center_vertical"
                                     android:text="RUC: 20600114299"
-                                    android:textColor="@color/colorPrimary"
-                                    style="@style/sizeTextView"  />
-
-                                <TextView
-                                    android:id="@+id/tv_moneda"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:text="Moneda: SOLES"
-                                    android:textColor="@color/colorPrimary"
-                                    style="@style/sizeTextView"  />
-
-                                <TextView
-                                    android:id="@+id/tv_condicionPago"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:text="Condicion Pago: CONTADO TRANSFERENCIA"
                                     android:textColor="@color/colorPrimary"
                                     style="@style/sizeTextView"  />
 
@@ -191,9 +146,7 @@
                 android:layout_margin="5dp"
                 android:background="#FFF"
                 android:elevation="20dp"
-                android:minHeight="70dp"
-                card_view:cardCornerRadius="10dp"
-                card_view:contentPadding="15dp">
+                android:minHeight="70dp">
 
                 <LinearLayout
 
@@ -229,7 +182,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:singleLine="true"
-                            android:text="Productos" />
+                            android:text="Dato comercial" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -241,12 +194,99 @@
                         android:orientation="vertical"
                         android:weightSum="100">
 
-                        <TextView
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:gravity="center_horizontal"
-                            android:text="Ver listado de cotización" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Moneda" />
+
+                            <Spinner
+                                android:id="@+id/sp_monedaCabezera"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Spinner" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Lista de precio" />
+
+                            <Spinner
+                                android:id="@+id/sp_listPrecioCabezera"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Spinner" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Validez" />
+
+                            <Spinner
+                                android:id="@+id/sp_validezCabezera"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Spinner" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Condicion de Pago" />
+
+                            <Spinner
+                                android:id="@+id/sp_CondicionpagoCabezera"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Spinner" />
+
+                        </LinearLayout>
+
+
+
+
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -259,9 +299,7 @@
                 android:layout_margin="5dp"
                 android:background="#FFF"
                 android:elevation="20dp"
-                android:minHeight="70dp"
-                card_view:cardCornerRadius="10dp"
-                card_view:contentPadding="15dp">
+                android:minHeight="70dp">
 
                 <LinearLayout
 
@@ -298,7 +336,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:singleLine="true"
-                            android:text="Observaciones" />
+                            android:text="Vendedor" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -311,202 +349,40 @@
                         android:orientation="vertical"
                         android:weightSum="100">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:gravity="center_horizontal"
-                            android:text="Despachar antes de 24/12/2021" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Vendedor Asignado" />
+
+                            <Spinner
+                                android:id="@+id/sp_vendedorasignadoCabezera"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Spinner" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <!--Fin Observaciones-->
             <!--sección TOTALES-->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_vehicle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#FFF"
-                android:elevation="20dp"
-                android:minHeight="70dp"
-                card_view:cardCornerRadius="10dp"
-                card_view:contentPadding="15dp">
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="40dp"
-                    android:orientation="horizontal"
-                    android:weightSum="100">
-
-
-                    <RelativeLayout
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/ic_info_vehicle"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/ic_base"
-                            android:fontFamily="sans-serif-condensed"
-                            android:padding="15dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/ic_money"
-                            app:tint="@color/colorPrimary" />
-
-                        <TextView
-                            style="@style/sizeTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/ic_info_vehicle"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
-                            android:text="Totales" />
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="100"
-                        android:orientation="vertical"
-
-                        android:weightSum="100">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="50"
-                            android:orientation="vertical">
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                >
-                                <TextView
-                                    style="@style/sizeTextView"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:text="Sub-Total: "
-                                    android:textColor="@color/colorPrimary" />
-
-                                <TextView
-                                    android:id="@+id/tv_subTotalAddCotizacion"
-                                    style="@style/sizeTextView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:ellipsize="marquee"
-                                    android:textAlignment="textEnd"
-                                    android:text="S/. 0"
-                                    android:textColor="@color/colorPrimary" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                >
-                                <TextView
-                                    style="@style/sizeTextView"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:text="Valor Venta: "
-                                    android:textColor="@color/colorPrimary" />
-
-                                <TextView
-                                    android:id="@+id/tv_valorVentaAddCotizacion"
-                                    style="@style/sizeTextView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:ellipsize="marquee"
-                                    android:textAlignment="textEnd"
-                                    android:text="S/. 0"
-                                    android:textColor="@color/colorPrimary" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                >
-                                <TextView
-                                    style="@style/sizeTextView"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:text="IGV 18%: "
-                                    android:textColor="@color/colorPrimary" />
-
-                                <TextView
-                                    android:id="@+id/tv_valorIGVAddCotizacion"
-                                    style="@style/sizeTextView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:ellipsize="marquee"
-                                    android:textAlignment="textEnd"
-                                    android:text="S/. 0"
-                                    android:textColor="@color/colorPrimary" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                >
-                                <TextView
-                                    style="@style/sizeTextView"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="marquee"
-                                    android:gravity="center_vertical"
-                                    android:text="Importe Total: "
-                                    android:textColor="@color/colorPrimary" />
-
-                                <TextView
-                                    android:id="@+id/tv_importeTotal"
-                                    style="@style/sizeTextView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:ellipsize="marquee"
-                                    android:textAlignment="textEnd"
-                                    android:text="S/. 0"
-                                    android:textColor="@color/colorPrimary" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
             <!--FIN TOTALES-->
 
         </LinearLayout>
 
         <!---->
     </ScrollView>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:rotation="90"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/ic_more" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
