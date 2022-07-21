@@ -272,7 +272,7 @@ interface DAO {
 
     //--Exists
     @Query("SELECT EXISTS(SELECT * FROM EntityListProct)")
-    fun isExistsEntityProductListCot(): Boolean
+    fun isExistsEntityProductList(): Boolean
 
 
     //*****************  CABEZERA COTIZACION *******************//

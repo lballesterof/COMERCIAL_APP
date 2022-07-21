@@ -16,6 +16,9 @@ import com.unosoft.ecomercialapp.api.ClientApi
 import com.unosoft.ecomercialapp.api.PedidoApi
 import com.unosoft.ecomercialapp.databinding.ActivityAddPedidoBinding
 import com.unosoft.ecomercialapp.databinding.ActivityDetallePedidoBinding
+import com.unosoft.ecomercialapp.entity.Cotizacion.DetCotizacion
+import com.unosoft.ecomercialapp.entity.Cotizacion.EnviarCotizacion
+import com.unosoft.ecomercialapp.entity.Pedidos.Detalle
 import com.unosoft.ecomercialapp.entity.Pedidos.EnviarPedido
 import com.unosoft.ecomercialapp.helpers.utils
 import com.unosoft.ecomercialapp.ui.cotizacion.ActivityCardQuotation
@@ -58,42 +61,42 @@ class ActivityAddPedido : AppCompatActivity() {
         binding.tvCondicionPagoAddPedido.text = "Condición de Pago: "
 
         //**********  CORREGIR ************
-        /*
+
         CoroutineScope(Dispatchers.IO).launch {
             println("***********  VALOR  *************")
-            println(DATAGLOBAL.database.daoTblBasica().isExistsEntityProductListPedido())
+            println(DATAGLOBAL.database.daoTblBasica().isExistsEntityProductList())
 
 
-            if(DATAGLOBAL.database.daoTblBasica().isExistsEntityProductListPedido()){
+            if(DATAGLOBAL.database.daoTblBasica().isExistsEntityProductList()){
 
-                DATAGLOBAL.database.daoTblBasica().getAllListProctPedido().forEach {
+                DATAGLOBAL.database.daoTblBasica().getAllListProct().forEach {
 
                     runOnUiThread{
 
-                        binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
-                        binding.tvValorVentaAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
-                        binding.tvValorIGVAddCotizacion.text = utils().pricetostringformat(it.montoTotalIGV)
-                        binding.tvImporteTotal.text = utils().pricetostringformat(it.montoTotal)
+                        binding.tvSubTotalAddPedido.text = utils().pricetostringformat(it.montoSubTotal)
+                        binding.tvValorVentaAddPedido.text = utils().pricetostringformat(it.montoSubTotal)
+                        binding.tvValorIGVAddPedido.text = utils().pricetostringformat(it.montoTotalIGV)
+                        binding.tvImporteTotalAddPedido.text = utils().pricetostringformat(it.montoTotal)
 
                     }
                 }
             }
 
-            if(DATAGLOBAL.database.daoTblBasica().isExistsEntityDataCabezeraPedido()){
+            if(DATAGLOBAL.database.daoTblBasica().isExistsEntityDataCabezera()){
                 DATAGLOBAL.database.daoTblBasica().getAllDataCabezera().forEach {
                     withContext(Dispatchers.IO){
-                        binding.tvFecOrden.text = "Fecha y hora: ${formatter.format(date)}"
-                        binding.tvCodCotizacion.text = "Numero: "
-                        binding.tvCliente.text = "Nombre Cliente ${it.nombreCliente}"
-                        binding.tvRuc.text = "RUC: ${it.rucCliente}"
-                        binding.tvMoneda.text = "Moneda: ${it.tipoMoneda}"
-                        binding.tvCondicionPago.text = "Condición de Pago ${it.condicionPago}"
+                        binding.tvFechaCreacionAddPedido.text = "Fecha y hora: ${formatter.format(date)}"
+                        binding.tvNumAddPedido.text = "Numero: "
+                        binding.tvClienteADdPedido.text = "Nombre Cliente ${it.nombreCliente}"
+                        binding.tvRucAddPedido.text = "RUC: ${it.rucCliente}"
+                        binding.tvMonedaAddPedido.text = "Moneda: ${it.tipoMoneda}"
+                        binding.tvCondicionPagoAddPedido.text = "Condición de Pago ${it.condicionPago}"
                     }
                 }
             }
 
         }
-        */
+
     }
 
     private fun eventsHandlers() {
@@ -108,20 +111,154 @@ class ActivityAddPedido : AppCompatActivity() {
 
     private fun enviarPedido() {
 
-        /*
-        val datosPedido : EnviarPedido = EnviarPedido()
+        val listaPedido = ArrayList<Detalle>()
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = apiInterface!!.postCreatePedido(datosPedido)
-            runOnUiThread{
-                if(response.isSuccessful){
+            val datosLista = DATAGLOBAL.database.daoTblBasica().getAllListProct()
+            runOnUiThread {
+                datosLista.forEach {
+                    listaPedido.add(
+                        Detalle(
+                        0,
+                        it.id_Producto,
+                        it.cantidad,
+                        "",
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        "1",
+                        1,
+                        0,
+                        "",
+                        0,
+                        "",
+                        0,
+                        0,
+                        it.cdg_Unidad,
+                        "",
+                        "",
+                        "",
+                        it.cdg_Unidad,
+                        "2022-07-19T23:38:40.713Z",
+                        "",
+                        "S",
+                        "",
+                        0,
+                        1,
+                        0,
+                        "",
+                        "",
+                        0,
+                        "",
+                        "",
+                        "",
+                        0,
+                        "",
+                        "",
+                        "",
+                        "",
+                        0,
+                        0,
+                        0,
+                        "",
+                        "",
+                        0,
+                        0,
+                        0
 
-                }else{
+                    )
+                    )
+                }
+            }
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val datosCabezera = DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()
+            val datoslogin = DATAGLOBAL.database.daoTblBasica().getAllDataLogin()[0]
+
+            var datosPedido: EnviarPedido
+            datosCabezera.forEach {
+                datosPedido = EnviarPedido(
+                    datoslogin.iD_COTIZACION.toInt(),
+                    "",
+                    datoslogin.cdG_VENDEDOR,
+                    it.codVendedor!!,
+                    datoslogin.cdgpago,
+                    it.codMoneda!!,
+                    "2022-07-19T23:38:40.713Z",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    0,
+                    0,
+                    0,
+                    0,
+                    datoslogin.iD_CLIENTE,
+                    datoslogin.iD_CLIENTE,
+                    "",
+                    "",
+                    "",
+                    0,
+                    0,
+                    "",
+                    "2022-07-19T23:38:40.713Z",
+                    datoslogin.codigO_EMPRESA,
+                    datoslogin.sucursal,
+                    "",
+                    "",
+                    0,
+                    0,
+                    "2022-07-19T23:38:40.713Z",
+                    "",
+                    "",
+                    datoslogin.redondeo,
+                    datoslogin.validez,
+                    "",
+                    0,
+                    0,
+                    "",
+                    "",
+                    "",
+                    datoslogin.sucursal,
+                    "",
+                    "",
+                    0,
+                    "",
+                    "",
+                    "",
+                    listaPedido
+                )
+
+                runOnUiThread {
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val response = apiInterface!!.postCreatePedido(datosPedido)
+                        runOnUiThread {
+                            if(response.isSuccessful){
+                                println("**********************************")
+                                println("********      EXITO        *******")
+                                println("**********************************")
+                                Toast.makeText(this@ActivityAddPedido, "Exito", Toast.LENGTH_SHORT).show()
+                            }else{
+                                println("**********************************")
+                                println("********      ERROR        *******")
+                                println("**********************************")
+                                Toast.makeText(this@ActivityAddPedido, "ERROR", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
 
                 }
             }
         }
-        */
+
 
     }
 

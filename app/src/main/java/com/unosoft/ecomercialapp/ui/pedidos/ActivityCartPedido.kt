@@ -61,7 +61,7 @@ class ActivityCartPedido : AppCompatActivity() {
     fun getData() {
         CoroutineScope(Dispatchers.IO).launch {
 
-            if (DATAGLOBAL.database.daoTblBasica().isExistsEntityProductListCot()){
+            if (DATAGLOBAL.database.daoTblBasica().isExistsEntityProductList()){
 
                 DATAGLOBAL.database.daoTblBasica().getAllListProct().forEach {
                     listaProductoListados.add(

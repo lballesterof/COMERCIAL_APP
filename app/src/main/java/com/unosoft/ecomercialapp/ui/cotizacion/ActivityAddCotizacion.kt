@@ -89,10 +89,10 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             println("***********  VALOR  *************")
-            println(database.daoTblBasica().isExistsEntityProductListCot())
+            println(database.daoTblBasica().isExistsEntityProductList())
 
 
-            if(database.daoTblBasica().isExistsEntityProductListCot()){
+            if(database.daoTblBasica().isExistsEntityProductList()){
 
                 database.daoTblBasica().getAllListProct().forEach {
                     withContext(Dispatchers.IO){
