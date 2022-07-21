@@ -96,6 +96,8 @@ class MainActivity : AppCompatActivity() {
                 return@OnClickListener
             } else {
                 pd.show()
+
+
                 //*******  MANTENER
                 val _user = DCLoginUser(user.text.toString(), pass.text.toString())
                 val call1 = apiInterface!!.login(_user)
@@ -149,7 +151,8 @@ class MainActivity : AppCompatActivity() {
                         call.cancel()
                     }
                 })
-                //*******  MANTENER
+                //*******  MANTENER ********
+
             }
         })
     }

@@ -1,6 +1,5 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,23 +15,20 @@ import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.PedidoApi
 import com.unosoft.ecomercialapp.databinding.FragmentPedidosBinding
-import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
-import com.unosoft.ecomercialapp.ui.cotizacion.ActivityAddCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 class PedidosFragment : Fragment() {
+    private var _binding: FragmentPedidosBinding? = null
+    private val binding get() = _binding!!
+
+    //************* INICIALIZACIONDE VARIABLES **************
     private lateinit var adapterPedidos: listpedidosadapter
     private val listapedidos = ArrayList<pedidosDto>()
     var apiInterface: PedidoApi? = null
     var apiInterface2: LoginApi? = null
-
-
-    private var _binding: FragmentPedidosBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -54,10 +50,10 @@ class PedidosFragment : Fragment() {
     }
 
     private fun eventsHandlers() {
-        _binding?.iconAgregarPedido?.setOnClickListener { addNewQuatation() }
+        _binding?.iconAgregarPedido?.setOnClickListener { addNewPedido() }
     }
 
-    private fun addNewQuatation() {
+    private fun addNewPedido() {
         val intent = Intent(activity, ActivityAddPedido::class.java)
         startActivity(intent)
     }
@@ -106,7 +102,6 @@ class PedidosFragment : Fragment() {
         startActivity(intent)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun getDataPedido(cdg_ven:String){
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getPedido("$cdg_ven")

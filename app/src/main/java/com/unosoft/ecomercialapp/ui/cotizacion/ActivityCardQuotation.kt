@@ -14,6 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
 import com.unosoft.ecomercialapp.Adapter.ProductoComercial.productocomercialadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ProductoComercial
@@ -287,7 +289,7 @@ class ActivityCardQuotation : AppCompatActivity() {
             rv_productos.adapter = adapterProductoComercial
 
             CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getProductoComercial("LPR0000002", "0001", "4.00")
+                val response = apiInterface2!!.getProductoComercial("LPR0000002", "${database.daoTblBasica().getAllDataCabezera()[0].codMoneda}", "${prefs.getTipoCambio()}")
                 runOnUiThread {
                     if (response.isSuccessful) {
                         listaProductoCotizacion.clear()

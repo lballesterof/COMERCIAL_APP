@@ -18,6 +18,6 @@ interface PedidoApi{
 
 
     @POST("/api/Pedido/CreateOrder")
-    suspend fun postCreatePedido(@Body enviarCotizacion: EnviarPedido) : Response<EnviarPedido>
+    suspend fun postCreatePedido(@Body enviarPedido: EnviarPedido) : Response<EnviarPedido>
 
 }
