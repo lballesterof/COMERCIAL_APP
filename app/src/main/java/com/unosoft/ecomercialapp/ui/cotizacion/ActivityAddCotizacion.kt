@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.barteksc.pdfviewer.PDFView
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
@@ -27,12 +28,14 @@ import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.ClientApi
+import com.unosoft.ecomercialapp.api.PDFApi
 import com.unosoft.ecomercialapp.databinding.ActivityAddCotizacionBinding
 import com.unosoft.ecomercialapp.entity.Cliente.ClientListResponse
 import com.unosoft.ecomercialapp.entity.Cotizacion.DetCotizacion
 import com.unosoft.ecomercialapp.entity.Cotizacion.EnviarCotizacion
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
+import com.unosoft.ecomercialapp.helpers.VisorPDF
 import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,6 +51,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddCotizacionBinding
 
+    var apiInterface3: PDFApi? = null
     var apiInterface2: ClientApi? = null
     var apiInterface: ApiCotizacion? = null
 
@@ -57,11 +61,12 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding = ActivityAddCotizacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //****************************************************************
+        apiInterface3 = APIClient.client?.create(PDFApi::class.java)
         apiInterface2 = APIClient.client?.create(ClientApi::class.java)
         apiInterface = APIClient.client?.create(ApiCotizacion::class.java)
 
         eventsHandlers()
-        //inicialDatos()
+        inicialDatos()
     }
     private fun eventsHandlers() {
         binding.ivDatosClientAddCot.setOnClickListener { editDateClient() }
@@ -69,8 +74,10 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding.icObservacion.setOnClickListener { observacion() }
 
         //****  CONSULTAR  ****
-        val btnsaveCotizacion = findViewById<Button>(R.id.btn_savePedido)
-        btnsaveCotizacion.setOnClickListener { enviarCotizacion() }
+        val btnsaveCotizacion = findViewById<Button>(R.id.btn_saveCotizacion)
+        btnsaveCotizacion.setOnClickListener {
+            println("Cotizacion")
+            enviarCotizacion() }
     }
 
     private fun inicialDatos() {
@@ -85,42 +92,49 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding.tvMoneda.text = "Moneda: "
         binding.tvCondicionPago.text = "Condición de Pago"
 
-
         CoroutineScope(Dispatchers.IO).launch {
+
             println("***********  VALOR  *************")
             println(database.daoTblBasica().isExistsEntityProductList())
 
+            if(database.daoTblBasica().isExistsEntityDataCabezera()){
 
-            if(database.daoTblBasica().isExistsEntityProductList()){
+                val nombreCliente = database.daoTblBasica().getAllDataCabezera()[0].nombreCliente
+                val rucCliente = database.daoTblBasica().getAllDataCabezera()[0].rucCliente
+                val tipoMoneda = database.daoTblBasica().getAllDataCabezera()[0].tipoMoneda
+                val condicionPago = database.daoTblBasica().getAllDataCabezera()[0].condicionPago
 
-                database.daoTblBasica().getAllListProct().forEach {
-                    withContext(Dispatchers.IO){
+                if(database.daoTblBasica().isExistsEntityProductList()){
 
-                        binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
-                        binding.tvValorVentaAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
-                        binding.tvValorIGVAddCotizacion.text = utils().pricetostringformat(it.montoTotalIGV)
-                        binding.tvImporteTotal.text = utils().pricetostringformat(it.montoTotal)
-
+                    runOnUiThread {
+                        binding.tvFecOrden.text = "Fecha y hora: ${formatter.format(date)}"
+                        binding.tvCodCotizacion.text = "Numero: "
+                        binding.tvCliente.text = "Nombre Cliente ${nombreCliente}"
+                        binding.tvRuc.text = "RUC: ${rucCliente}"
+                        binding.tvMoneda.text = "Moneda: ${tipoMoneda}"
+                        binding.tvCondicionPago.text = "Condición de Pago ${condicionPago}"
                     }
+
                 }
             }
 
-            if(database.daoTblBasica().isExistsEntityDataCabezera()){
-                database.daoTblBasica().getAllDataCabezera().forEach {
-                    withContext(Dispatchers.IO){
-                        binding.tvFecOrden.text = "Fecha y hora: ${formatter.format(date)}"
-                        binding.tvCodCotizacion.text = "Numero: "
-                        binding.tvCliente.text = "Nombre Cliente ${it.nombreCliente}"
-                        binding.tvRuc.text = "RUC: ${it.rucCliente}"
-                        binding.tvMoneda.text = "Moneda: ${it.tipoMoneda}"
-                        binding.tvCondicionPago.text = "Condición de Pago ${it.condicionPago}"
-                    }
+            if(database.daoTblBasica().isExistsEntityProductList()){
+
+                val montoSubTotal = database.daoTblBasica().getAllListProct()[0].montoSubTotal
+                val montoTotalIGV = database.daoTblBasica().getAllListProct()[0].montoTotalIGV
+                val montoTotal = database.daoTblBasica().getAllListProct()[0].montoTotal
+
+                runOnUiThread {
+                    binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(montoSubTotal)
+                    binding.tvValorVentaAddCotizacion.text = utils().pricetostringformat(montoSubTotal)
+                    binding.tvValorIGVAddCotizacion.text = utils().pricetostringformat(montoTotalIGV)
+                    binding.tvImporteTotal.text = utils().pricetostringformat(montoTotal)
                 }
             }
 
         }
-
     }
+
     private fun editDateClient() {
         val intent = Intent(this, EditCabezera::class.java)
         startActivity(intent)
@@ -256,6 +270,11 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                      println("********      EXITO        *******")
                                      println("**********************************")
                                      Toast.makeText(this@ActivityAddCotizacion, "Exito", Toast.LENGTH_SHORT).show()
+
+
+                                      visualizarPDF(response.body()!!.iD_COTIZACION)
+
+
                                   }else{
                                      println("**********************************")
                                      println("********      ERROR        *******")
@@ -273,6 +292,19 @@ class ActivityAddCotizacion : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun visualizarPDF(idCotizacion:Int) {
+
+        val intent = Intent(this, VisorPDFCotizacion::class.java)
+
+        //ENVIAR DATOS
+        val bundle = Bundle()
+        bundle.putString("ID", "$idCotizacion")
+        intent.putExtras(bundle)
+
+        startActivity(intent)
+
     }
 
     private fun observacion() {

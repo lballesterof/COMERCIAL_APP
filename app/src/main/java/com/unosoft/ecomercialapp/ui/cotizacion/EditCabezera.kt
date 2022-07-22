@@ -2,7 +2,6 @@ package com.unosoft.ecomercialapp.ui.cotizacion
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -26,7 +25,6 @@ import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class EditCabezera : AppCompatActivity() {
@@ -55,6 +53,7 @@ class EditCabezera : AppCompatActivity() {
     fun eventsHanlder() {
 
         binding.ivDatosClientCabezera.setOnClickListener { listarClientes() }
+
         iniciarSpinnerMoneda()
         iniciarSpinnerListPrecio()
         iniciarSpinnerValidez()
@@ -278,14 +277,14 @@ class EditCabezera : AppCompatActivity() {
     //************ CLIENTE ******************
     private fun listarClientes() {
         //***********  Alerta de Dialogo  ************
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this@EditCabezera)
         val vista = layoutInflater.inflate(R.layout.dialogue_cliente, null)
-        vista.setBackgroundResource(R.color.transparent)
+        //vista.setBackgroundResource(R.color.transparent)
 
         builder.setView(vista)
 
         val dialog = builder.create()
-        dialog.window!!.setGravity(Gravity.TOP)
+
         dialog.show()
 
         //*********************************************
@@ -309,6 +308,7 @@ class EditCabezera : AppCompatActivity() {
         rv_buscarCliente?.adapter = adapterCliente
 
 
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface2!!.getAllClients()
             runOnUiThread {
@@ -316,6 +316,7 @@ class EditCabezera : AppCompatActivity() {
                     listaClient.clear()
                     listaClient.addAll(response.body()!!)
                     adapterCliente.notifyDataSetChanged()
+
                 }else{
                     Toast.makeText(this@EditCabezera, "Error", Toast.LENGTH_SHORT).show()
                 }
@@ -333,6 +334,7 @@ class EditCabezera : AppCompatActivity() {
             }
         })
     }
+
     fun filterCliente(text: String) {
         val filterdNamePlato: ArrayList<ClientListResponse> = ArrayList()
         for (i in listaClient.indices) {

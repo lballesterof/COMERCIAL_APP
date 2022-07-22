@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.apppedido.Prefs
 import com.unosoft.ecomercialapp.DATAGLOBAL
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
@@ -18,9 +19,6 @@ import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.ClientApi
 import com.unosoft.ecomercialapp.api.PedidoApi
 import com.unosoft.ecomercialapp.databinding.ActivityAddPedidoBinding
-import com.unosoft.ecomercialapp.databinding.ActivityDetallePedidoBinding
-import com.unosoft.ecomercialapp.entity.Cotizacion.DetCotizacion
-import com.unosoft.ecomercialapp.entity.Cotizacion.EnviarCotizacion
 import com.unosoft.ecomercialapp.entity.Pedidos.Detalle
 import com.unosoft.ecomercialapp.entity.Pedidos.EnviarPedido
 import com.unosoft.ecomercialapp.helpers.utils
@@ -56,9 +54,12 @@ class ActivityAddPedido : AppCompatActivity() {
         binding.ivProductoAddPedido.setOnClickListener { addressCartQuotation() }
         binding.icObsAddPedido.setOnClickListener { observacion() }
 
+
         //** CONSULTAR **
         val btn_savePedido = findViewById<Button>(R.id.btn_savePedido)
-        btn_savePedido.setOnClickListener { enviarPedido() }
+        btn_savePedido.setOnClickListener {
+            println("Pedido")
+            enviarPedido() }
     }
     private fun inicialDatos() {
 
@@ -95,16 +96,21 @@ class ActivityAddPedido : AppCompatActivity() {
             }
 
             if(DATAGLOBAL.database.daoTblBasica().isExistsEntityDataCabezera()){
-                DATAGLOBAL.database.daoTblBasica().getAllDataCabezera().forEach {
-                    withContext(Dispatchers.IO){
+
+                val nombreCliente = DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].nombreCliente
+                val rucCliente = DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].rucCliente
+                val tipoMoneda = DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].tipoMoneda
+                val condicionPago = DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].condicionPago
+
+                    runOnUiThread{
                         binding.tvFechaCreacionAddPedido.text = "Fecha y hora: ${formatter.format(date)}"
                         binding.tvNumAddPedido.text = "Numero: "
-                        binding.tvClienteADdPedido.text = "Nombre Cliente ${it.nombreCliente}"
-                        binding.tvRucAddPedido.text = "RUC: ${it.rucCliente}"
-                        binding.tvMonedaAddPedido.text = "Moneda: ${it.tipoMoneda}"
-                        binding.tvCondicionPagoAddPedido.text = "Condición de Pago ${it.condicionPago}"
+                        binding.tvClienteADdPedido.text = "Nombre Cliente ${nombreCliente}"
+                        binding.tvRucAddPedido.text = "RUC: ${rucCliente}"
+                        binding.tvMonedaAddPedido.text = "Moneda: ${tipoMoneda}"
+                        binding.tvCondicionPagoAddPedido.text = "Condición de Pago ${condicionPago}"
                     }
-                }
+
             }
 
         }
@@ -115,7 +121,10 @@ class ActivityAddPedido : AppCompatActivity() {
         val listaPedido = ArrayList<Detalle>()
 
         CoroutineScope(Dispatchers.IO).launch {
-            val datosLista = DATAGLOBAL.database.daoTblBasica().getAllListProct()
+            val datosLista = database.daoTblBasica().getAllListProct()
+
+            val idCliente = database.daoTblBasica().getAllDataLogin()[0].iD_CLIENTE.toString()
+
             runOnUiThread {
                 datosLista.forEach {
                     listaPedido.add(
@@ -144,7 +153,7 @@ class ActivityAddPedido : AppCompatActivity() {
                         "0",
                         it.unidad,
                         "2022-07-19T23:38:40.713Z",
-                        "",
+                        "$idCliente",
                         "0001", //******
                         "",
                         0,
@@ -169,16 +178,15 @@ class ActivityAddPedido : AppCompatActivity() {
                         0,
                         0,
                         0
-
-                    )
+                        )
                     )
                 }
             }
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val datosCabezera = DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()
-            val datoslogin = DATAGLOBAL.database.daoTblBasica().getAllDataLogin()[0]
+            val datosCabezera = database.daoTblBasica().getAllDataCabezera()
+            val datoslogin = database.daoTblBasica().getAllDataLogin()[0]
 
             var datosPedido: EnviarPedido
             datosCabezera.forEach {
@@ -196,10 +204,10 @@ class ActivityAddPedido : AppCompatActivity() {
                     it.codMoneda!!,
                     "2022-07-19T23:38:40.713Z",
                     "",
-                    DATAGLOBAL.database.daoTblBasica().getAllListProct()[0].montoSubTotal,
-                    DATAGLOBAL.database.daoTblBasica().getAllListProct()[0].montoTotalIGV,
+                    database.daoTblBasica().getAllListProct()[0].montoSubTotal,
+                    database.daoTblBasica().getAllListProct()[0].montoTotalIGV,
                     0,
-                    DATAGLOBAL.database.daoTblBasica().getAllListProct()[0].montoTotal,
+                    database.daoTblBasica().getAllListProct()[0].montoTotal,
                     0,
                     0,
                     "",

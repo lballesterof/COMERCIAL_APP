@@ -523,7 +523,7 @@ class ActivityCartPedido : AppCompatActivity() {
     override fun onBackPressed() {
         guardarListRoom()
 
-        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        val intent = Intent(this, ActivityAddPedido::class.java)
         startActivity(intent)
         finish()
 

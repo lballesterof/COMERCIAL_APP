@@ -3,7 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.unosoft.ecomercialapp">
 
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".DATAGLOBAL"
@@ -12,11 +19,15 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.cotizacion.VisorPDFCotizacion"
+            android:exported="false" />
         <activity
             android:name=".ui.pedidos.EditCabezeraPedido"
             android:exported="false" />
@@ -25,9 +36,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.pedidos.ActivityAddPedido"
-            android:exported="false"
-            android:label="@string/title_activity_add_pedido"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".ui.cotizacion.EditCabezera"
             android:exported="false" />
@@ -42,8 +51,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.cotizacion.ActivityEditCotizacion"
-            android:exported="false"
-            android:label=".ui.cotizacion.ActivityEditCotizacion" />
+            android:exported="false" />
         <activity
             android:name=".Activity.inicio.InicioActivity"
             android:exported="false"

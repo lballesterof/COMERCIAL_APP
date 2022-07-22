@@ -79,9 +79,9 @@ class ActivityCardQuotation : AppCompatActivity() {
     fun getData() {
         CoroutineScope(Dispatchers.IO).launch {
 
-            if (DATAGLOBAL.database.daoTblBasica().isExistsEntityProductList()){
+            if (database.daoTblBasica().isExistsEntityProductList()){
 
-                DATAGLOBAL.database.daoTblBasica().getAllListProct().forEach {
+                database.daoTblBasica().getAllListProct().forEach {
                     listaProductoListados.add(
                         productlistcot(
                             it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,
@@ -90,8 +90,8 @@ class ActivityCardQuotation : AppCompatActivity() {
                     )
                 }
 
-                DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
-                DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
+                database.daoTblBasica().deleteTableListProct()
+                database.daoTblBasica().clearPrimaryKeyListProct()
             }
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -521,13 +521,13 @@ class ActivityCardQuotation : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
-            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
+            database.daoTblBasica().deleteTableListProct()
+            database.daoTblBasica().clearPrimaryKeyListProct()
 
             if(listaProductoListados.size>0){
 
                 listaProductoListados.forEach {
-                    DATAGLOBAL.database.daoTblBasica().insertListProct(
+                    database.daoTblBasica().insertListProct(
                         EntityListProct(
                             0, it.id_Producto, it.codigo!!, it.codigo_Barra,
                             it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,it.cdg_Unidad,it.unidad,
@@ -538,7 +538,7 @@ class ActivityCardQuotation : AppCompatActivity() {
 
             }
 
-            println(DATAGLOBAL.database.daoTblBasica().getAllListProct())
+            println(database.daoTblBasica().getAllListProct())
 
         }
 

@@ -78,7 +78,7 @@
                                 android:layout_below="@+id/iv_datosClientAddPedido"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
-                                android:text="Cotización" />
+                                android:text="Pedido" />
                         </RelativeLayout>
 
                         <LinearLayout
@@ -503,6 +503,12 @@
 
     </LinearLayout>
 
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
@@ -536,5 +542,7 @@
             android:text="Cancelar"
             android:textColor="@color/colorPrimary" />
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

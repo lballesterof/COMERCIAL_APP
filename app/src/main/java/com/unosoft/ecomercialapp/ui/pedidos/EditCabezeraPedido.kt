@@ -59,7 +59,10 @@ class EditCabezeraPedido : AppCompatActivity() {
         iniciarSpinnerVendedor()
 
         val btn_guardarCabeceraCot = findViewById<Button>(R.id.btn_guardarCabeceraPedido)
-        btn_guardarCabeceraCot.setOnClickListener { guardarInfo() }
+        btn_guardarCabeceraCot.setOnClickListener {
+            println("btn_guardarCabeceraCot")
+            guardarInfo()
+        }
     }
 
     private fun guardarInfo() {
@@ -91,7 +94,7 @@ class EditCabezeraPedido : AppCompatActivity() {
 
             runOnUiThread{
 
-                val intent = Intent(this@EditCabezeraPedido, ActivityAddCotizacion::class.java)
+                val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -274,15 +277,17 @@ class EditCabezeraPedido : AppCompatActivity() {
     //************ CLIENTE ******************
     private fun listarClientes() {
         //***********  Alerta de Dialogo  ************
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this@EditCabezeraPedido)
         val vista = layoutInflater.inflate(R.layout.dialogue_cliente, null)
         vista.setBackgroundResource(R.color.transparent)
 
         builder.setView(vista)
 
         val dialog = builder.create()
+
         dialog.window!!.setGravity(Gravity.TOP)
         dialog.show()
+        //*********************************************
 
         //*********************************************
         val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
@@ -304,6 +309,7 @@ class EditCabezeraPedido : AppCompatActivity() {
         adapterCliente = listclientesadapter(listaClient) { data -> onItemDatosClientes(data) }
         rv_buscarCliente?.adapter = adapterCliente
 
+        dialog.show()
 
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface2!!.getAllClients()

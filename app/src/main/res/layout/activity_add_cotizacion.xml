@@ -524,6 +524,8 @@
             <!---->
         </ScrollView>
 
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -557,6 +559,7 @@
             android:background="@color/colorBackground"
             android:text="Cancelar"
             android:textColor="@color/colorPrimary" />
+
 
     </LinearLayout>
 
