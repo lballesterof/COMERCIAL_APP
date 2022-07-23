@@ -15,14 +15,14 @@ import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.LoginApi
-import com.unosoft.ecomercialapp.databinding.FragmentSlideshowBinding
+import com.unosoft.ecomercialapp.databinding.FragmentCotizacionBinding
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FramentCotizacion : Fragment() {
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentCotizacionBinding? = null
     private val binding get() = _binding!!
 
     //************* INICIALIZACIONDE VARIABLES **************
@@ -32,8 +32,9 @@ class FramentCotizacion : Fragment() {
     var apiInterface2: LoginApi? = null
 
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
+        _binding = FragmentCotizacionBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
     }
@@ -44,8 +45,8 @@ class FramentCotizacion : Fragment() {
 
         initRecyclerView()
         buscarCotizacion()
-        //getData(prefs.getCdgVendedor())
         getData(prefs.getCdgVendedor())
+
         eventsHandlers()
     }
 

@@ -1,4 +1,4 @@
-package com.unosoft.ecomercialapp.ui.cotizacion
+package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,35 +10,33 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
 import com.unosoft.ecomercialapp.Adapter.ProductoComercial.productocomercialadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
-import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
-import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ProductoComercial
-import com.unosoft.ecomercialapp.databinding.ActivityAddCotizacionBinding
-import com.unosoft.ecomercialapp.databinding.ActivityCardQuotationBinding
+import com.unosoft.ecomercialapp.databinding.ActivityAddPedidoBinding
+import com.unosoft.ecomercialapp.databinding.ActivityCartPedidoBinding
 import com.unosoft.ecomercialapp.db.EntityListProct
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
 import com.unosoft.ecomercialapp.helpers.utils
+import com.unosoft.ecomercialapp.ui.cotizacion.ActivityAddCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.internal.Util
 
-class ActivityCardQuotation : AppCompatActivity() {
+class ActivityCartPedido : AppCompatActivity() {
+    private lateinit var binding: ActivityCartPedidoBinding
+    //********************************************************
 
-    private lateinit var binding: ActivityCardQuotationBinding
+    private val listaProductoListados = ArrayList<productlistcot>()
+    private val listaProductoPedido = ArrayList<productocomercial>()
 
     private lateinit var adapterProductoComercial: productocomercialadapter
     private lateinit var productlistcotadarte: productlistcotadarte
-
-    private val listaProductoCotizacion = ArrayList<productocomercial>()
-    private val listaProductoListados = ArrayList<productlistcot>()
-
 
     var apiInterface2: ProductoComercial? = null
 
@@ -46,42 +44,26 @@ class ActivityCardQuotation : AppCompatActivity() {
     var igvTotal:Double = 0.0
     var subtotal:Double = 0.0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCardQuotationBinding.inflate(layoutInflater)
+        binding = ActivityCartPedidoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        //*********************************************************
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
-        //iniciarLista()
         getData()
 
         productosListado()
         abrirListProductos()
     }
 
-
-    private fun iniciarLista() {
-        /*
-        CoroutineScope(Dispatchers.IO).launch {
-            if (database.daoTblBasica().isExistsEntityListProctCot())
-            {
-                database.daoTblBasica().deleteTableListProctCot()
-                database.daoTblBasica().clearPrimaryKeyListProctCot()
-            }
-
-        }
-        */
-
-    }
-
-    //********* INICIA DATOS  **************
     fun getData() {
         CoroutineScope(Dispatchers.IO).launch {
 
-            if (database.daoTblBasica().isExistsEntityProductList()){
+            if (DATAGLOBAL.database.daoTblBasica().isExistsEntityProductList()){
 
-                database.daoTblBasica().getAllListProct().forEach {
+                DATAGLOBAL.database.daoTblBasica().getAllListProct().forEach {
                     listaProductoListados.add(
                         productlistcot(
                             it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,
@@ -90,8 +72,8 @@ class ActivityCardQuotation : AppCompatActivity() {
                     )
                 }
 
-                database.daoTblBasica().deleteTableListProct()
-                database.daoTblBasica().clearPrimaryKeyListProct()
+                DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
+                DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
             }
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -101,12 +83,14 @@ class ActivityCardQuotation : AppCompatActivity() {
 
     }
 
+
+
     //************  PRODUCTOS LISTADOS *************
     fun productosListado() {
-        val rv_listproductcot = binding.rvListProdut
-        rv_listproductcot.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        val rv_listproductpedido = binding.rvListProdut
+        rv_listproductpedido.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         productlistcotadarte = productlistcotadarte(listaProductoListados) { data -> onItemDatosProductList(data) }
-        rv_listproductcot.adapter = productlistcotadarte
+        rv_listproductpedido.adapter = productlistcotadarte
     }
     fun onItemDatosProductList(data: productlistcot) {
         //***********  Alerta de Dialogo  ***********
@@ -137,9 +121,9 @@ class ActivityCardQuotation : AppCompatActivity() {
 
         tv_nameProducto.text = data.nombre
         tv_codProducto.text = data.codigo
-        tv_precioUnidad.text = "${data.mon} ${pricetostringformat(data.precio_Venta)}"
+        tv_precioUnidad.text = "${data.mon} ${utils().pricetostringformat(data.precio_Venta)}"
         tv_precioTotal.text = "${data.mon} ${
-            pricetostringformat(
+            utils().pricetostringformat(
                 calculatepricebyqty(
                     tv_cantidad.text.toString().toInt(), data.precio_Venta
                 )
@@ -152,7 +136,7 @@ class ActivityCardQuotation : AppCompatActivity() {
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
             tv_precioTotal.text = "${data.mon} ${
-                pricetostringformat(
+                utils().pricetostringformat(
                     calculatepricebyqty(
                         tv_cantidad.text.toString().toInt(), data.precio_Venta
                     )
@@ -174,7 +158,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 cantidad += 1
                 tv_cantidad.text = cantidad.toString()
                 val precioTotal: Double = calculatepricebyqty(cantidad, data.precio_Venta)
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 listaProductoListados.add(
                     productlistcot(
                         data.id_Producto,
@@ -199,7 +183,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 var cantidad = lt.cantidad + 1
                 tv_cantidad.text = cantidad.toString()
                 val precioTotal: Double = calculatepricebyqty(cantidad, data.precio_Venta)
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 listaProductoListados[pos] = productlistcot(
                     data.id_Producto,
                     data.codigo,
@@ -250,7 +234,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                     data.precio_Venta,
                     precioTotal)
                 tv_cantidad.text = cantidad.toString()
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 rv_listproductcot?.adapter?.notifyDataSetChanged()
                 if (cantidad == 0) {
                     listaProductoListados.removeAt(pos)
@@ -283,17 +267,18 @@ class ActivityCardQuotation : AppCompatActivity() {
             val sv_consultasproductos = vista.findViewById<SearchView>(R.id.sv_consultasproductos)
 
             rv_productos.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            adapterProductoComercial = productocomercialadapter(listaProductoCotizacion) { data ->
+            adapterProductoComercial = productocomercialadapter(listaProductoPedido) { data ->
                 onItemDatosProductos(data)
             }
+
             rv_productos.adapter = adapterProductoComercial
 
             CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getProductoComercial("LPR0000002", "${database.daoTblBasica().getAllDataCabezera()[0].codMoneda}", "${prefs.getTipoCambio()}")
+                val response = apiInterface2!!.getProductoComercial("LPR0000002", "0001", "4.00")
                 runOnUiThread {
                     if (response.isSuccessful) {
-                        listaProductoCotizacion.clear()
-                        listaProductoCotizacion.addAll(response.body()!!)
+                        listaProductoPedido.clear()
+                        listaProductoPedido.addAll(response.body()!!)
                         adapterProductoComercial.notifyDataSetChanged()
                     }
                 }
@@ -315,9 +300,9 @@ class ActivityCardQuotation : AppCompatActivity() {
     }
     fun filter(text: String) {
         val filterdNameProducto: ArrayList<productocomercial> = ArrayList()
-        for (i in listaProductoCotizacion.indices) {
-            if (listaProductoCotizacion[i].nombre.lowercase().contains(text.lowercase())) {
-                filterdNameProducto.add(listaProductoCotizacion[i])
+        for (i in listaProductoPedido.indices) {
+            if (listaProductoPedido[i].nombre.lowercase().contains(text.lowercase())) {
+                filterdNameProducto.add(listaProductoPedido[i])
             }
         }
         adapterProductoComercial.filterList(filterdNameProducto)
@@ -351,15 +336,15 @@ class ActivityCardQuotation : AppCompatActivity() {
 
         tv_nameProducto.text = data.nombre
         tv_codProducto.text = data.codigo
-        tv_precioUnidad.text = "${data.mon} ${pricetostringformat(data.precio_Venta!!)}"
-        tv_precioTotal.text = "${data.mon} ${ pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
+        tv_precioUnidad.text = "${data.mon} ${utils().pricetostringformat(data.precio_Venta!!)}"
+        tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
 
         if (action == 0) {
             tv_cantidad.text = "0"
             tv_precioTotal.text = "0"
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
-            tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
+            tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
         }
 
         //********   AUMENTA PRODUCTOS O AGREGA    *************
@@ -376,7 +361,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 cantidad += 1
                 tv_cantidad.text = cantidad.toString()
                 val precioTotal: Double = calculatepricebyqty(cantidad, data.precio_Venta)
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 listaProductoListados.add(
                     productlistcot(
                         data.id_Producto,
@@ -401,7 +386,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 var cantidad = lt.cantidad + 1
                 tv_cantidad.text = cantidad.toString()
                 val precioTotal: Double = calculatepricebyqty(cantidad, data.precio_Venta)
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 listaProductoListados.set(
                     pos,
                     productlistcot(
@@ -457,7 +442,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                     precioTotal
                 )
                 tv_cantidad.text = cantidad.toString()
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 rv_listproductcot?.adapter?.notifyDataSetChanged()
                 if (cantidad == 0) {
                     listaProductoListados.removeAt(pos)
@@ -472,23 +457,7 @@ class ActivityCardQuotation : AppCompatActivity() {
         }
     }
 
-
-
-    //************* FUNCIONES ADICIONALES  ****************
-    fun calcularMontoTotal(){
-        montoTotal = listaProductoListados.sumOf { it.precioTotal }
-        igvTotal = montoTotal*0.18
-        subtotal = montoTotal - igvTotal
-
-        val tv_subtotalCot = binding.tvSubTotalAddCart
-        val tv_igvCot = binding.tvIgvCotAddCart
-        val tv_totalCot = binding.tvTotalCotAddCart
-
-        tv_totalCot.text = utils().pricetostringformat(montoTotal)
-        tv_igvCot.text = utils().pricetostringformat(igvTotal)
-        tv_subtotalCot.text = utils().pricetostringformat(subtotal)
-    }
-
+    //*************** FUNCIONES UTILITARIAS ********
     private fun buscaCoincidencia(dataCodigo:String): List<Int> {
         //-------------Evalua POSICION Y ACCION DE AGREGAR-------------------
         //println("------- Evalua POSICION Y ACCION DE AGREGAR-------------")
@@ -512,8 +481,18 @@ class ActivityCardQuotation : AppCompatActivity() {
     private fun calculatepricebyqty(Qty: Int, Price: Double): Double {
         return (Price * Qty.toDouble())
     }
-    private fun pricetostringformat(valuenumeric: Double): String {
-        return String.format("%,.2f", valuenumeric)
+    fun calcularMontoTotal(){
+        montoTotal = listaProductoListados.sumOf { it.precioTotal }
+        igvTotal = montoTotal*0.18
+        subtotal = montoTotal - igvTotal
+
+        val tv_subtotalCot = binding.tvSubTotalAddCart
+        val tv_igvCot = binding.tvIgvAddCart
+        val tv_totalCot = binding.tvTotalAddCart
+
+        tv_totalCot.text = utils().pricetostringformat(montoTotal)
+        tv_igvCot.text = utils().pricetostringformat(igvTotal)
+        tv_subtotalCot.text = utils().pricetostringformat(subtotal)
     }
 
     //************* GUARDAR ROOM  ****************
@@ -521,13 +500,12 @@ class ActivityCardQuotation : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            database.daoTblBasica().deleteTableListProct()
-            database.daoTblBasica().clearPrimaryKeyListProct()
+            DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
+            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
 
             if(listaProductoListados.size>0){
-
                 listaProductoListados.forEach {
-                    database.daoTblBasica().insertListProct(
+                    DATAGLOBAL.database.daoTblBasica().insertListProct(
                         EntityListProct(
                             0, it.id_Producto, it.codigo!!, it.codigo_Barra,
                             it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,it.cdg_Unidad,it.unidad,
@@ -535,10 +513,9 @@ class ActivityCardQuotation : AppCompatActivity() {
                         )
                     )
                 }
-
             }
 
-            println(database.daoTblBasica().getAllListProct())
+            println(DATAGLOBAL.database.daoTblBasica().getAllListProct())
 
         }
 
@@ -546,7 +523,7 @@ class ActivityCardQuotation : AppCompatActivity() {
     override fun onBackPressed() {
         guardarListRoom()
 
-        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        val intent = Intent(this, ActivityAddPedido::class.java)
         startActivity(intent)
         finish()
 

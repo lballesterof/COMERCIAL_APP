@@ -15,6 +15,9 @@ import com.unosoft.ecomercialapp.api.PedidoMaster
 import com.unosoft.ecomercialapp.databinding.ActivityPedidoEditarBinding
 import com.unosoft.ecomercialapp.db.EntityPedidoMaster
 import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
+import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
+import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
+import com.unosoft.ecomercialapp.helpers.utils
 import com.unosoft.ecomercialapp.ui.cotizacion.ActivityDetalleCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -172,17 +175,19 @@ class ActivityEditPedido : AppCompatActivity() {
     }
 
     private fun InitializeUI() {
-        val tv_idCotizacion = findViewById<TextView>(R.id.tv_idCotizacion)
-        val tv_nameClientCot = findViewById<TextView>(R.id.tv_nameClientCot)
-        val tv_rucCot = findViewById<TextView>(R.id.tv_rucCot)
-        val tv_tipoMonedaCot = findViewById<TextView>(R.id.tv_tipoMonedaCot)
-        val tv_CondPagoCot = findViewById<TextView>(R.id.tv_CondPagoCot)
-        val tv_subtotalCot = findViewById<TextView>(R.id.tv_subtotalCot)
-        val tv_valorventaCot = findViewById<TextView>(R.id.tv_valorventaCot)
-        val tv_igvCot = findViewById<TextView>(R.id.tv_igvCot)
-        val tv_importe = findViewById<TextView>(R.id.tv_importe)
-        val iv_person_Cot = findViewById<ImageView>(R.id.iv_person_Cot)
-        val iv_productosCot = findViewById<ImageView>(R.id.iv_productosCot)
+        val datos = intent.getSerializableExtra("DATOSPEDIDOS") as pedidosDto
+
+        binding.tvNumPedido.text = "Numero: "+datos.numero_Pedido
+        binding.tvFechaCreacionPedido.text = "Fecha de creacion "+datos.fecha_pedido
+        binding.tvNomClientePedido.text = ""
+        binding.tvRucPedido.text = "RUC: "+datos.ruc
+        binding.tvTipoMonedaPedido.text = "Moneda: ${datos.nom_moneda}"
+        binding.tvCondPagoPedido.text = ""
+
+        binding.tvSubTotalPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_Total-datos.importe_igv)}"
+        binding.tvValorVentaPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_Total-datos.importe_igv)}"
+        binding.tvIgvPedido.text = "${datos.mon} ${datos.importe_igv}"
+        binding.tvImporteTotalPedido.text = "${datos.mon} ${datos.importe_Total}"
 
     }
 

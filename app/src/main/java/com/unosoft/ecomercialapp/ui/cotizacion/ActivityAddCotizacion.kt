@@ -20,19 +20,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.barteksc.pdfviewer.PDFView
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
-import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
+import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.ClientApi
-import com.unosoft.ecomercialapp.api.ProductoComercial
+import com.unosoft.ecomercialapp.api.PDFApi
 import com.unosoft.ecomercialapp.databinding.ActivityAddCotizacionBinding
 import com.unosoft.ecomercialapp.entity.Cliente.ClientListResponse
-import com.unosoft.ecomercialapp.entity.Cliente.Cliente
-import com.unosoft.ecomercialapp.entity.DatosCabezeraCotizacion.datosCabezeraCotizacion
+import com.unosoft.ecomercialapp.entity.Cotizacion.DetCotizacion
+import com.unosoft.ecomercialapp.entity.Cotizacion.EnviarCotizacion
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
+import com.unosoft.ecomercialapp.helpers.VisorPDF
 import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +43,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.LocalTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,26 +51,33 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddCotizacionBinding
 
-    private val listaTipoMoneda = ArrayList<MonedaResponse>()
-    private val listaCondicionPago = ArrayList<CondicionPagoResponse>()
-    private val listaClient = ArrayList<ClientListResponse>()
-
-    private lateinit var adapterCliente : listclientesadapter
-
+    var apiInterface3: PDFApi? = null
     var apiInterface2: ClientApi? = null
-    var nombreCliente: String? = null
+    var apiInterface: ApiCotizacion? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        apiInterface2 = APIClient.client?.create(ClientApi::class.java)
-
         binding = ActivityAddCotizacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //****************************************************************
+        apiInterface3 = APIClient.client?.create(PDFApi::class.java)
+        apiInterface2 = APIClient.client?.create(ClientApi::class.java)
+        apiInterface = APIClient.client?.create(ApiCotizacion::class.java)
 
         eventsHandlers()
         inicialDatos()
+    }
+    private fun eventsHandlers() {
+        binding.ivDatosClientAddCot.setOnClickListener { editDateClient() }
+        binding.ivProductoAddCot.setOnClickListener { addressCartQuotation() }
+        binding.icObservacion.setOnClickListener { observacion() }
+
+        //****  CONSULTAR  ****
+        val btnsaveCotizacion = findViewById<Button>(R.id.btn_saveCotizacion)
+        btnsaveCotizacion.setOnClickListener {
+            println("Cotizacion")
+            enviarCotizacion() }
     }
 
     private fun inicialDatos() {
@@ -82,232 +92,219 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding.tvMoneda.text = "Moneda: "
         binding.tvCondicionPago.text = "Condición de Pago"
 
-
         CoroutineScope(Dispatchers.IO).launch {
+
             println("***********  VALOR  *************")
-            println(database.daoTblBasica().isExistsEntityProductListCot())
+            println(database.daoTblBasica().isExistsEntityProductList())
 
+            if(database.daoTblBasica().isExistsEntityDataCabezera()){
 
-            if(database.daoTblBasica().isExistsEntityProductListCot()){
+                val nombreCliente = database.daoTblBasica().getAllDataCabezera()[0].nombreCliente
+                val rucCliente = database.daoTblBasica().getAllDataCabezera()[0].rucCliente
+                val tipoMoneda = database.daoTblBasica().getAllDataCabezera()[0].tipoMoneda
+                val condicionPago = database.daoTblBasica().getAllDataCabezera()[0].condicionPago
 
-                database.daoTblBasica().getAllListProctCot().forEach {
-                    withContext(Dispatchers.IO){
+                if(database.daoTblBasica().isExistsEntityProductList()){
 
-                        binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
-                        binding.tvValorVentaAddCotizacion.text = utils().pricetostringformat(it.montoSubTotal)
-                        binding.tvValorIGVAddCotizacion.text = utils().pricetostringformat(it.montoTotalIGV)
-                        binding.tvImporteTotal.text = utils().pricetostringformat(it.montoTotal)
-
+                    runOnUiThread {
+                        binding.tvFecOrden.text = "Fecha y hora: ${formatter.format(date)}"
+                        binding.tvCodCotizacion.text = "Numero: "
+                        binding.tvCliente.text = "Nombre Cliente ${nombreCliente}"
+                        binding.tvRuc.text = "RUC: ${rucCliente}"
+                        binding.tvMoneda.text = "Moneda: ${tipoMoneda}"
+                        binding.tvCondicionPago.text = "Condición de Pago ${condicionPago}"
                     }
+
                 }
             }
 
-            if(database.daoTblBasica().isExistsEntityDataCabezera()){
-                database.daoTblBasica().getAllDataCabezera().forEach {
-                    withContext(Dispatchers.IO){
-                        binding.tvFecOrden.text = "Fecha y hora: ${formatter.format(date)}"
-                        binding.tvCodCotizacion.text = "Numero: "
-                        binding.tvCliente.text = "Nombre Cliente ${it.nombreCliente}"
-                        binding.tvRuc.text = "RUC: ${it.rucCliente}"
-                        binding.tvMoneda.text = "Moneda: ${it.tipoMoneda}"
-                        binding.tvCondicionPago.text = "Condición de Pago ${it.condicionPago}"
-                    }
+            if(database.daoTblBasica().isExistsEntityProductList()){
+
+                val montoSubTotal = database.daoTblBasica().getAllListProct()[0].montoSubTotal
+                val montoTotalIGV = database.daoTblBasica().getAllListProct()[0].montoTotalIGV
+                val montoTotal = database.daoTblBasica().getAllListProct()[0].montoTotal
+
+                runOnUiThread {
+                    binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(montoSubTotal)
+                    binding.tvValorVentaAddCotizacion.text = utils().pricetostringformat(montoSubTotal)
+                    binding.tvValorIGVAddCotizacion.text = utils().pricetostringformat(montoTotalIGV)
+                    binding.tvImporteTotal.text = utils().pricetostringformat(montoTotal)
                 }
             }
 
         }
-
     }
 
     private fun editDateClient() {
-
         val intent = Intent(this, EditCabezera::class.java)
         startActivity(intent)
-
-
-
-        //spinnerMoneda()
-        //spinnerCondicionPago()
     }
-
-    private fun spinnerCondicionPago() {
-        //******************** EXTRAR DATA BASE ********************//
-        val listspMoneda = ArrayList<String>()
-        val listspCondicionPago = ArrayList<String>()
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            database.daoTblBasica().getAllCondicionPago().forEach {
-                listaCondicionPago.add(
-                    CondicionPagoResponse(
-                        it.Codigo,it.Nombre,it.Numero,it.Referencia1
-                    )
-                )
-            }
-
-            database.daoTblBasica().getAllMoneda().forEach {
-                listaTipoMoneda.add(
-                    MonedaResponse(
-                        it.Nombre,it.Numero,it.Referencia1
-                    )
-                )
-            }
-
-        }
-
-        val dialogue = Dialog(this)
-        dialogue.setContentView(R.layout.dialogue_editarinformacion)
-        dialogue.show()
-
-
-        //**************** SPINNER *****************
-
-        if (listspCondicionPago.size==0){
-            listaCondicionPago.forEach { listspCondicionPago.add(it.Nombre) }
-        }
-        if (listspMoneda.size==0){
-            listaTipoMoneda.forEach { listspMoneda.add(it.Nombre) }
-        }
-
-        val sp_filtroMoneda = dialogue.findViewById<Spinner>(R.id.sp_filtroMoneda)
-        val sp_CondicionPago = dialogue.findViewById<Spinner>(R.id.sp_filtroCondicionPago)
-        val iv_filtroCliente = dialogue.findViewById<ImageView>(R.id.iv_filtroCliente)
-        val tv_nameClienteDialogue = dialogue.findViewById<TextView>(R.id.tv_nameClienteDialogue)
-
-
-        val AdaptadorCondicionPago = ArrayAdapter(this, android.R.layout.simple_spinner_item, listspCondicionPago)
-        sp_CondicionPago?.adapter = AdaptadorCondicionPago
-        sp_CondicionPago.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val itemSelectCondicionPago = listspCondicionPago[position]
-
-                binding.tvCondicionPago.text =  "CONDICION DE PAGO: $itemSelectCondicionPago"
-
-                Toast.makeText(this@ActivityAddCotizacion,"Lista $itemSelectCondicionPago", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
-
-        val AdaptadorMoneda = ArrayAdapter(this, android.R.layout.simple_spinner_item, listspMoneda)
-        sp_filtroMoneda?.adapter = AdaptadorMoneda
-        sp_filtroMoneda.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val itemSelectMoneda = listspMoneda[position]
-
-                binding.tvMoneda.text = "MONEDA: $itemSelectMoneda"
-
-                Toast.makeText(this@ActivityAddCotizacion,"Lista $itemSelectMoneda", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
-
-        iv_filtroCliente.setOnClickListener {
-            buscarCliente()
-        }
-
-        tv_nameClienteDialogue.text = nombreCliente
-
-
-        //*******************************************
-    }
-
-    fun buscarCliente(){
-        //***********  Alerta de Dialogo  ************
-        val builder = AlertDialog.Builder(this)
-        val vista = layoutInflater.inflate(R.layout.dialogue_cliente, null)
-        vista.setBackgroundResource(R.color.transparent)
-
-        builder.setView(vista)
-
-        val dialog = builder.create()
-        dialog.window!!.setGravity(Gravity.TOP)
-        dialog.show()
-        //*********************************************
-
-
-        val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
-
-        fun onItemDatosClientes(data: ClientListResponse) {
-
-            dialog.hide()
-        }
-
-        val rv_buscarCliente = vista.findViewById<RecyclerView>(R.id.rv_buscarCliente)
-        rv_buscarCliente?.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
-        adapterCliente = listclientesadapter(listaClient) { data -> onItemDatosClientes(data) }
-        rv_buscarCliente?.adapter = adapterCliente
-
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = apiInterface2!!.getAllClients()
-            runOnUiThread {
-                if(response.isSuccessful){
-                    listaClient.clear()
-                    listaClient.addAll(response.body()!!)
-                    adapterCliente.notifyDataSetChanged()
-                }else{
-                    Toast.makeText(this@ActivityAddCotizacion, "Error", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        sv_buscadorCliente?.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                println("$newText")
-                filterCliente(newText.toString())
-                return false
-            }
-        })
-    }
-
-
-
-    fun filterCliente(text: String) {
-        val filterdNamePlato: ArrayList<ClientListResponse> = ArrayList()
-        for (i in listaClient.indices) {
-            if (listaClient[i].nombre.lowercase().contains(text.lowercase())) {
-                filterdNamePlato.add(listaClient[i])
-            }
-        }
-        adapterCliente.filterCliente(filterdNamePlato)
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private fun addressCartQuotation() {
         val intent = Intent(this, ActivityCardQuotation::class.java)
         startActivity(intent)
     }
 
-    private fun eventsHandlers() {
-        binding.ivDatosClientAddCot.setOnClickListener { editDateClient() }
-        binding.ivProductoAddCot.setOnClickListener { addressCartQuotation() }
-        binding.icObservacion.setOnClickListener { observacion() }
+    private fun enviarCotizacion() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var validarCabezera = database.daoTblBasica().isExistsEntityDataCabezera()
+            var validarListProct = database.daoTblBasica().isExistsEntityListProct()
+            val listaCotizado = ArrayList<DetCotizacion>()
+            runOnUiThread{
+                if(validarCabezera){
+                    if (validarListProct){
+                        CoroutineScope(Dispatchers.IO).launch {
+
+                            val datosLista = database.daoTblBasica().getAllListProct()
+                            val datosCabezera = database.daoTblBasica().getAllDataCabezera()[0]
+                            val datoslogin = database.daoTblBasica().getAllDataLogin()[0]
+
+                            datosLista.forEach {
+                                listaCotizado.add(DetCotizacion(
+                                    0,
+                                    it.id_Producto,
+                                    it.cantidad,
+                                    it.precioUnidad,
+                                    0,
+                                    it.precioUnidad*it.cantidad*1.18,
+                                    it.precioUnidad*it.cantidad,
+                                    "",
+                                    0,
+                                    it.precio_Venta,
+                                    "1",
+                                    1,
+                                    "1",
+                                    0,
+                                    0,
+                                    "",
+                                    "",
+                                    "",
+                                    it.cdg_Unidad,
+                                    0,
+                                    0,
+                                    it.precioUnidad,
+                                    it.cdg_Unidad,
+                                    "2022-07-19T23:38:40.713Z",
+                                    "",
+                                    "S",
+                                    0,
+                                    0,
+                                    1,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ))
+                            }
+
+                            val datosCotizacion = EnviarCotizacion(
+                                datoslogin.iD_COTIZACION.toInt(),
+                                "",
+                                datoslogin.cdG_VENDEDOR,
+                                datosCabezera.codVendedor!!,
+                                datoslogin.cdgpago,
+                                datosCabezera.codMoneda!!,
+                                "2022-07-19T23:38:40.713Z",
+                                "",
+                                database.daoTblBasica().getAllListProct()[0].montoSubTotal,
+                                0,
+                                database.daoTblBasica().getAllListProct()[0].montoSubTotal,
+                                database.daoTblBasica().getAllListProct()[0].montoTotalIGV,
+                                database.daoTblBasica().getAllListProct()[0].montoTotal,
+                                0,
+                                0,
+                                "",
+                                "",
+                                datoslogin.iD_CLIENTE,
+                                datoslogin.iD_CLIENTE,
+                                0,
+                                "",
+                                "",
+                                datoslogin.usuariocreacion,
+                                "2022-07-19T23:38:40.713Z",
+                                "",
+                                "2022-07-19T23:38:40.713Z",
+                                datoslogin.codigO_EMPRESA,
+                                datoslogin.sucursal,
+                                "",
+                                0,
+                                "2022-07-19T23:38:40.713Z",
+                                datoslogin.usuarioautoriza,
+                                "2022-07-19T23:38:40.713Z",
+                                "",
+                                0,
+                                datoslogin.redondeo,
+                                datoslogin.validez,
+                                "",
+                                "",
+                                "",
+                                datoslogin.tipocambio,
+                                0,
+                                "",
+                                datoslogin.sucursal,
+                                "",
+                                0,
+                                "",
+                                0,
+                                0,
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                0,
+                                "",
+                                prefs.getCdgVendedor(),
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                listaCotizado
+                            )
+
+                            val response = apiInterface!!.postCreateCotizacion(datosCotizacion)
+                               runOnUiThread {
+                                  if(response.isSuccessful){
+                                     println("**********************************")
+                                     println("********      EXITO        *******")
+                                     println("**********************************")
+                                     Toast.makeText(this@ActivityAddCotizacion, "Exito", Toast.LENGTH_SHORT).show()
+
+
+                                      visualizarPDF(response.body()!!.iD_COTIZACION)
+
+
+                                  }else{
+                                     println("**********************************")
+                                     println("********      ERROR        *******")
+                                     println("**********************************")
+                                     Toast.makeText(this@ActivityAddCotizacion, "ERROR", Toast.LENGTH_SHORT).show()
+                                  }
+                               }
+                        }
+
+                    }else{
+                        Toast.makeText(this@ActivityAddCotizacion, "Falta ingresar productos", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(this@ActivityAddCotizacion, "Falta datos cliente", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun visualizarPDF(idCotizacion:Int) {
+
+        val intent = Intent(this, VisorPDFCotizacion::class.java)
+
+        //ENVIAR DATOS
+        val bundle = Bundle()
+        bundle.putString("ID", "$idCotizacion")
+        intent.putExtras(bundle)
+
+        startActivity(intent)
+
     }
 
     private fun observacion() {
@@ -320,34 +317,31 @@ class ActivityAddCotizacion : AppCompatActivity() {
         //***********Declara elementos *****************
         var et_detalle = dialogue.findViewById<EditText>(R.id.et_detalle)
         val bt_guardarDetalle = dialogue.findViewById<Button>(R.id.bt_guardarDetalle)
-        val tv_AlerObservacion = dialogue.findViewById<TextView>(R.id.tv_AlerObservacion)
 
         //*********** BOTON GUARDAR DEL DIALOGO ********
         bt_guardarDetalle.setOnClickListener {
             var detalle:String = et_detalle.text.toString()
+            binding.tvObsCotizacion.text = detalle
             dialogue.hide()
         }
 
     }
-
     override fun onBackPressed() {
         clearTable()
         super.onBackPressed()
     }
-
     private fun clearTable() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            database.daoTblBasica().deleteTableListProctCot()
-            database.daoTblBasica().clearPrimaryKeyListProctCot()
+            database.daoTblBasica().deleteTableListProct()
+            database.daoTblBasica().clearPrimaryKeyListProct()
 
             database.daoTblBasica().deleteTableDataCabezera()
             database.daoTblBasica().clearPrimaryKeyDataCabezera()
 
-            println(database.daoTblBasica().getAllListProctCot())
+            println(database.daoTblBasica().getAllListProct())
         }
 
     }
-
 
 }

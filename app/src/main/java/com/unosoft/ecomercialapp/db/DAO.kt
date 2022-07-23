@@ -44,14 +44,17 @@ interface DAO {
     @Query("SELECT * FROM EntityListaPrecio")
     fun getAllListaPrecio(): List<EntityListaPrecio>
 
-    @Query("SELECT * FROM EntityListProctCot")
-    fun getAllListProctCot(): List<EntityListProctCot>
+    @Query("SELECT * FROM EntityListProct")
+    fun getAllListProct(): List<EntityListProct>
 
     @Query("SELECT * FROM EntityVendedor")
     fun getAllVendedor(): List<EntityVendedor>
 
     @Query("SELECT * FROM EntityDataCabezera")
     fun getAllDataCabezera(): List<EntityDataCabezera>
+
+    @Query("SELECT * FROM EntityDataLogin")
+    fun getAllDataLogin(): List<EntityDataLogin>
 
 
     //*************   INSERT DE TABLAS    *********************
@@ -83,13 +86,16 @@ interface DAO {
     fun insertListaPrecio( insertListaPrecio: EntityListaPrecio)
 
     @Insert
-    fun insertListProctCot( insertListProctCot: EntityListProctCot)
+    fun insertListProct( insertListProctCot: EntityListProct)
 
     @Insert
     fun insertVendedor( insertVendedor: EntityVendedor)
 
     @Insert
     fun insertDataCabezera( insertDataCabezera: EntityDataCabezera)
+
+    @Insert
+    fun insertDataLogin( insertDataLogin: EntityDataLogin)
 
 
 
@@ -101,10 +107,7 @@ interface DAO {
     fun getSizeMoneda(): Int
 
 
-    @Query("SELECT id_Producto,codigo,codigo_Barra,nombre,mon,precio_Venta,factor_Conversion,cdg_Unidad,unidad,moneda_Lp,cantidad,precioUnidad,precioTotal  FROM EntityListProctCot WHERE id= :id")
-    fun getEntityListProctCot(id:Int): productlistcot
-
-    @Query("SELECT COUNT(*) from EntityListProctCot")
+    @Query("SELECT COUNT(*) from EntityListProct")
     fun getSizeListProctCot(): Int
 
 
@@ -145,14 +148,17 @@ interface DAO {
     @Query("DELETE FROM EntityListaPrecio")
     fun deleteTableListaPrecio()
 
-    @Query("DELETE FROM EntityListProctCot")
-    fun deleteTableListProctCot()
+    @Query("DELETE FROM EntityListProct")
+    fun deleteTableListProct()
 
     @Query("DELETE FROM EntityVendedor")
     fun deleteTableVendedor()
 
     @Query("DELETE FROM EntityDataCabezera")
     fun deleteTableDataCabezera()
+
+    @Query("DELETE FROM EntityDataLogin")
+    fun deleteTableDataLogin()
 
 
 
@@ -188,12 +194,11 @@ interface DAO {
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityQuotationMaster'")
     fun clearPrimaryKeyQuotationMaster()
 
-
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityListaPrecio'")
     fun clearPrimaryKeyListaPrecio()
 
-    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityListProctCot'")
-    fun clearPrimaryKeyListProctCot()
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityListProct'")
+    fun clearPrimaryKeyListProct()
 
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityVendedor'")
     fun clearPrimaryKeyVendedor()
@@ -201,14 +206,17 @@ interface DAO {
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityDataCabezera'")
     fun clearPrimaryKeyDataCabezera()
 
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityDataLogin'")
+    fun clearPrimaryKeyDataLogin()
+
 
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
     @Query("SELECT EXISTS(SELECT * FROM EntityCondicionPago)")
     fun isExists(): Boolean
 
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
-    @Query("SELECT EXISTS(SELECT * FROM EntityListProctCot)")
-    fun isExistsEntityListProctCot(): Boolean
+    @Query("SELECT EXISTS(SELECT * FROM EntityListProct)")
+    fun isExistsEntityListProct(): Boolean
 
 
 
@@ -263,8 +271,8 @@ interface DAO {
 
 
     //--Exists
-    @Query("SELECT EXISTS(SELECT * FROM EntityListProctCot)")
-    fun isExistsEntityProductListCot(): Boolean
+    @Query("SELECT EXISTS(SELECT * FROM EntityListProct)")
+    fun isExistsEntityProductList(): Boolean
 
 
     //*****************  CABEZERA COTIZACION *******************//

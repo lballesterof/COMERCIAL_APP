@@ -3,7 +3,7 @@ package com.unosoft.ecomercialapp.entity.DatosCabezeraCotizacion
 import java.io.Serializable
 
 
-data class datosCabezeraCotizacion(
+data class datosCabezera(
     var idCliente: String? = "",
     var nombreCliente: String?= "",
     var rucCliente: String?= "",

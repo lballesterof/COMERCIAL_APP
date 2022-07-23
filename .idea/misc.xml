@@ -4,15 +4,23 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Gian/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/drawable/background_label_fab.xml" value="0.188" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_add_cotizacion.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_add_pedido.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_card_quotation.xml" value="0.20878623188405798" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_cart_pedido.xml" value="0.25" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_cotizacion_generar.xml" value="0.2" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_detalle_cotizacion.xml" value="0.25" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_detalle_cotizacion_mock.xml" value="0.3569230769230769" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_detalle_pedido.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_edit_cabezera.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_edit_cabezera_pedido.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_edit_cotizacion.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_inicio.xml" value="0.1" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_pedido_editar.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_visor_pdfcotizacion.xml" value="0.16875" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/app_bar_inicio.xml" value="0.348731884057971" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/card_layout_item_cotizacion.xml" value="0.3625" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/card_layout_item_listado.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/card_layout_item_listado_mock.xml" value="0.33" />
@@ -25,6 +33,7 @@
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/dialogue_cliente.xml" value="0.22010869565217392" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/dialogue_editarinformacion.xml" value="0.215625" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/dialogue_observacion.xml" value="0.1778115501519757" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_cotizacion.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_gallery.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_home.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/fragment_pedido_master.xml" value="0.5" />
@@ -36,6 +45,7 @@
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_filtro.xml" value="0.5" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/item_productocomericaldetallado.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/nav_header_inicio.xml" value="0.1" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/pdf.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/menu/activity_home_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/menu/inicio.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/balle/AndroidStudioProjects/ecomercialapp/app/src/main/res/layout/activity_cotizacion_generar.xml" value="0.1" />

@@ -39,7 +39,7 @@ class ActivityEditDetallePedido : AppCompatActivity() {
     }
 
     fun InitRecyclerview() {
-        binding.rvLtsorder?.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.rvLtsorder.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         adapterdetailpedido = productlisteditorderadapter(listaProductoPEDIDO)
         binding.rvLtsorder.adapter = adapterdetailpedido
     }

@@ -1,6 +1,5 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,22 +15,20 @@ import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.PedidoApi
 import com.unosoft.ecomercialapp.databinding.FragmentPedidosBinding
-import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 class PedidosFragment : Fragment() {
+    private var _binding: FragmentPedidosBinding? = null
+    private val binding get() = _binding!!
+
+    //************* INICIALIZACIONDE VARIABLES **************
     private lateinit var adapterPedidos: listpedidosadapter
     private val listapedidos = ArrayList<pedidosDto>()
     var apiInterface: PedidoApi? = null
     var apiInterface2: LoginApi? = null
-
-
-    private var _binding: FragmentPedidosBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -48,6 +45,17 @@ class PedidosFragment : Fragment() {
         initRecyclerView()
         buscarCotizacion()
         getDataPedido(prefs.getCdgVendedor())
+
+        eventsHandlers()
+    }
+
+    private fun eventsHandlers() {
+        _binding?.iconAgregarPedido?.setOnClickListener { addNewPedido() }
+    }
+
+    private fun addNewPedido() {
+        val intent = Intent(activity, ActivityAddPedido::class.java)
+        startActivity(intent)
     }
 
     private fun buscarCotizacion() {
@@ -83,14 +91,17 @@ class PedidosFragment : Fragment() {
 
     fun onItemDatosPedidos(dataclassPedido: pedidosDto) {
         prefs.save_IdPedido(dataclassPedido.id_pedido.toString())
-        println("IDPEDIDO: ${prefs.getIdPedido()}")
+        //**********************************************************************
+        val intent = Intent(activity, ActivityEditPedido::class.java)
 
-        val i = Intent(activity, ActivityEditPedido::class.java)
-        startActivity(i)
+        //ENVIAR DATOS
+        val bundle = Bundle()
+        bundle.putSerializable("DATOSPEDIDOS", dataclassPedido)
+        intent.putExtras(bundle)
 
+        startActivity(intent)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun getDataPedido(cdg_ven:String){
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getPedido("$cdg_ven")

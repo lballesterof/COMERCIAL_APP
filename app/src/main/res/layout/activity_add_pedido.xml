@@ -6,14 +6,17 @@
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="#C6CCD6"
-    tools:context=".ui.cotizacion.ActivityEditCotizacion"
-    android:orientation="vertical">
+    tools:context=".ui.pedidos.ActivityAddPedido">
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <include
             android:id="@+id/app_bar_inicio"
@@ -40,7 +43,7 @@
                     android:elevation="20dp"
                     android:minHeight="70dp"
                     card_view:cardCornerRadius="10dp"
-                    card_view:contentPadding="13dp">
+                    card_view:contentPadding="15dp">
 
                     <LinearLayout
 
@@ -57,7 +60,7 @@
                             android:layout_gravity="center_vertical">
 
                             <ImageView
-                                android:id="@+id/iv_person_Cot"
+                                android:id="@+id/iv_datosClientAddPedido"
                                 android:layout_width="52dp"
                                 android:layout_height="52dp"
                                 android:layout_centerHorizontal="true"
@@ -72,10 +75,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/iv_person_Cot"
+                                android:layout_below="@+id/iv_datosClientAddPedido"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
-                                android:text="Cotización" />
+                                android:text="Pedido" />
                         </RelativeLayout>
 
                         <LinearLayout
@@ -101,7 +104,7 @@
                                     android:orientation="vertical">
 
                                     <TextView
-                                        android:id="@+id/tv_idCotizacion"
+                                        android:id="@+id/tv_numAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -111,8 +114,9 @@
                                         android:text="Numero: COT-0000145271"
                                         android:textColor="@color/colorPrimary" />
 
+
                                     <TextView
-                                        android:id="@+id/tv_fechaCreacionCot"
+                                        android:id="@+id/tv_fechaCreacionAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -123,7 +127,7 @@
                                         android:textColor="@color/colorPrimary" />
 
                                     <TextView
-                                        android:id="@+id/tv_nameClientCot"
+                                        android:id="@+id/tv_clienteADdPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -133,7 +137,7 @@
                                         android:textColor="@color/colorPrimary" />
 
                                     <TextView
-                                        android:id="@+id/tv_rucCot"
+                                        android:id="@+id/tv_rucAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -143,7 +147,7 @@
                                         android:textColor="@color/colorPrimary" />
 
                                     <TextView
-                                        android:id="@+id/tv_tipoMonedaCot"
+                                        android:id="@+id/tv_monedaAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -153,7 +157,7 @@
                                         android:textColor="@color/colorPrimary" />
 
                                     <TextView
-                                        android:id="@+id/tv_CondPagoCot"
+                                        android:id="@+id/tv_condicionPagoAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -183,7 +187,7 @@
                     android:elevation="20dp"
                     android:minHeight="70dp"
                     card_view:cardCornerRadius="10dp"
-                    card_view:contentPadding="13dp">
+                    card_view:contentPadding="15dp">
 
                     <LinearLayout
 
@@ -199,7 +203,7 @@
                             android:layout_height="match_parent">
 
                             <ImageView
-                                android:id="@+id/iv_productosCot"
+                                android:id="@+id/iv_productoAddPedido"
                                 android:layout_width="52dp"
                                 android:layout_height="52dp"
                                 android:layout_centerHorizontal="true"
@@ -215,7 +219,7 @@
                                 style="@style/sizeTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/iv_productosCot"
+                                android:layout_below="@+id/iv_productoAddPedido"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
                                 android:singleLine="true"
@@ -267,7 +271,7 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:id="@+id/ic_solutions"
+                                android:id="@+id/ic_obsAddPedido"
                                 android:layout_width="52dp"
                                 android:layout_height="52dp"
 
@@ -284,7 +288,7 @@
                                 style="@style/sizeTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/ic_solutions"
+                                android:layout_below="@+id/ic_obsAddPedido"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
                                 android:singleLine="true"
@@ -302,6 +306,14 @@
                             android:weightSum="100">
 
                             <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:text="Despachar antes de 24/12/2021" />
+
+                            <TextView
+                                android:id="@+id/tv_obsAddPedido"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -375,6 +387,7 @@
                                 android:layout_weight="50"
                                 android:orientation="vertical">
 
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -386,20 +399,20 @@
                                         android:layout_height="wrap_content"
                                         android:ellipsize="marquee"
                                         android:gravity="center_vertical"
-                                        android:text="Sub-Total:"
+                                        android:text="Sub-Total: "
                                         android:textColor="@color/colorPrimary" />
 
                                     <TextView
-                                        android:id="@+id/tv_subtotalCot"
+                                        android:id="@+id/tv_subTotalAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:ellipsize="marquee"
-                                        android:gravity="end"
-                                        android:text="S/. 1,271.19"
+                                        android:text="S/. 0.0"
+                                        android:textAlignment="textEnd"
                                         android:textColor="@color/colorPrimary" />
-
                                 </LinearLayout>
+
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -416,13 +429,13 @@
                                         android:textColor="@color/colorPrimary" />
 
                                     <TextView
-                                        android:id="@+id/tv_valorventaCot"
+                                        android:id="@+id/tv_valorVentaAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:ellipsize="marquee"
-                                        android:gravity="end"
-                                        android:text="S/. 1,271.19"
+                                        android:text="S/. 0.0"
+                                        android:textAlignment="textEnd"
                                         android:textColor="@color/colorPrimary" />
                                 </LinearLayout>
 
@@ -441,15 +454,16 @@
                                         android:textColor="@color/colorPrimary" />
 
                                     <TextView
-                                        android:id="@+id/tv_igvCot"
+                                        android:id="@+id/tv_valorIGVAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:ellipsize="marquee"
-                                        android:gravity="end"
-                                        android:text="S/. 1,271.19"
+                                        android:text="S/. 0.0"
+                                        android:textAlignment="textEnd"
                                         android:textColor="@color/colorPrimary" />
                                 </LinearLayout>
+
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -462,22 +476,21 @@
                                         android:layout_height="wrap_content"
                                         android:ellipsize="marquee"
                                         android:gravity="center_vertical"
-                                        android:text="Importe Total:"
+                                        android:text="Importe Total: "
                                         android:textColor="@color/colorPrimary" />
 
                                     <TextView
-                                        android:id="@+id/tv_importe"
+                                        android:id="@+id/tv_importeTotalAddPedido"
                                         style="@style/sizeTextView"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:ellipsize="marquee"
-                                        android:gravity="end"
-                                        android:text="S/. 1,271.19"
+                                        android:text="S/. 0.0"
+                                        android:textAlignment="textEnd"
                                         android:textColor="@color/colorPrimary" />
                                 </LinearLayout>
 
                             </LinearLayout>
-
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -487,71 +500,49 @@
 
             <!---->
         </ScrollView>
+
     </LinearLayout>
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/menu_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="3dp"
-        android:layout_marginBottom="512dp"
-        app:fab_addButtonColorNormal="?attr/colorPrimary"
-        app:fab_addButtonSize="normal"
-        app:fab_labelStyle="@style/Etiquetas"
-        app:fab_labelsPosition="left"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/accion_carrito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorPrimary"
-            app:fab_icon="@drawable/ic_pdf"
-            app:fab_size="mini"
-            app:fab_title="Ver PDF" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
     <LinearLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout7"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="10dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btn_save"
-            android:layout_width="160dp"
+            android:id="@+id/btn_savePedido"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginRight="16dp"
             android:background="@color/colorPrimary"
-            android:padding="1dp"
-            android:text="Guardar"
+            android:text="Guardar y Salir"
             android:textColor="@color/colorBackground" />
 
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_width="160dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="16dp"
             android:background="@color/colorBackground"
-            android:padding="1dp"
             android:text="Cancelar"
             android:textColor="@color/colorPrimary" />
-
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
