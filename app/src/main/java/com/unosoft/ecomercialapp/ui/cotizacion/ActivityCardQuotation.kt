@@ -289,7 +289,7 @@ class ActivityCardQuotation : AppCompatActivity() {
             rv_productos.adapter = adapterProductoComercial
 
             CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getProductoComercial("LPR0000002", "${database.daoTblBasica().getAllDataCabezera()[0].codMoneda}", "${prefs.getTipoCambio()}")
+                val response = apiInterface2!!.getProductoComercial("${database.daoTblBasica().getAllDataCabezera()[0].codListPrecio}", "${database.daoTblBasica().getAllDataCabezera()[0].codMoneda}", "${prefs.getTipoCambio()}")
                 runOnUiThread {
                     if (response.isSuccessful) {
                         listaProductoCotizacion.clear()

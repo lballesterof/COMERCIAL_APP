@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
@@ -25,6 +26,7 @@ import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class EditCabezera : AppCompatActivity() {
@@ -92,11 +94,11 @@ class EditCabezera : AppCompatActivity() {
             println(DATAGLOBAL.database.daoTblBasica().getAllDataCabezera())
 
             runOnUiThread{
-
                 val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
                 startActivity(intent)
                 finish()
             }
+
         }
 
 
@@ -279,19 +281,17 @@ class EditCabezera : AppCompatActivity() {
         //***********  Alerta de Dialogo  ************
         val builder = AlertDialog.Builder(this@EditCabezera)
         val vista = layoutInflater.inflate(R.layout.dialogue_cliente, null)
-        //vista.setBackgroundResource(R.color.transparent)
+        vista.setBackgroundResource(R.color.transparent)
 
+        //pasar vista al buielder
         builder.setView(vista)
-
-        val dialog = builder.create()
-
-        dialog.show()
-
         //*********************************************
         val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
 
-        fun onItemDatosClientes(data: ClientListResponse) {
+        //Creamos dialogue
+        val dialog = builder.create()
 
+        fun onItemDatosClientes(data: ClientListResponse) {
             binding.tvCliente.text = "Nombre: ${data.nombre}"
             binding.tvRuc.text = "RUC: ${data.ruc}"
 
@@ -300,18 +300,21 @@ class EditCabezera : AppCompatActivity() {
             DatosCabezeraCotizacion.idCliente = data.idpersona
 
             dialog.hide()
+            dialog.dismiss()
         }
+
+        if (!isFinishing)
+        dialog.show()
+
 
         val rv_buscarCliente = vista.findViewById<RecyclerView>(R.id.rv_buscarCliente)
         rv_buscarCliente?.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
         adapterCliente = listclientesadapter(listaClient) { data -> onItemDatosClientes(data) }
         rv_buscarCliente?.adapter = adapterCliente
 
-
-
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface2!!.getAllClients()
-            runOnUiThread {
+            withContext(Dispatchers.IO){
                 if(response.isSuccessful){
                     listaClient.clear()
                     listaClient.addAll(response.body()!!)
@@ -333,7 +336,11 @@ class EditCabezera : AppCompatActivity() {
                 return false
             }
         })
+
+
     }
+
+
 
     fun filterCliente(text: String) {
         val filterdNamePlato: ArrayList<ClientListResponse> = ArrayList()

@@ -1,11 +1,15 @@
 package com.unosoft.ecomercialapp.helpers;
 
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Log;
 
 
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
