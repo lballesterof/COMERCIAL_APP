@@ -144,6 +144,9 @@ class ActivityAddPedido : AppCompatActivity() {
                             val datosCabezera = database.daoTblBasica().getAllDataCabezera()[0]
                             val datoslogin = database.daoTblBasica().getAllDataLogin()[0]
 
+                            println("*********** TABLA DATA CABEZERA ***********")
+                            println(database.daoTblBasica().getAllDataCabezera())
+
                             datosLista.forEach {
                                 listaPedido.add(
                                     Detalle(

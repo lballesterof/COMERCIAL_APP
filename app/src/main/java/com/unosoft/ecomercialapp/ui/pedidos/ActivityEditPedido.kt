@@ -13,6 +13,7 @@ import com.unosoft.ecomercialapp.db.EntityPedidoMaster
 import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
 import com.unosoft.ecomercialapp.helpers.utils
+import com.unosoft.ecomercialapp.ui.Cotizacion.ActivityAddCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -194,8 +195,10 @@ class ActivityEditPedido : AppCompatActivity() {
     //Nuevo Activity
     private fun showactivitydetail()
     {
-        println("que")
         val intent = Intent(this, ActivityEditDetallePedido::class.java)
         startActivity(intent)
     }
+
+
+
 }

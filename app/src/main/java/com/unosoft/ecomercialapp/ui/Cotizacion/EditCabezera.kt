@@ -116,6 +116,7 @@ class EditCabezera : AppCompatActivity() {
                 val spVendedorasignadoCabezera = binding.spVendedorasignadoCabezera
                 val AdaptadorVendedor = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listVendedor)
                 spVendedorasignadoCabezera.adapter = AdaptadorVendedor
+                spVendedorasignadoCabezera.setSelection(-1)
                 spVendedorasignadoCabezera.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
@@ -124,7 +125,6 @@ class EditCabezera : AppCompatActivity() {
                         CoroutineScope(Dispatchers.IO).launch {
                             datosVendedor.forEach { if (it.Nombre == item){DatosCabezeraCotizacion.codVendedor = it.Codigo} }
                         }
-                        Toast.makeText(this@EditCabezera,"Lista $item", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -149,15 +149,15 @@ class EditCabezera : AppCompatActivity() {
                 val sp_ListCondicionPago = binding.spCondicionpagoCabezera
                 val AdaptadorCondicionPago = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listCondicionPago)
                 sp_ListCondicionPago.adapter = AdaptadorCondicionPago
+                sp_ListCondicionPago.setSelection(-1)
                 sp_ListCondicionPago.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
                         val item: String = parent!!.getItemAtPosition(position).toString()
                         DatosCabezeraCotizacion.condicionPago = item
                         CoroutineScope(Dispatchers.IO).launch {
-                            datosCondicionPago.forEach { if (it.Nombre == item){DatosCabezeraCotizacion.codCondicionPago = it.Codigo} }
+                            datosCondicionPago.forEach { if (it.Nombre == item){DatosCabezeraCotizacion.codCondicionPago = it.Numero} }
                         }
-                        Toast.makeText(this@EditCabezera,"Lista $item", Toast.LENGTH_SHORT).show()
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("Not yet implemented")
@@ -182,6 +182,7 @@ class EditCabezera : AppCompatActivity() {
                 val sp_ListFrecuenciaDia = binding.spValidezCabezera
                 val AdaptadorListPrecio = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listFrecuenciaDia)
                 sp_ListFrecuenciaDia.adapter = AdaptadorListPrecio
+                sp_ListFrecuenciaDia.setSelection(-1)
                 sp_ListFrecuenciaDia.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
@@ -211,14 +212,11 @@ class EditCabezera : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val datosListaPrecio = DATAGLOBAL.database.daoTblBasica().getAllListaPrecio()
             runOnUiThread{
-                datosListaPrecio.forEach {
-                    listspListPrecio.add(it.nombre)
-                }
-
-
+                datosListaPrecio.forEach {listspListPrecio.add(it.nombre)}
                 val sp_ListPrecioCabezera = binding.spListPrecioCabezera
                 val AdaptadorListPrecio = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listspListPrecio)
                 sp_ListPrecioCabezera.adapter = AdaptadorListPrecio
+                sp_ListPrecioCabezera.setSelection(-1)
                 sp_ListPrecioCabezera.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
@@ -227,7 +225,6 @@ class EditCabezera : AppCompatActivity() {
                         CoroutineScope(Dispatchers.IO).launch {
                             datosListaPrecio.forEach { if (it.nombre == item){DatosCabezeraCotizacion.codListPrecio = it.codigo} }
                         }
-                        Toast.makeText(this@EditCabezera, "$item", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -255,17 +252,16 @@ class EditCabezera : AppCompatActivity() {
 
             runOnUiThread{
                 listaTipoMoneda.forEach { listspMoneda.add(it.Nombre) }
-
                 val sp_filtroMonedaCabezera = binding.spMonedaCabezera
                 val AdaptadorMoneda = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listspMoneda)
                 sp_filtroMonedaCabezera.adapter = AdaptadorMoneda
+                sp_filtroMonedaCabezera.setSelection(-1)
                 sp_filtroMonedaCabezera.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected( parent: AdapterView<*>?, view: View?, position: Int, id: Long ) {
                         val item: String = parent!!.getItemAtPosition(position).toString()
                         DatosCabezeraCotizacion.tipoMoneda = item
                         listaTipoMoneda.forEach { if(it.Nombre == item) {DatosCabezeraCotizacion.codMoneda = it.Numero} }
-                        Toast.makeText(this@EditCabezera, item, Toast.LENGTH_SHORT).show()
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
@@ -308,7 +304,6 @@ class EditCabezera : AppCompatActivity() {
 
         if (!isFinishing)
         dialog.show()
-
 
         val rv_buscarCliente = vista.findViewById<RecyclerView>(R.id.rv_buscarCliente)
         rv_buscarCliente?.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
@@ -353,6 +348,13 @@ class EditCabezera : AppCompatActivity() {
     }
     //******** FIN DE CLIENTE ******************
 
+
+    override fun onBackPressed() {
+        val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
+        super.onBackPressed()
+    }
 }
 
 

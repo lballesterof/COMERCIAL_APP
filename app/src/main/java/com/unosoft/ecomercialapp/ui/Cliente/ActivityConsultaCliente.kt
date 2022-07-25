@@ -86,7 +86,7 @@ class ActivityConsultaCliente : Fragment() {
     fun filterCliente(text: String) {
         val filterdNamePlato: ArrayList<ClientListResponse> = ArrayList()
         for (i in listaClient.indices) {
-            if (listaClient[i].nombre.lowercase().contains(text.lowercase())) {
+            if (listaClient[i].nombre.lowercase().contains(text.lowercase())||listaClient[i].ruc.lowercase().contains(text.lowercase())) {
                 filterdNamePlato.add(listaClient[i])
             }
         }

@@ -2,10 +2,12 @@ package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
@@ -22,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,7 +35,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
     var apiInterface3: PDFApi? = null
     var apiInterface2: ClientApi? = null
     var apiInterface: ApiCotizacion? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +59,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
             println("Cotizacion")
             enviarCotizacion() }
     }
-
     private fun inicialDatos() {
 
         val date = Date()
@@ -108,10 +109,8 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
                 }
             }
-
         }
     }
-
     private fun editDateClient() {
         val intent = Intent(this, EditCabezera::class.java)
         startActivity(intent)
@@ -135,25 +134,19 @@ class ActivityAddCotizacion : AppCompatActivity() {
                }
             }
         }
-
     }
-
     private fun enviarCotizacion() {
-
         CoroutineScope(Dispatchers.IO).launch {
             var validarCabezera = database.daoTblBasica().isExistsEntityDataCabezera()
             var validarListProct = database.daoTblBasica().isExistsEntityListProct()
             val listaCotizado = ArrayList<DetCotizacion>()
-
             runOnUiThread{
                 if(validarCabezera){
                     if (validarListProct){
                         CoroutineScope(Dispatchers.IO).launch {
-
                             val datosLista = database.daoTblBasica().getAllListProct()
                             val datosCabezera = database.daoTblBasica().getAllDataCabezera()[0]
                             val datoslogin = database.daoTblBasica().getAllDataLogin()[0]
-
                             datosLista.forEach {
                                 listaCotizado.add(DetCotizacion(
                                     0,
@@ -179,7 +172,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                     0,
                                     it.precioUnidad,
                                     it.cdg_Unidad,
-                                    "2022-07-19T23:38:40.713Z",
+                                    "${LocalDateTime.now()}",
                                     "",
                                     "S",
                                     0,
@@ -191,7 +184,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                     0
                                 ))
                             }
-
                             val datosCotizacion = EnviarCotizacion(
                                 datoslogin.iD_COTIZACION.toInt(),
                                 "",
@@ -199,7 +191,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                 datosCabezera.codVendedor!!,
                                 datoslogin.cdgpago,
                                 datosCabezera.codMoneda!!,
-                                "2022-07-19T23:38:40.713Z",
+                                "${LocalDateTime.now()}",
                                 "",
                                 database.daoTblBasica().getAllListProct()[0].montoSubTotal,
                                 0,
@@ -216,16 +208,16 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                 "",
                                 "",
                                 datoslogin.usuariocreacion,
-                                "2022-07-19T23:38:40.713Z",
+                                "${LocalDateTime.now()}",
                                 "",
-                                "2022-07-19T23:38:40.713Z",
+                                "${LocalDateTime.now()}",
                                 datoslogin.codigO_EMPRESA,
                                 datoslogin.sucursal,
                                 "",
                                 0,
-                                "2022-07-19T23:38:40.713Z",
+                                "${LocalDateTime.now()}",
                                 datoslogin.usuarioautoriza,
-                                "2022-07-19T23:38:40.713Z",
+                                "${LocalDateTime.now()}",
                                 "",
                                 0,
                                 datoslogin.redondeo,
@@ -252,12 +244,11 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                 prefs.getCdgVendedor(),
                                 "",
                                 "",
-                                "",
+                                datosCabezera.rucCliente!!,
                                 "",
                                 "",
                                 listaCotizado
                             )
-
                             val response = apiInterface!!.postCreateCotizacion(datosCotizacion)
                                runOnUiThread {
                                   if(response.isSuccessful){
@@ -278,7 +269,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                   }
                                }
                         }
-
                     }else{
                         Toast.makeText(this@ActivityAddCotizacion, "Falta ingresar productos", Toast.LENGTH_SHORT).show()
                     }
@@ -290,48 +280,34 @@ class ActivityAddCotizacion : AppCompatActivity() {
     }
 
     private fun visualizarPDF(idCotizacion:Int) {
-
-
         val intent = Intent(this, VisorPDFCotizacion::class.java)
-
         //ENVIAR DATOS
         val bundle = Bundle()
         bundle.putString("ID", "$idCotizacion")
         intent.putExtras(bundle)
-
         startActivity(intent)
-
-
-
-
-
     }
 
     private fun observacion() {
-
         //***********  Alerta de Dialogo  ***********
         val dialogue = Dialog(this)
         dialogue.setContentView(R.layout.dialogue_observacion)
         dialogue.show()
-
         //***********Declara elementos *****************
         var et_detalle = dialogue.findViewById<EditText>(R.id.et_detalle)
         val bt_guardarDetalle = dialogue.findViewById<Button>(R.id.bt_guardarDetalle)
-
         //*********** BOTON GUARDAR DEL DIALOGO ********
         bt_guardarDetalle.setOnClickListener {
             var detalle:String = et_detalle.text.toString()
             binding.tvObsCotizacion.text = detalle
             dialogue.hide()
         }
-
     }
     override fun onBackPressed() {
         clearTable()
         super.onBackPressed()
     }
     private fun clearTable() {
-
         CoroutineScope(Dispatchers.IO).launch {
             database.daoTblBasica().deleteTableListProct()
             database.daoTblBasica().clearPrimaryKeyListProct()
@@ -341,7 +317,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
             println(database.daoTblBasica().getAllListProct())
         }
-
     }
 
 }
