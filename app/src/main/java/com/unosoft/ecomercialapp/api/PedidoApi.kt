@@ -14,7 +14,7 @@ interface PedidoApi{
     @GET("api/PedidoComercial/{cdg_ven}")
     suspend fun getPedido(@Path("cdg_ven") cdg_ven:String): Response<List<pedidosDto>>
 
-    @POST("/api/Pedido/CreateOrder")
+    @POST("/api/PedidoComercial/CreateOrder")
     suspend fun postCreatePedido(@Body enviarPedido: EnviarPedido) : Response<EnviarPedido>
 
 }

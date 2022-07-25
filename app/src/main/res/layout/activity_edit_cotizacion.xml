@@ -495,7 +495,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="3dp"
-        app:fab_addButtonColorNormal="?attr/colorPrimary"
+        app:fab_addButtonColorNormal="?attr/colorAccent"
         app:fab_addButtonSize="normal"
         app:fab_labelStyle="@style/Etiquetas"
         app:fab_labelsPosition="left"
@@ -503,10 +503,10 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/accion_carrito"
+            android:id="@+id/fa_pdfCotizacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorNormal="@color/colorAccent"
             app:fab_icon="@drawable/ic_pdf"
             app:fab_size="mini"
             app:fab_title="Ver PDF" />

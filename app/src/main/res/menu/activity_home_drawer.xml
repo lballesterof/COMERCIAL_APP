@@ -43,11 +43,11 @@
     <item android:title="Configuraciones">
         <menu>
             <item
-                android:id="@+id/nav_basictables"
+                android:id="@+id/sincTablaBassicaFragment"
                 android:icon="@drawable/ic_sync"
                 android:title="Sinc. Tablas Básicas" />
             <item
-                android:id="@+id/nav_logout"
+                android:id="@+id/cerrarSesionFrament"
                 android:icon="@drawable/ic_salir"
                 android:title="Cerrar Sesión" />
         </menu>

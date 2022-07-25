@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.PedidoMaster
 import com.unosoft.ecomercialapp.databinding.ActivityPedidoEditarBinding
@@ -14,6 +15,7 @@ import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
 import com.unosoft.ecomercialapp.helpers.utils
 import com.unosoft.ecomercialapp.ui.Cotizacion.ActivityAddCotizacion
+import com.unosoft.ecomercialapp.ui.Cotizacion.VisorPDFCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -174,10 +176,10 @@ class ActivityEditPedido : AppCompatActivity() {
 
         binding.tvNumPedido.text = "Numero: "+datos.numero_Pedido
         binding.tvFechaCreacionPedido.text = "Fecha de creacion "+datos.fecha_pedido
-        binding.tvNomClientePedido.text = ""
+        binding.tvNomClientePedido.text = "Cliente: "+datos.persona
         binding.tvRucPedido.text = "RUC: "+datos.ruc
         binding.tvTipoMonedaPedido.text = "Moneda: ${datos.nom_moneda}"
-        binding.tvCondPagoPedido.text = ""
+        binding.tvCondPagoPedido.text = "Condicion Pago: "
 
         binding.tvSubTotalPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_Total-datos.importe_igv)}"
         binding.tvValorVentaPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_Total-datos.importe_igv)}"
@@ -189,6 +191,17 @@ class ActivityEditPedido : AppCompatActivity() {
     private fun eventsHandlers()
     {
         binding.icProducts.setOnClickListener {showactivitydetail()}
+        val fa_pdfPedido = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.fa_pdfPedido)
+        fa_pdfPedido.setOnClickListener { verPDF() }
+    }
+
+    private fun verPDF() {
+        val intent = Intent(this, VisorPDFCotizacion::class.java)
+        //ENVIAR DATOS
+        val bundle = Bundle()
+        bundle.putString("ID", DATAGLOBAL.prefs.getIdPedido())
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 
 

@@ -54,8 +54,6 @@ var apiInterface2: TablaBasicaApi? = null
 var apiInterface3: ListaPrecio? = null
 var apiInterface4: VendedorApi? = null
 
-
-
 private val listCondicionPago = ArrayList<CondicionPagoResponse>()
 private val listDepartamento = ArrayList<DepartamentoResponse>()
 private val listDistrito = ArrayList<DistritoResponse>()
@@ -66,8 +64,6 @@ private val listProvincia = ArrayList<ProvinciaResponse>()
 private val listUnidadMedida = ArrayList<UnidadMedidaResponse>()
 private val listPrecio = ArrayList<ListaPrecioRespuesta>()
 private val listVendedores = ArrayList<VendedorResponse>()
-
-
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,8 +78,6 @@ class MainActivity : AppCompatActivity() {
         apiInterface3 = client!!.create(ListaPrecio::class.java)
         apiInterface4 = client!!.create(VendedorApi::class.java)
 
-
-
         cargarTablaBasica()
 
         val pd = ProgressDialog(this)
@@ -96,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                 return@OnClickListener
             } else {
                 pd.show()
-
 
                 //*******  MANTENER
                 val _user = DCLoginUser(user.text.toString(), pass.text.toString())
@@ -145,9 +138,6 @@ class MainActivity : AppCompatActivity() {
 
                                 }
                             }
-
-
-
                         }
                     }
 
@@ -158,7 +148,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
                 //*******  MANTENER ********
-
             }
         })
     }

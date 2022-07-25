@@ -46,8 +46,6 @@ class VisorPDFCotizacion : AppCompatActivity() {
             requestPermisisonLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
             if (permission==1){
                 descargarPDF()
-            }else{
-                Toast.makeText(this,"Permiso denegado",Toast.LENGTH_SHORT).show()
             }
         }
     }
