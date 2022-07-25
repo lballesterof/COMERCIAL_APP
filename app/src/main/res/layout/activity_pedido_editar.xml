@@ -546,12 +546,8 @@
         app:fab_addButtonSize="normal"
         app:fab_labelStyle="@style/Etiquetas"
         app:fab_labelsPosition="left"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/accion_carrito"
@@ -564,41 +560,7 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="16dp"
-            android:background="@color/colorPrimary"
-            android:padding="1dp"
-            android:text="Guardar"
-            android:textColor="@color/colorBackground" />
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="16dp"
-            android:background="@color/colorBackground"
-            android:padding="1dp"
-            android:text="Cancelar"
-            android:textColor="@color/colorPrimary" />
-
-    </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

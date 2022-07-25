@@ -1,4 +1,4 @@
-package com.unosoft.ecomercialapp.ui.gallery
+package com.unosoft.ecomercialapp.ui.ConsultaStock
 
 import android.content.Context
 import android.os.Bundle
@@ -11,9 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,11 +36,7 @@ class GalleryFragment : Fragment() {
     var itemSelect: String? = null
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_stocks, container, false)
         return view
     }
@@ -118,7 +112,7 @@ class GalleryFragment : Fragment() {
             activity?.runOnUiThread {
                 if (response.isSuccessful) {
                     listaConsultaStocks.clear()
-                    listaConsultaStocks.addAll(response!!.body()!!)
+                    listaConsultaStocks.addAll(response.body()!!)
                     adapterStocks.notifyDataSetChanged()
                 } else {
                     println("Error en la conaulta ")
@@ -133,7 +127,7 @@ class GalleryFragment : Fragment() {
             activity?.runOnUiThread {
                 if (response.isSuccessful) {
                     listaConsultaStocks.clear()
-                    listaConsultaStocks.addAll(response!!.body()!!)
+                    listaConsultaStocks.addAll(response.body()!!)
                     adapterStocks.notifyDataSetChanged()
                 } else {
                     println("Error en la conaulta ")

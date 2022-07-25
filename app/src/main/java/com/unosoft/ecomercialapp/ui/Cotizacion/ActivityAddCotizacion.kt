@@ -1,27 +1,12 @@
-package com.unosoft.ecomercialapp.ui.cotizacion
+package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.github.barteksc.pdfviewer.PDFView
-import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
@@ -30,24 +15,13 @@ import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.ClientApi
 import com.unosoft.ecomercialapp.api.PDFApi
 import com.unosoft.ecomercialapp.databinding.ActivityAddCotizacionBinding
-import com.unosoft.ecomercialapp.entity.Cliente.ClientListResponse
 import com.unosoft.ecomercialapp.entity.Cotizacion.DetCotizacion
 import com.unosoft.ecomercialapp.entity.Cotizacion.EnviarCotizacion
-import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
-import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
-import com.unosoft.ecomercialapp.helpers.DescargarPDF
-import com.unosoft.ecomercialapp.helpers.VisorPDF
 import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.FileOutputStream
-import java.net.URL
-import java.nio.channels.Channels
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.LocalTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -98,11 +72,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            println("***********  VALOR  *************")
-            println(database.daoTblBasica().isExistsEntityDataCabezera())
-            println("***********  DAtOS  *************")
-            println(database.daoTblBasica().getAllDataCabezera())
-
             if(database.daoTblBasica().isExistsEntityDataCabezera()){
 
                 val nombreCliente = database.daoTblBasica().getAllDataCabezera()[0].nombreCliente
@@ -150,7 +119,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
     }
     private fun addressCartQuotation() {
 
-
         CoroutineScope(Dispatchers.IO).launch {
 
             val valor = database.daoTblBasica().isExistsEntityDataCabezera()
@@ -176,6 +144,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
             var validarCabezera = database.daoTblBasica().isExistsEntityDataCabezera()
             var validarListProct = database.daoTblBasica().isExistsEntityListProct()
             val listaCotizado = ArrayList<DetCotizacion>()
+
             runOnUiThread{
                 if(validarCabezera){
                     if (validarListProct){

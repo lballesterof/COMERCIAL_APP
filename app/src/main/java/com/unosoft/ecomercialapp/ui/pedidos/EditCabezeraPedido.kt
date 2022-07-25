@@ -23,7 +23,6 @@ import com.unosoft.ecomercialapp.db.EntityDataCabezera
 import com.unosoft.ecomercialapp.entity.Cliente.ClientListResponse
 import com.unosoft.ecomercialapp.entity.DatosCabezeraCotizacion.datosCabezera
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
-import com.unosoft.ecomercialapp.ui.cotizacion.ActivityAddCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -59,10 +58,7 @@ class EditCabezeraPedido : AppCompatActivity() {
         iniciarSpinnerVendedor()
 
         val btn_guardarCabeceraCot = findViewById<Button>(R.id.btn_guardarCabeceraPedido)
-        btn_guardarCabeceraCot.setOnClickListener {
-            println("btn_guardarCabeceraCot")
-            guardarInfo()
-        }
+        btn_guardarCabeceraCot.setOnClickListener { guardarInfo() }
     }
 
     private fun guardarInfo() {
@@ -93,7 +89,6 @@ class EditCabezeraPedido : AppCompatActivity() {
             println(DATAGLOBAL.database.daoTblBasica().getAllDataCabezera())
 
             runOnUiThread{
-
                 val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
                 startActivity(intent)
                 finish()
@@ -172,6 +167,7 @@ class EditCabezeraPedido : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val datosFrecuenciaDia = DATAGLOBAL.database.daoTblBasica().getAllFrecuenciaDias()
+
             runOnUiThread{
                 datosFrecuenciaDia.forEach {
                     listFrecuenciaDia.add("Dias habiles ${it.Nombre}")
@@ -190,7 +186,6 @@ class EditCabezeraPedido : AppCompatActivity() {
                                 DatosCabezeraPedido.validesDias = it.Nombre
                             } }
                         }
-                        Toast.makeText(this@EditCabezeraPedido,"Lista $item", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -281,7 +276,10 @@ class EditCabezeraPedido : AppCompatActivity() {
         val vista = layoutInflater.inflate(R.layout.dialogue_cliente, null)
         vista.setBackgroundResource(R.color.transparent)
 
+        //Pasar vista al buielder
         builder.setView(vista)
+        //*********************************************
+        val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
 
         val dialog = builder.create()
 
@@ -289,11 +287,7 @@ class EditCabezeraPedido : AppCompatActivity() {
         //*********************************************
 
 
-        //*********************************************
-        val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
-
         fun onItemDatosClientes(data: ClientListResponse) {
-
             binding.tvCliente.text = "Nombre: ${data.nombre}"
             binding.tvRuc.text = "RUC: ${data.ruc}"
 
@@ -304,13 +298,13 @@ class EditCabezeraPedido : AppCompatActivity() {
             dialog.hide()
             dialog.dismiss()
         }
+        if (!isFinishing)
+            dialog.show()
 
         val rv_buscarCliente = vista.findViewById<RecyclerView>(R.id.rv_buscarCliente)
         rv_buscarCliente?.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
         adapterCliente = listclientesadapter(listaClient) { data -> onItemDatosClientes(data) }
         rv_buscarCliente?.adapter = adapterCliente
-
-        dialog.show()
 
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface2!!.getAllClients()

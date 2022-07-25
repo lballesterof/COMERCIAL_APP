@@ -1,24 +1,18 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
-import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.PedidoMaster
 import com.unosoft.ecomercialapp.databinding.ActivityPedidoEditarBinding
 import com.unosoft.ecomercialapp.db.EntityPedidoMaster
 import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
-import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
 import com.unosoft.ecomercialapp.helpers.utils
-import com.unosoft.ecomercialapp.ui.cotizacion.ActivityDetalleCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

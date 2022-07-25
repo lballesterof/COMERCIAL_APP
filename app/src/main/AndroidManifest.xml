@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStoge"/>
 
 
     <application
@@ -25,7 +26,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.cotizacion.VisorPDFCotizacion"
+            android:name=".ui.Cotizacion.VisorPDFCotizacion"
             android:exported="false" />
         <activity
             android:name=".ui.pedidos.EditCabezeraPedido"
@@ -37,19 +38,19 @@
             android:name=".ui.pedidos.ActivityAddPedido"
             android:exported="false" />
         <activity
-            android:name=".ui.cotizacion.EditCabezera"
+            android:name=".ui.Cotizacion.EditCabezera"
             android:exported="false" />
         <activity
-            android:name=".ui.cotizacion.ActivityCardQuotation"
+            android:name=".ui.Cotizacion.ActivityCardQuotation"
             android:exported="false" />
         <activity
-            android:name=".ui.cotizacion.ActivityAddCotizacion"
+            android:name=".ui.Cotizacion.ActivityAddCotizacion"
             android:exported="false" />
         <activity
-            android:name=".ui.cotizacion.ActivityDetalleCotizacion"
+            android:name=".ui.Cotizacion.ActivityDetalleCotizacion"
             android:exported="false" />
         <activity
-            android:name=".ui.cotizacion.ActivityEditCotizacion"
+            android:name=".ui.Cotizacion.ActivityEditCotizacion"
             android:exported="false" />
         <activity
             android:name=".Activity.inicio.InicioActivity"

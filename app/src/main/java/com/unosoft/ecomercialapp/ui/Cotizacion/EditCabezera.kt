@@ -1,7 +1,8 @@
-package com.unosoft.ecomercialapp.ui.cotizacion
+package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,7 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
@@ -26,7 +26,6 @@ import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class EditCabezera : AppCompatActivity() {
@@ -174,6 +173,7 @@ class EditCabezera : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val datosFrecuenciaDia = DATAGLOBAL.database.daoTblBasica().getAllFrecuenciaDias()
+
             runOnUiThread{
                 datosFrecuenciaDia.forEach {
                     listFrecuenciaDia.add("Dias habiles ${it.Nombre}")
@@ -192,7 +192,6 @@ class EditCabezera : AppCompatActivity() {
                                 DatosCabezeraCotizacion.validesDias = it.Nombre
                             } }
                         }
-                        Toast.makeText(this@EditCabezera,"Lista $item", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -291,6 +290,10 @@ class EditCabezera : AppCompatActivity() {
         //Creamos dialogue
         val dialog = builder.create()
 
+        dialog.window!!.setGravity(Gravity.TOP)
+        //*********************************************
+
+
         fun onItemDatosClientes(data: ClientListResponse) {
             binding.tvCliente.text = "Nombre: ${data.nombre}"
             binding.tvRuc.text = "RUC: ${data.ruc}"
@@ -314,12 +317,11 @@ class EditCabezera : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface2!!.getAllClients()
-            withContext(Dispatchers.IO){
+            runOnUiThread{
                 if(response.isSuccessful){
                     listaClient.clear()
                     listaClient.addAll(response.body()!!)
                     adapterCliente.notifyDataSetChanged()
-
                 }else{
                     Toast.makeText(this@EditCabezera, "Error", Toast.LENGTH_SHORT).show()
                 }
@@ -336,8 +338,6 @@ class EditCabezera : AppCompatActivity() {
                 return false
             }
         })
-
-
     }
 
 

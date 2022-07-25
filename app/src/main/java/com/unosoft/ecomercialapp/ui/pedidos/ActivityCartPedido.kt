@@ -16,17 +16,14 @@ import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ProductoComercial
-import com.unosoft.ecomercialapp.databinding.ActivityAddPedidoBinding
 import com.unosoft.ecomercialapp.databinding.ActivityCartPedidoBinding
 import com.unosoft.ecomercialapp.db.EntityListProct
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
 import com.unosoft.ecomercialapp.helpers.utils
-import com.unosoft.ecomercialapp.ui.cotizacion.ActivityAddCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.internal.Util
 
 class ActivityCartPedido : AppCompatActivity() {
     private lateinit var binding: ActivityCartPedidoBinding
