@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="#C6CCD6"
-    tools:context=".ui.cotizacion.ActivityEditCotizacion"
+    tools:context=".ui.Cotizacion.ActivityEditCotizacion"
     android:orientation="vertical">
 
     <LinearLayout
@@ -306,7 +306,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
-                                android:text="Despachar antes de 24/12/2021" />
+                                android:text="Despachar antes de 00/00/00" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -481,12 +481,12 @@
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <!--FIN TOTALES-->
-
             </LinearLayout>
-
             <!---->
         </ScrollView>
+
     </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
@@ -495,17 +495,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="3dp"
-        android:layout_marginBottom="512dp"
         app:fab_addButtonColorNormal="?attr/colorPrimary"
         app:fab_addButtonSize="normal"
         app:fab_labelStyle="@style/Etiquetas"
         app:fab_labelsPosition="left"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/accion_carrito"
@@ -517,41 +512,5 @@
             app:fab_title="Ver PDF" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-    <LinearLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="10dp">
-
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="16dp"
-            android:background="@color/colorPrimary"
-            android:padding="1dp"
-            android:text="Guardar"
-            android:textColor="@color/colorBackground" />
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@color/colorBackground"
-            android:padding="1dp"
-            android:text="Cancelar"
-            android:textColor="@color/colorPrimary" />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

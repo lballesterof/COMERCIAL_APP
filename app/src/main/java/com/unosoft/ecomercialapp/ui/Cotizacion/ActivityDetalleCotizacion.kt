@@ -1,4 +1,4 @@
-package com.unosoft.ecomercialapp.ui.cotizacion
+package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -52,10 +52,6 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
     fun getData() {
 
         CoroutineScope(Dispatchers.IO).launch {
-
-            println("Estado de valor "+database.daoTblBasica().isExistsEntityListEditQuotation())
-            println("Datos de detalle "+database.daoTblBasica().getAllQuotationDetail())
-
 
             if (database.daoTblBasica().isExistsEntityListEditQuotation()) {
                     database.daoTblBasica().getAllQuotationDetail().forEach {

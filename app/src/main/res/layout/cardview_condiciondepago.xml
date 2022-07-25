@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
     android:layout_marginHorizontal="5dp"
-    tools:context=".ui.gallery.GalleryFragment"
+    tools:context=".ui.ConsultaStock.GalleryFragment"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView

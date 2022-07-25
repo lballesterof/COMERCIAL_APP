@@ -1,4 +1,4 @@
-package com.unosoft.ecomercialapp.ui.cotizacion
+package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,16 +10,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
 import com.unosoft.ecomercialapp.Adapter.ProductoComercial.productocomercialadapter
-import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ProductoComercial
-import com.unosoft.ecomercialapp.databinding.ActivityAddCotizacionBinding
 import com.unosoft.ecomercialapp.databinding.ActivityCardQuotationBinding
 import com.unosoft.ecomercialapp.db.EntityListProct
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot

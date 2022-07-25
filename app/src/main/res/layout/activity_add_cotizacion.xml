@@ -7,7 +7,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="#C6CCD6"
     android:orientation="vertical"
-    tools:context=".ui.cotizacion.ActivityAddCotizacion">
+    tools:context=".ui.Cotizacion.ActivityAddCotizacion">
 
     <LinearLayout
         android:layout_width="match_parent"

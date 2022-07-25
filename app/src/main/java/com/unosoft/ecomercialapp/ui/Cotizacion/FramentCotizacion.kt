@@ -1,4 +1,4 @@
-package com.unosoft.ecomercialapp.ui.cotizacion
+package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
-import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
@@ -31,9 +30,7 @@ class FramentCotizacion : Fragment() {
     var apiInterface: ApiCotizacion? = null
     var apiInterface2: LoginApi? = null
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         _binding = FragmentCotizacionBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
@@ -49,17 +46,13 @@ class FramentCotizacion : Fragment() {
 
         eventsHandlers()
     }
-
     private fun eventsHandlers() {
         _binding?.iconAgregarCotizacion?.setOnClickListener { addNewQuatation() }
     }
-
     private fun addNewQuatation() {
         val intent = Intent(activity, ActivityAddCotizacion::class.java)
         startActivity(intent)
     }
-
-
     private fun buscarCotizacion() {
         var sv_buscadorCotizacion = view?.findViewById<androidx.appcompat.widget.SearchView>(R.id.sv_buscadorCotizacion)
 
@@ -90,7 +83,6 @@ class FramentCotizacion : Fragment() {
         adapterCotizaciones = listcotizacionesadapter(listacotizaciones) { dataclassCotizacion -> onItemDatosCotizacion(dataclassCotizacion) }
         rv_cotizaciones?.adapter = adapterCotizaciones
     }
-
     private fun getData(cdg_ven:String){
         CoroutineScope(Dispatchers.IO).launch {
             val cotizaciones = apiInterface!!.fetchAllCotizaciones("$cdg_ven")
@@ -104,7 +96,6 @@ class FramentCotizacion : Fragment() {
             }
         }
     }
-
     fun onItemDatosCotizacion(dataclassCotizacion: cotizacionesDto) {
         prefs.save_IdPedido(dataclassCotizacion.id_cotizacion.toString())
         val intent = Intent(activity, ActivityEditCotizacion::class.java)

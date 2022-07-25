@@ -1,4 +1,4 @@
-package com.unosoft.ecomercialapp.ui.gallery
+package com.unosoft.ecomercialapp.ui.ConsultaStock
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

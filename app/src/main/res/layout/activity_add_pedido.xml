@@ -310,7 +310,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
-                                android:text="Despachar antes de 24/12/2021" />
+                                android:text="Despachar: " />
 
                             <TextView
                                 android:id="@+id/tv_obsAddPedido"
@@ -318,7 +318,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
-                                android:text="Despachar antes de 24/12/2021" />
+                                android:text=""/>
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -502,12 +502,6 @@
         </ScrollView>
 
     </LinearLayout>
-
-    <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/pdfView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
 
     <LinearLayout
         android:id="@+id/linearLayout4"

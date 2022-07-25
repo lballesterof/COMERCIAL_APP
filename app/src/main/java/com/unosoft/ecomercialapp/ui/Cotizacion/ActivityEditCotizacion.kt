@@ -1,30 +1,23 @@
-package com.unosoft.ecomercialapp.ui.cotizacion
+package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.app.Dialog
 import android.content.Intent
-import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.CotizacionMaster
-import com.unosoft.ecomercialapp.api.PedidoMaster
 import com.unosoft.ecomercialapp.databinding.ActivityEditCotizacionBinding
 import com.unosoft.ecomercialapp.db.cotizacion.EntityEditQuotationDetail
 import com.unosoft.ecomercialapp.db.cotizacion.EntityQuotationMaster
-import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import kotlinx.coroutines.CoroutineScope
@@ -125,7 +118,7 @@ class ActivityEditCotizacion : AppCompatActivity() {
 
         val datos = intent.getSerializableExtra("DATOSCOTIZACION") as cotizacionesDto
 
-        binding.tvFechaCreacionCot.text = "00/00/00"
+        binding.tvFechaCreacionCot.text = "Fecha y Hora: 00/00/00"
         //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
         binding.tvIdCotizacion.text = StringBuilder().append("NUMERO: ").append(datos.id_cotizacion)
         binding.tvNameClientCot.text = StringBuilder().append("NOMBRE CLIENTE: ").append(datos.persona)
