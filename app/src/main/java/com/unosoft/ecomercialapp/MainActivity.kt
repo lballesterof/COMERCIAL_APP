@@ -123,6 +123,12 @@ class MainActivity : AppCompatActivity() {
                                 println("***************  IMPRIMIENDO DATOS USUARIO  *****************")
                                 println(database.daoTblBasica().getAllDataLogin())
 
+                                println("***************  LIMPIAR DATOS LISTA PRODUCTO Y CABEZERA  *****************")
+                                database.daoTblBasica().deleteTableListProct()
+                                database.daoTblBasica().clearPrimaryKeyListProct()
+                                database.daoTblBasica().deleteTableDataCabezera()
+                                database.daoTblBasica().clearPrimaryKeyDataCabezera()
+
                                 runOnUiThread {
 
                                     println(user1.cdG_VENDEDOR)

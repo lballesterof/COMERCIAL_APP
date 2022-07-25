@@ -16,7 +16,7 @@
             >
 
             <TextView
-                android:layout_width="220dp"
+                android:layout_width="270dp"
                 android:layout_height="39dp"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -25,20 +25,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="3dp"
                 />
-
-            <Button
-                android:id="@+id/bt_cerrarbusqueda"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:padding="0dp"
-                android:layout_margin="1dp"
-                android:text="Cerrar"
-                android:backgroundTint="@color/white"
-                android:layout_gravity="right"
-                />
-
-
-
         </LinearLayout>
 
         <androidx.appcompat.widget.SearchView

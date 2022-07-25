@@ -286,8 +286,8 @@ class EditCabezeraPedido : AppCompatActivity() {
         val dialog = builder.create()
 
         dialog.window!!.setGravity(Gravity.TOP)
-        dialog.show()
         //*********************************************
+
 
         //*********************************************
         val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
@@ -302,6 +302,7 @@ class EditCabezeraPedido : AppCompatActivity() {
             DatosCabezeraPedido.idCliente = data.idpersona
 
             dialog.hide()
+            dialog.dismiss()
         }
 
         val rv_buscarCliente = vista.findViewById<RecyclerView>(R.id.rv_buscarCliente)

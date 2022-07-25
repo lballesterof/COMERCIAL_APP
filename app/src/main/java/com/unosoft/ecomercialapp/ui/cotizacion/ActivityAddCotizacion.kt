@@ -35,12 +35,16 @@ import com.unosoft.ecomercialapp.entity.Cotizacion.DetCotizacion
 import com.unosoft.ecomercialapp.entity.Cotizacion.EnviarCotizacion
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
+import com.unosoft.ecomercialapp.helpers.DescargarPDF
 import com.unosoft.ecomercialapp.helpers.VisorPDF
 import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.FileOutputStream
+import java.net.URL
+import java.nio.channels.Channels
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -85,7 +89,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
         val date = Date()
         val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
 
-        binding.tvFecOrden.text = "Fecha y hora: ${formatter.format(date)}"
+        binding.tvFecOrden.text = "Fecha y hora:"
         binding.tvCodCotizacion.text = "Numero: "
         binding.tvCliente.text = "Nombre Cliente "
         binding.tvRuc.text = "RUC: "
@@ -95,7 +99,9 @@ class ActivityAddCotizacion : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
 
             println("***********  VALOR  *************")
-            println(database.daoTblBasica().isExistsEntityProductList())
+            println(database.daoTblBasica().isExistsEntityDataCabezera())
+            println("***********  DAtOS  *************")
+            println(database.daoTblBasica().getAllDataCabezera())
 
             if(database.daoTblBasica().isExistsEntityDataCabezera()){
 
@@ -104,18 +110,18 @@ class ActivityAddCotizacion : AppCompatActivity() {
                 val tipoMoneda = database.daoTblBasica().getAllDataCabezera()[0].tipoMoneda
                 val condicionPago = database.daoTblBasica().getAllDataCabezera()[0].condicionPago
 
-                if(database.daoTblBasica().isExistsEntityProductList()){
 
                     runOnUiThread {
+
                         binding.tvFecOrden.text = "Fecha y hora: ${formatter.format(date)}"
                         binding.tvCodCotizacion.text = "Numero: "
                         binding.tvCliente.text = "Nombre Cliente ${nombreCliente}"
                         binding.tvRuc.text = "RUC: ${rucCliente}"
                         binding.tvMoneda.text = "Moneda: ${tipoMoneda}"
                         binding.tvCondicionPago.text = "Condición de Pago ${condicionPago}"
+
                     }
 
-                }
             }
 
             if(database.daoTblBasica().isExistsEntityProductList()){
@@ -125,10 +131,12 @@ class ActivityAddCotizacion : AppCompatActivity() {
                 val montoTotal = database.daoTblBasica().getAllListProct()[0].montoTotal
 
                 runOnUiThread {
+
                     binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(montoSubTotal)
                     binding.tvValorVentaAddCotizacion.text = utils().pricetostringformat(montoSubTotal)
                     binding.tvValorIGVAddCotizacion.text = utils().pricetostringformat(montoTotalIGV)
                     binding.tvImporteTotal.text = utils().pricetostringformat(montoTotal)
+
                 }
             }
 
@@ -138,10 +146,28 @@ class ActivityAddCotizacion : AppCompatActivity() {
     private fun editDateClient() {
         val intent = Intent(this, EditCabezera::class.java)
         startActivity(intent)
+        finish()
     }
     private fun addressCartQuotation() {
-        val intent = Intent(this, ActivityCardQuotation::class.java)
-        startActivity(intent)
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val valor = database.daoTblBasica().isExistsEntityDataCabezera()
+            println("******** VALORES ********")
+            println("$valor")
+
+            runOnUiThread {
+               if (valor){
+                    val intent = Intent(this@ActivityAddCotizacion, ActivityCardQuotation::class.java)
+                    startActivity(intent)
+                    finish()
+               }else{
+                    Toast.makeText(this@ActivityAddCotizacion, "Rellenar datos clientes", Toast.LENGTH_SHORT).show()
+               }
+            }
+        }
+
     }
 
     private fun enviarCotizacion() {
@@ -271,9 +297,9 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                      println("**********************************")
                                      Toast.makeText(this@ActivityAddCotizacion, "Exito", Toast.LENGTH_SHORT).show()
 
-
                                       visualizarPDF(response.body()!!.iD_COTIZACION)
 
+                                      binding.tvCodCotizacion.text = "N° Cotizacion: ${response.body()!!.iD_COTIZACION}"
 
                                   }else{
                                      println("**********************************")
@@ -296,6 +322,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
 
     private fun visualizarPDF(idCotizacion:Int) {
 
+
         val intent = Intent(this, VisorPDFCotizacion::class.java)
 
         //ENVIAR DATOS
@@ -304,6 +331,10 @@ class ActivityAddCotizacion : AppCompatActivity() {
         intent.putExtras(bundle)
 
         startActivity(intent)
+
+
+
+
 
     }
 

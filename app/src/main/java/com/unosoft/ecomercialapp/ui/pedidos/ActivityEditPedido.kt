@@ -200,6 +200,7 @@ class ActivityEditPedido : AppCompatActivity() {
     //Nuevo Activity
     private fun showactivitydetail()
     {
+        println("que")
         val intent = Intent(this, ActivityEditDetallePedido::class.java)
         startActivity(intent)
     }
