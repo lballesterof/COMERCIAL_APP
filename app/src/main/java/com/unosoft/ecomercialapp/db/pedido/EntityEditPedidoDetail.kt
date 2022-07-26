@@ -106,5 +106,5 @@ data class EntityEditPedidoDetail(
         @ColumnInfo
         val importE_MARGEN: Double?,
         @ColumnInfo
-        val costO_ADIC: Double?
+        val costO_ADIC: Double?,
     )

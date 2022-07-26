@@ -32,10 +32,14 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
     var igvTotal:Double = 0.0
     var subtotal:Double = 0.0
 
+    var tipoMoneda = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalle_cotizacion)
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
+        tipoMoneda = intent.getStringExtra("TIPOMONEDA").toString()
 
         getData()
         productosListado()
@@ -48,26 +52,30 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         rv_listproductcot?.adapter = productlistcotadarte
     }
     private fun onItemDatosProductList(data: productlistcot) {
-    }
-    fun getData() {
 
+    }
+
+    fun getData() {
         CoroutineScope(Dispatchers.IO).launch {
+
+            println("/////////************************************////////")
+            println("/////////************  Inicio  **************////////")
+            println(database.daoTblBasica().getAllQuotationDetail())
+            println("/////////*************  fin  **************////////")
 
             if (database.daoTblBasica().isExistsEntityListEditQuotation()) {
                     database.daoTblBasica().getAllQuotationDetail().forEach {
                         listaProductoListados.add(
                             productlistcot(
-                            it.iD_PRODUCTO,it.codigo,it.codigO_BARRA,it.nombre,it.noM_UNIDAD,it.preciO_ORIGINAL,0.0,it.unidad,"","",it.cantidad,it.preciO_ORIGINAL,it.preciO_ORIGINAL
+                            it.iD_PRODUCTO,it.codigo,it.codigO_BARRA,it.nombre,tipoMoneda,it.preciO_ORIGINAL,0.0,it.unidad,it.noM_UNIDAD,"",it.cantidad,it.preciO_ORIGINAL,it.preciO_ORIGINAL*it.cantidad
                             )
                         )
                     }
-                }
-
-                productlistcotadarte.notifyDataSetChanged()
-                calcularMontoTotal()
             }
-
+            productlistcotadarte.notifyDataSetChanged()
+            calcularMontoTotal()
         }
+    }
 
 
     //************* FUNCIONES ADICIONALES  ****************
@@ -80,9 +88,9 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
         val tv_igvCot = findViewById<TextView>(R.id.tv_igvCotDetailQuotation)
         val tv_totalCot = findViewById<TextView>(R.id.tv_totalCotDetailQuotation)
 
-        tv_totalCot.text = utils().pricetostringformat(montoTotal)
-        tv_igvCot.text = utils().pricetostringformat(igvTotal)
-        tv_subtotalCot.text = utils().pricetostringformat(subtotal)
+        tv_totalCot.text = "$tipoMoneda ${utils().pricetostringformat(montoTotal)}"
+        tv_igvCot.text = "$tipoMoneda ${utils().pricetostringformat(igvTotal)}"
+        tv_subtotalCot.text = "$tipoMoneda  ${utils().pricetostringformat(subtotal)}"
     }
 
 }

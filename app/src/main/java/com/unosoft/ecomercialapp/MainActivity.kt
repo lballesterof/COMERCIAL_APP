@@ -132,6 +132,10 @@ class MainActivity : AppCompatActivity() {
 
                                     val i = Intent(applicationContext, InicioActivity::class.java)
                                     startActivity(i)
+                                    finish()
+
+                                    user.setText("")
+                                    pass.setText("")
 
                                     // Toast.makeText(getApplicationContext(), user1.nombreusuario + " " + user1.jwtToken + " " + user1.poR_IGV + " " + user1.refreshToken, Toast.LENGTH_SHORT).show();
                                     pd.cancel()

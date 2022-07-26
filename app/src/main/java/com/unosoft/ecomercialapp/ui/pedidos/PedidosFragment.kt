@@ -44,6 +44,9 @@ class PedidosFragment : Fragment() {
 
         initRecyclerView()
         buscarCotizacion()
+
+
+
         getDataPedido(prefs.getCdgVendedor())
 
         eventsHandlers()

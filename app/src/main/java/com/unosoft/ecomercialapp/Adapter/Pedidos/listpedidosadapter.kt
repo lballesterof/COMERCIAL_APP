@@ -37,11 +37,12 @@ class listpedidosadapter(var datos: ArrayList<pedidosDto>, private val onClickLi
             val fechapedido = view.findViewById<TextView>(R.id.fechapedido)
 
             tv_cliente.text = datos.persona
-            if (datos.numero_Pedido==null)
-            {   tv_numeropedido.text = "PED-SINVALOR"
-                datos.numero_Pedido = "PED-SINVALOR" }
+            if (datos.numero_Pedido==null){
+                tv_numeropedido.text = "PED-SINVALOR"
+                datos.numero_Pedido = "PED-SINVALOR"
+            }
             else {
-                tv_numeropedido.text = datos.numero_Pedido.toString()
+                tv_numeropedido.text = datos.numero_Pedido
             }
             ruc.text = "RUC:  ${datos.ruc}"
             preciocotizacion.text =  StringBuilder().append("IMPORTE TOTAL ").append(datos.mon+". ").append(String.format("%,.2f", datos.importe_Total))

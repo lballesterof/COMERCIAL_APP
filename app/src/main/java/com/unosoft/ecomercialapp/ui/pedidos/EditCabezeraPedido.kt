@@ -120,16 +120,12 @@ class EditCabezeraPedido : AppCompatActivity() {
                         }
                         Toast.makeText(this@EditCabezeraPedido,"Lista $item", Toast.LENGTH_SHORT).show()
                     }
-
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("Not yet implemented")
                     }
-
                 }
             }
         }
-
-
     }
     private fun iniciarSpinnerCondicionPago() {
         val listCondicionPago = ArrayList<String>()
@@ -187,17 +183,12 @@ class EditCabezeraPedido : AppCompatActivity() {
                             } }
                         }
                     }
-
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("Not yet implemented")
                     }
-
                 }
-
             }
         }
-
-
     }
     private fun iniciarSpinnerListPrecio() {
         val listspListPrecio = ArrayList<String>()
@@ -208,8 +199,6 @@ class EditCabezeraPedido : AppCompatActivity() {
                 datosListaPrecio.forEach {
                     listspListPrecio.add(it.nombre)
                 }
-
-
                 val sp_ListPrecioCabezera = binding.spListPrecioCabezera
                 val AdaptadorListPrecio = ArrayAdapter(this@EditCabezeraPedido, android.R.layout.simple_spinner_item, listspListPrecio)
                 sp_ListPrecioCabezera.adapter = AdaptadorListPrecio

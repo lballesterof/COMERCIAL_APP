@@ -9,6 +9,9 @@ class Prefs (contexto:Context){
     val SHARE_TIPOCAMBIO = "TIPOCAMBIO"
     val SHARE_IDPEDIDO = "IDPEDIDO"
 
+    //val SHARE_USER = "USER"
+    //val SHARE_PASS = "PASS"
+
 
     val storege = contexto.getSharedPreferences(SHARE_DB,0)
 

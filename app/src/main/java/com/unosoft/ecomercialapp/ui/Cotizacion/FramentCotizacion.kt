@@ -42,6 +42,7 @@ class FramentCotizacion : Fragment() {
 
         initRecyclerView()
         buscarCotizacion()
+
         getData(prefs.getCdgVendedor())
 
         eventsHandlers()

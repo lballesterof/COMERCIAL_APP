@@ -17,10 +17,12 @@ import com.unosoft.ecomercialapp.databinding.ActivityAddPedidoBinding
 import com.unosoft.ecomercialapp.entity.Pedidos.Detalle
 import com.unosoft.ecomercialapp.entity.Pedidos.EnviarPedido
 import com.unosoft.ecomercialapp.helpers.utils
+import com.unosoft.ecomercialapp.ui.Cotizacion.VisorPDFCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 class ActivityAddPedido : AppCompatActivity() {
@@ -28,6 +30,7 @@ class ActivityAddPedido : AppCompatActivity() {
 
     var apiInterface: PedidoApi? = null
 
+    var tipomoneda = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +52,11 @@ class ActivityAddPedido : AppCompatActivity() {
         //** CONSULTAR **
         val btn_savePedido = findViewById<Button>(R.id.btn_savePedido)
         btn_savePedido.setOnClickListener { enviarPedido() }
+        val btn_cancelPedido = findViewById<Button>(R.id.btn_cancelPedido)
+        btn_cancelPedido.setOnClickListener {
+            this.onBackPressed()
+            finish()
+        }
     }
 
     private fun inicialDatos() {
@@ -74,15 +82,21 @@ class ActivityAddPedido : AppCompatActivity() {
                 val tipoMoneda = database.daoTblBasica().getAllDataCabezera()[0].tipoMoneda
                 val condicionPago = database.daoTblBasica().getAllDataCabezera()[0].condicionPago
 
+                tipomoneda = tipoMoneda!!
+
                 runOnUiThread {
 
-                    binding.tvFechaCreacionAddPedido.text =
-                        "Fecha y hora: ${formatter.format(date)}"
+                    binding.tvFechaCreacionAddPedido.text = "Fecha y hora: ${formatter.format(date)}"
                     binding.tvNumAddPedido.text = "Numero: "
                     binding.tvClienteADdPedido.text = "Nombre Cliente ${nombreCliente}"
                     binding.tvRucAddPedido.text = "RUC: ${rucCliente}"
                     binding.tvMonedaAddPedido.text = "Moneda: ${tipoMoneda}"
                     binding.tvCondicionPagoAddPedido.text = "Condición de Pago ${condicionPago}"
+
+                    binding.tvSubTotalAddPedido.text = "${tipoMoneda} 0.0"
+                    binding.tvValorVentaAddPedido.text = "${tipoMoneda} 0.0"
+                    binding.tvValorIGVAddPedido.text = "${tipoMoneda} 0.0"
+                    binding.tvImporteTotalAddPedido.text = "${tipoMoneda} 0.0"
 
                 }
 
@@ -93,13 +107,15 @@ class ActivityAddPedido : AppCompatActivity() {
                 val montoSubTotal = database.daoTblBasica().getAllListProct()[0].montoSubTotal
                 val montoTotalIGV = database.daoTblBasica().getAllListProct()[0].montoTotalIGV
                 val montoTotal = database.daoTblBasica().getAllListProct()[0].montoTotal
+                val tipoMoneda = database.daoTblBasica().getAllDataCabezera()[0].tipoMoneda
+
 
                 runOnUiThread {
 
-                    binding.tvSubTotalAddPedido.text = utils().pricetostringformat(montoSubTotal)
-                    binding.tvValorVentaAddPedido.text = utils().pricetostringformat(montoSubTotal)
-                    binding.tvValorIGVAddPedido.text = utils().pricetostringformat(montoTotalIGV)
-                    binding.tvImporteTotalAddPedido.text = utils().pricetostringformat(montoTotal)
+                    binding.tvSubTotalAddPedido.text = "${tipoMoneda} ${utils().pricetostringformat(montoSubTotal)}"
+                    binding.tvValorVentaAddPedido.text = "${tipoMoneda} ${utils().pricetostringformat(montoSubTotal)}"
+                    binding.tvValorIGVAddPedido.text = "${tipoMoneda} ${utils().pricetostringformat(montoTotalIGV)}"
+                    binding.tvImporteTotalAddPedido.text = "${tipoMoneda} ${utils().pricetostringformat(montoTotal)}"
 
                 }
             }
@@ -121,6 +137,7 @@ class ActivityAddPedido : AppCompatActivity() {
                 if (valor) {
                     val intent = Intent(this@ActivityAddPedido, ActivityCartPedido::class.java)
                     startActivity(intent)
+                    intent.putExtra("TIPOMONEDA",tipomoneda)
                     finish()
                 } else {
                     Toast.makeText(this@ActivityAddPedido,"Rellenar datos clientes",Toast.LENGTH_SHORT).show()
@@ -173,7 +190,7 @@ class ActivityAddPedido : AppCompatActivity() {
                                         "",
                                         "0",
                                         it.unidad,
-                                        "2022-07-19T23:38:40.713Z",
+                                        "",
                                         "${datoslogin.usuario}",
                                         "0001", //******
                                         "",
@@ -181,7 +198,7 @@ class ActivityAddPedido : AppCompatActivity() {
                                         0,
                                         0,
                                         "",
-                                        "2022-07-19T23:38:40.713Z",
+                                        "${LocalDateTime.now()}",
                                         1,
                                         "",
                                         "S",
@@ -195,7 +212,7 @@ class ActivityAddPedido : AppCompatActivity() {
                                         0,
                                         0,
                                         "",
-                                        "2022-07-19T23:38:40.713Z",
+                                        "${LocalDateTime.now()}",
                                         0,
                                         0,
                                         0
@@ -212,10 +229,10 @@ class ActivityAddPedido : AppCompatActivity() {
                                 "",
                                 "",
                                 "",
-                                "",
+                                prefs.getCdgVendedor(),
                                 datosCabezera.codCondicionPago!!,
                                 datosCabezera.codMoneda!!,
-                                "2022-07-19T23:38:40.713Z",
+                                "${LocalDateTime.now()}",
                                 "",
                                 database.daoTblBasica().getAllListProct()[0].montoSubTotal,
                                 database.daoTblBasica().getAllListProct()[0].montoTotalIGV,
@@ -230,14 +247,14 @@ class ActivityAddPedido : AppCompatActivity() {
                                 0,
                                 datoslogin.usuariocreacion,
                                 datoslogin.usuarioautoriza,
-                                "2022-07-19T23:38:40.713Z",
-                                "2022-07-19T23:38:40.713Z",
+                                "${LocalDateTime.now()}",
+                                "${LocalDateTime.now()}",
                                 datoslogin.codigO_EMPRESA,
                                 datoslogin.sucursal,
                                 0,
                                 0,
-                                "",
-                                "2022-07-19T23:38:40.713Z",
+                                prefs.getCdgVendedor(),
+                                "${LocalDateTime.now()}",
                                 "",
                                 "",
                                 "",
@@ -266,6 +283,11 @@ class ActivityAddPedido : AppCompatActivity() {
                                     println("********      EXITO        *******")
                                     println("**********************************")
                                     Toast.makeText(this@ActivityAddPedido,"Exito",Toast.LENGTH_SHORT).show()
+
+                                    visualizarPDF(response.body()!!.iD_PEDIDO)
+
+                                    binding.tvNumAddPedido.text = "N° Pedido: ${response.body()!!.iD_COTIZACION}"
+
                                 } else {
                                     println("**********************************")
                                     println("********      ERROR        *******")
@@ -283,6 +305,15 @@ class ActivityAddPedido : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun visualizarPDF(idPedido: Int) {
+        val intent = Intent(this, VisorPDFPedido::class.java)
+        //ENVIAR DATOS
+        val bundle = Bundle()
+        bundle.putString("ID", "$idPedido")
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 
     fun observacion() {

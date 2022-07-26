@@ -8,10 +8,13 @@
 
     <LinearLayout
 
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -23,101 +26,98 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/icon_agregarProductosCotizacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            app:srcCompat="@drawable/ic_add" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:gravity="bottom"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:text="Sub-Total:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tv_subtotalCotDetailQuotation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:paddingStart="20dp"
-                    android:text="Sub-Total:"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16dp" />
-                <TextView
-                    android:id="@+id/tv_subtotalCotDetailQuotation"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="30dp"
-                    android:textAlignment="textEnd"
-                    android:text="S/. 0.0"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:paddingStart="20dp"
-                    android:text="IGV:"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16dp" />
-                <TextView
-                    android:id="@+id/tv_igvCotDetailQuotation"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="30dp"
-                    android:textAlignment="textEnd"
-                    android:text="S/. 0.0"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-
-                >
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:paddingStart="20dp"
-                    android:text="Total:"
-
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16dp" />
-                <TextView
-                    android:id="@+id/tv_totalCotDetailQuotation"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="30dp"
-                    android:text="S/. 0.0"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
+                android:layout_height="40dp"
+                android:layout_marginRight="30dp"
+                android:text="S/. 0.0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16dp" />
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:text="IGV:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tv_igvCotDetailQuotation"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="30dp"
+                android:text="S/. 0.0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+
+                android:text="Total:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tv_totalCotDetailQuotation"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="30dp"
+                android:text="S/. 0.0"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

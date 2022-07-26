@@ -44,11 +44,10 @@ class CerrarSesionFrament : Fragment() {
         builder.setIcon(android.R.drawable.ic_input_delete)
 
         builder.setPositiveButton("Si") { dialogInterface, which ->
-            Toast.makeText(activity, "clicked yes", Toast.LENGTH_LONG).show()
             cerrarSesion()
         }
         builder.setNegativeButton("No") { dialogInterface, which ->
-            Toast.makeText(activity, "clicked no", Toast.LENGTH_LONG).show()
+            requireActivity().onBackPressed()
         }
 
         val alertDialog: AlertDialog = builder.create()
@@ -82,10 +81,12 @@ class CerrarSesionFrament : Fragment() {
                 println("***************************************")
                 println("*********** CERRAR SESION *************")
                 println("***************************************")
-                val intent = Intent(activity, MainActivity::class.java)
-                startActivity(intent)
+                startActivity(
+                    Intent(activity, MainActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                )
+                requireActivity().finish()
             }
         }
-
     }
 }

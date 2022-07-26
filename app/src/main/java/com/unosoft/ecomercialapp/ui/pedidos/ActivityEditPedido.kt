@@ -23,7 +23,8 @@ import kotlinx.coroutines.launch
 class ActivityEditPedido : AppCompatActivity() {
 
     var apiInterface: PedidoMaster? = null
-    var iv_productosCot :ImageView? = null
+
+    var tipomoneda = ""
 
     private lateinit var binding : ActivityPedidoEditarBinding
 
@@ -174,18 +175,21 @@ class ActivityEditPedido : AppCompatActivity() {
     private fun InitializeUI() {
         val datos = intent.getSerializableExtra("DATOSPEDIDOS") as pedidosDto
 
+        println("$datos")
+
         binding.tvNumPedido.text = "Numero: "+datos.numero_Pedido
         binding.tvFechaCreacionPedido.text = "Fecha de creacion "+datos.fecha_pedido
         binding.tvNomClientePedido.text = "Cliente: "+datos.persona
         binding.tvRucPedido.text = "RUC: "+datos.ruc
-        binding.tvTipoMonedaPedido.text = "Moneda: ${datos.nom_moneda}"
-        binding.tvCondPagoPedido.text = "Condicion Pago: "
+        binding.tvTipoMonedaPedido.text = "Moneda: ${datos.mon}"
+        binding.tvCondPagoPedido.text = "Condicion Pago: " // hoy hay para setear este campo
 
         binding.tvSubTotalPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_Total-datos.importe_igv)}"
         binding.tvValorVentaPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_Total-datos.importe_igv)}"
-        binding.tvIgvPedido.text = "${datos.mon} ${datos.importe_igv}"
+        binding.tvIgvPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_igv)}"
         binding.tvImporteTotalPedido.text = "${datos.mon} ${datos.importe_Total}"
 
+        tipomoneda = datos.mon
     }
 
     private fun eventsHandlers()
@@ -196,7 +200,7 @@ class ActivityEditPedido : AppCompatActivity() {
     }
 
     private fun verPDF() {
-        val intent = Intent(this, VisorPDFCotizacion::class.java)
+        val intent = Intent(this, VisorPDFPedido::class.java)
         //ENVIAR DATOS
         val bundle = Bundle()
         bundle.putString("ID", DATAGLOBAL.prefs.getIdPedido())
@@ -209,6 +213,9 @@ class ActivityEditPedido : AppCompatActivity() {
     private fun showactivitydetail()
     {
         val intent = Intent(this, ActivityEditDetallePedido::class.java)
+
+        intent.putExtra("TIPOMONEDA",tipomoneda)
+
         startActivity(intent)
     }
 

@@ -39,7 +39,7 @@ class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>, priv
             lblnrazonsocial.setTypeface(null, Typeface.BOLD)
             lblntotal.setTypeface(null, Typeface.BOLD)
             lblntotal.text = StringBuilder().append("IMPORTE TOTAL ").append(cotizaciones.mon+". ").append(String.format("%,.2f", cotizaciones.importe_total))
-            lblnrruc.text = StringBuilder().append(cotizaciones.documento+": ").append(cotizaciones.ruc.toString())
+            lblnrruc.text = StringBuilder().append(cotizaciones.documento+": ").append(cotizaciones.ruc)
 
             itemView.setOnClickListener {
                 onClickListener(cotizaciones)

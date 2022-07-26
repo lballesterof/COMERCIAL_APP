@@ -22,19 +22,21 @@ import com.unosoft.ecomercialapp.db.cotizacion.EntityEditQuotationDetail
 import com.unosoft.ecomercialapp.db.cotizacion.EntityQuotationMaster
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
+import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.StringBuilder
 
 class ActivityEditCotizacion : AppCompatActivity() {
+    private lateinit var binding: ActivityEditCotizacionBinding
 
     private lateinit var adapterCotizaciones: listcotizacionesadapter
     private val listacotizaciones = ArrayList<cotizacionesDto>()
     private val listaTipoMoneda = ArrayList<MonedaResponse>()
     var apiInterface: CotizacionMaster? = null
 
-    private lateinit var binding: ActivityEditCotizacionBinding
+    var tipomoneda = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,17 +120,22 @@ class ActivityEditCotizacion : AppCompatActivity() {
     private fun showactivitydetail() {
         val intent = Intent(this, ActivityDetalleCotizacion::class.java)
 
-        /*//ENVIAR DATOS
-        val bundle = Bundle()
-        bundle.putSerializable("DATOSCOTIZACION", dataclassCotizacion)
-        intent.putExtras(bundle)*/
+        intent.putExtra("TIPOMONEDA",tipomoneda)
 
         startActivity(intent)
     }
 
     private fun iniciarData() {
 
+
+
+
         val datos = intent.getSerializableExtra("DATOSCOTIZACION") as cotizacionesDto
+
+        println("********************************************************************")
+        println(datos)
+        println("********************************************************************")
+
 
         binding.tvFechaCreacionCot.text = "Fecha y Hora: 00/00/00"
         //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
@@ -137,10 +144,12 @@ class ActivityEditCotizacion : AppCompatActivity() {
         binding.tvRucCot.text = StringBuilder().append("RUC: ").append(datos.ruc)
         binding.tvTipoMonedaCot.text = StringBuilder().append("MONEDA: ").append(datos.mon)
         binding.tvCondPagoCot.text = StringBuilder().append("Consicion Pago: ").append("--------")
-        binding.tvSubtotalCot.text = StringBuilder().append(datos.mon).append(datos.importe_total - datos.importe_igv)
-        binding.tvValorventaCot.text = StringBuilder().append(datos.mon).append(datos.importe_total - datos.importe_igv)
-        binding.tvIgvCot.text = StringBuilder().append(datos.mon).append(datos.importe_igv)
-        binding.tvImporte.text = StringBuilder().append(datos.mon).append(datos.importe_total)
+        binding.tvSubtotalCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total - datos.importe_igv))
+        binding.tvValorventaCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total - datos.importe_igv))
+        binding.tvIgvCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_igv))
+        binding.tvImporte.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total))
+
+        tipomoneda = datos.mon
 
     }
 
@@ -260,7 +269,8 @@ class ActivityEditCotizacion : AppCompatActivity() {
                                     it.importE_DSCTO,
                                     it.comision,
                                     it.swT_PIGV,
-                                    it.noM_UNIDAD
+                                    it.noM_UNIDAD,
+
                                 )
                             )
                         }

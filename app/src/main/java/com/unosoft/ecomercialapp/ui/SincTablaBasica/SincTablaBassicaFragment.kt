@@ -1,13 +1,16 @@
 package com.unosoft.ecomercialapp.ui.SincTablaBasica
 
+import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import com.unosoft.ecomercialapp.DATAGLOBAL
+import com.unosoft.ecomercialapp.MainActivity
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ListaPrecio
 import com.unosoft.ecomercialapp.api.LoginApi
@@ -76,6 +79,16 @@ class SincTablaBassicaFragment : Fragment() {
         apiInterface4 = APIClient.client!!.create(VendedorApi::class.java)
 
         sincronizarTablaBasica()
+
+    }
+
+    private fun redireccionarHome() {
+
+        startActivity(
+            Intent(activity, MainActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        )
+
     }
 
     private fun sincronizarTablaBasica() {
@@ -85,11 +98,12 @@ class SincTablaBassicaFragment : Fragment() {
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         builder.setPositiveButton("Si"){dialogInterface, which ->
+            cargarTablaBasica()
             Toast.makeText(activity,"clicked yes",Toast.LENGTH_LONG).show()
-
         }
         builder.setNegativeButton("No"){dialogInterface, which ->
-            cargarTablaBasica()
+            Toast.makeText(activity,"clicked No",Toast.LENGTH_LONG).show()
+            requireActivity().onBackPressed()
         }
 
         val alertDialog: AlertDialog = builder.create()
@@ -98,6 +112,11 @@ class SincTablaBassicaFragment : Fragment() {
     }
 
     private fun cargarTablaBasica() {
+        val pd = ProgressDialog(activity)
+        pd.setMessage("Sincronizando datos")
+        pd.setCancelable(false)
+        pd.create()
+        pd.show()
 
         fun inyectarDataRoom(
             listaCondicionPagoResponse: ArrayList<CondicionPagoResponse>,
@@ -187,10 +206,12 @@ class SincTablaBassicaFragment : Fragment() {
                     }
                 }
 
-                withContext(Dispatchers.IO) {
+                activity?.runOnUiThread {
                     println("*********************************************************")
-                    println("**************  CARGA DE TABLA BASICA  ******************")
+                    println("********** EXITO DE CARGA DE TABLA BASICA  **************")
                     println("*********************************************************")
+                    pd.cancel()
+                    requireActivity().onBackPressed()
                 }
             }
         }
@@ -259,4 +280,6 @@ class SincTablaBassicaFragment : Fragment() {
         }
         getDataRoom()
     }
+
+
 }

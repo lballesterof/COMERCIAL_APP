@@ -44,7 +44,7 @@ class EditCabezera : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditCabezeraBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //******************************************************************
+        //***********************************
         apiInterface2 = APIClient.client?.create(ClientApi::class.java)
         eventsHanlder()
     }
@@ -260,8 +260,11 @@ class EditCabezera : AppCompatActivity() {
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected( parent: AdapterView<*>?, view: View?, position: Int, id: Long ) {
                         val item: String = parent!!.getItemAtPosition(position).toString()
-                        DatosCabezeraCotizacion.tipoMoneda = item
-                        listaTipoMoneda.forEach { if(it.Nombre == item) {DatosCabezeraCotizacion.codMoneda = it.Numero} }
+
+                        listaTipoMoneda.forEach { if(it.Nombre == item) {
+                            DatosCabezeraCotizacion.codMoneda = it.Numero
+                            DatosCabezeraCotizacion.tipoMoneda = it.Referencia1
+                        } }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }

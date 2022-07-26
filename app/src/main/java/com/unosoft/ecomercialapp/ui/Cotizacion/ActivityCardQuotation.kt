@@ -43,11 +43,13 @@ class ActivityCardQuotation : AppCompatActivity() {
     var igvTotal:Double = 0.0
     var subtotal:Double = 0.0
 
+    var tipomoneda = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCardQuotationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        tipomoneda = intent.getStringExtra("TIPOMONEDA").toString()
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         //iniciarLista()
@@ -81,7 +83,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 database.daoTblBasica().getAllListProct().forEach {
                     listaProductoListados.add(
                         productlistcot(
-                            it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,
+                            it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,tipomoneda,it.precio_Venta,it.factor_Conversion,
                             it.cdg_Unidad,it.unidad,it.moneda_Lp,it.cantidad,it.precioUnidad,it.precioTotal
                         )
                     )
@@ -135,26 +137,14 @@ class ActivityCardQuotation : AppCompatActivity() {
         tv_nameProducto.text = data.nombre
         tv_codProducto.text = data.codigo
         tv_precioUnidad.text = "${data.mon} ${pricetostringformat(data.precio_Venta)}"
-        tv_precioTotal.text = "${data.mon} ${
-            pricetostringformat(
-                calculatepricebyqty(
-                    tv_cantidad.text.toString().toInt(), data.precio_Venta
-                )
-            )
-        }"
+        tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
 
         if (action == 0) {
             tv_cantidad.text = "0"
             tv_precioTotal.text = "0"
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
-            tv_precioTotal.text = "${data.mon} ${
-                pricetostringformat(
-                    calculatepricebyqty(
-                        tv_cantidad.text.toString().toInt(), data.precio_Venta
-                    )
-                )
-            }"
+            tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
         }
 
         //********   AUMENTA PRODUCTOS O AGREGA    *************
@@ -469,8 +459,6 @@ class ActivityCardQuotation : AppCompatActivity() {
         }
     }
 
-
-
     //************* FUNCIONES ADICIONALES  ****************
     fun calcularMontoTotal(){
         montoTotal = listaProductoListados.sumOf { it.precioTotal }
@@ -481,9 +469,9 @@ class ActivityCardQuotation : AppCompatActivity() {
         val tv_igvCot = binding.tvIgvCotAddCart
         val tv_totalCot = binding.tvTotalCotAddCart
 
-        tv_totalCot.text = utils().pricetostringformat(montoTotal)
-        tv_igvCot.text = utils().pricetostringformat(igvTotal)
-        tv_subtotalCot.text = utils().pricetostringformat(subtotal)
+        tv_totalCot.text = "${tipomoneda} ${utils().pricetostringformat(montoTotal)}"
+        tv_igvCot.text = "${tipomoneda} ${utils().pricetostringformat(igvTotal)}"
+        tv_subtotalCot.text = "${tipomoneda} ${utils().pricetostringformat(subtotal)}"
     }
 
     private fun buscaCoincidencia(dataCodigo:String): List<Int> {

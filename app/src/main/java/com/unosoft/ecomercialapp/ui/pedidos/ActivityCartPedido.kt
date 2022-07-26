@@ -41,12 +41,14 @@ class ActivityCartPedido : AppCompatActivity() {
     var igvTotal:Double = 0.0
     var subtotal:Double = 0.0
 
+    var tipomoneda = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCartPedidoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //*********************************************************
+        tipomoneda = intent.getStringExtra("TIPOMONEDA").toString()
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         getData()
@@ -119,13 +121,7 @@ class ActivityCartPedido : AppCompatActivity() {
         tv_nameProducto.text = data.nombre
         tv_codProducto.text = data.codigo
         tv_precioUnidad.text = "${data.mon} ${utils().pricetostringformat(data.precio_Venta)}"
-        tv_precioTotal.text = "${data.mon} ${
-            utils().pricetostringformat(
-                calculatepricebyqty(
-                    tv_cantidad.text.toString().toInt(), data.precio_Venta
-                )
-            )
-        }"
+        tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
 
         if (action == 0) {
             tv_cantidad.text = "0"
@@ -487,9 +483,9 @@ class ActivityCartPedido : AppCompatActivity() {
         val tv_igvCot = binding.tvIgvAddCart
         val tv_totalCot = binding.tvTotalAddCart
 
-        tv_totalCot.text = utils().pricetostringformat(montoTotal)
-        tv_igvCot.text = utils().pricetostringformat(igvTotal)
-        tv_subtotalCot.text = utils().pricetostringformat(subtotal)
+        tv_totalCot.text = "${tipomoneda} ${utils().pricetostringformat(montoTotal)}"
+        tv_igvCot.text = "${tipomoneda} ${utils().pricetostringformat(igvTotal)}"
+        tv_subtotalCot.text ="${tipomoneda} ${utils().pricetostringformat(subtotal)}"
     }
 
     //************* GUARDAR ROOM  ****************
@@ -511,19 +507,15 @@ class ActivityCartPedido : AppCompatActivity() {
                     )
                 }
             }
-
             println(DATAGLOBAL.database.daoTblBasica().getAllListProct())
-
         }
 
     }
     override fun onBackPressed() {
         guardarListRoom()
-
         val intent = Intent(this, ActivityAddPedido::class.java)
         startActivity(intent)
         finish()
-
         super.onBackPressed()
     }
 }
