@@ -9,9 +9,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.CotizacionMaster
@@ -43,10 +45,9 @@ class ActivityEditCotizacion : AppCompatActivity() {
 
         apiInterface = APIClient.client?.create(CotizacionMaster::class.java) as CotizacionMaster
 
-        getData(DATAGLOBAL.prefs.getIdPedido())
+        getData(prefs.getIdPedido())
         iniciarData()
         eventsHandlers()
-
 
     }
 
@@ -62,6 +63,18 @@ class ActivityEditCotizacion : AppCompatActivity() {
     private fun eventsHandlers() {
         binding.ivProductosCot.setOnClickListener { showactivitydetail() }
         //binding.ivPersonCot.setOnClickListener { editDetailQuotation() }
+
+        val fa_pdfCotizacion = findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.fa_pdfCotizacion)
+        fa_pdfCotizacion.setOnClickListener { visualizarPDF() }
+    }
+
+    private fun visualizarPDF() {
+        val intent = Intent(this, VisorPDFCotizacion::class.java)
+        //ENVIAR DATOS
+        val bundle = Bundle()
+        bundle.putString("ID", prefs.getIdPedido())
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 
     //**************   EVENTS HANDLERS   ****************
@@ -105,8 +118,7 @@ class ActivityEditCotizacion : AppCompatActivity() {
     private fun showactivitydetail() {
         val intent = Intent(this, ActivityDetalleCotizacion::class.java)
 
-        /*
-        //ENVIAR DATOS
+        /*//ENVIAR DATOS
         val bundle = Bundle()
         bundle.putSerializable("DATOSCOTIZACION", dataclassCotizacion)
         intent.putExtras(bundle)*/

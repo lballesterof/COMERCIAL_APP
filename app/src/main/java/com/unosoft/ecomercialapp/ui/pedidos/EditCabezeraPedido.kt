@@ -149,7 +149,7 @@ class EditCabezeraPedido : AppCompatActivity() {
                         val item: String = parent!!.getItemAtPosition(position).toString()
                         DatosCabezeraPedido.condicionPago = item
                         CoroutineScope(Dispatchers.IO).launch {
-                            datosCondicionPago.forEach { if (it.Nombre == item){DatosCabezeraPedido.codCondicionPago = it.Codigo} }
+                            datosCondicionPago.forEach { if (it.Nombre == item){DatosCabezeraPedido.codCondicionPago = it.Numero} }
                         }
                         Toast.makeText(this@EditCabezeraPedido,"Lista $item", Toast.LENGTH_SHORT).show()
                     }
@@ -340,4 +340,12 @@ class EditCabezeraPedido : AppCompatActivity() {
         adapterCliente.filterCliente(filterdNamePlato)
     }
     //******** FIN DE CLIENTE ******************
+
+    override fun onBackPressed() {
+        val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
+        startActivity(intent)
+        finish()
+        super.onBackPressed()
+    }
+
 }

@@ -45,7 +45,7 @@ class listpedidosadapter(var datos: ArrayList<pedidosDto>, private val onClickLi
             }
             ruc.text = "RUC:  ${datos.ruc}"
             preciocotizacion.text =  StringBuilder().append("IMPORTE TOTAL ").append(datos.mon+". ").append(String.format("%,.2f", datos.importe_Total))
-            fechapedido.text = "${datos.fecha_pedido}"
+            fechapedido.text = "FECHA: ${datos.fecha_pedido}"
 
             itemView.setOnClickListener {
                 onClickListener(datos)
