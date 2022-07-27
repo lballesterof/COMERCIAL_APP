@@ -45,7 +45,6 @@ class ActivityEditCotizacion : AppCompatActivity() {
         apiInterface = APIClient.client?.create(CotizacionMaster::class.java) as CotizacionMaster
 
         getData(prefs.getIdPedido())
-        iniciarData()
         eventsHandlers()
 
     }
@@ -124,30 +123,39 @@ class ActivityEditCotizacion : AppCompatActivity() {
 
     private fun iniciarData() {
 
-
-
-
         val datos = intent.getSerializableExtra("DATOSCOTIZACION") as cotizacionesDto
 
-        println("********************************************************************")
-        println(datos)
-        println("********************************************************************")
+        CoroutineScope(Dispatchers.IO).launch {
 
+            val datosCPago = database.daoTblBasica().getAllCondicionPago()
+            val datosCotizacionMaster = database.daoTblBasica().getAllQuotationMaster()[0]
 
-        binding.tvFechaCreacionCot.text = "Fecha y Hora: 00/00/00"
-        //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
-        binding.tvIdCotizacion.text = StringBuilder().append("NUMERO: ").append(datos.id_cotizacion)
-        binding.tvNameClientCot.text = StringBuilder().append("NOMBRE CLIENTE: ").append(datos.persona)
-        binding.tvRucCot.text = StringBuilder().append("RUC: ").append(datos.ruc)
-        binding.tvTipoMonedaCot.text = StringBuilder().append("MONEDA: ").append(datos.mon)
-        binding.tvCondPagoCot.text = StringBuilder().append("Consicion Pago: ").append("--------")
-        binding.tvSubtotalCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total - datos.importe_igv))
-        binding.tvValorventaCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total - datos.importe_igv))
-        binding.tvIgvCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_igv))
-        binding.tvImporte.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total))
+            val fechA_COTIZACION = datosCotizacionMaster.fechA_COTIZACION
+            val numroCotizacion = datos.numero_Cotizacion
+            val persona = datosCotizacionMaster.persona
+            val documento = datos.documento
+            val ruc = datos.ruc
+            val mon = datos.mon
+            val codigO_CPAGO = datosCotizacionMaster.codigO_CPAGO
+            var condicionPago = ""
+            datosCPago.forEach { if (it.Numero == codigO_CPAGO){ condicionPago = it.Nombre } }
 
-        tipomoneda = datos.mon
+            runOnUiThread {
+                binding.tvFechaCreacionCot.text = "Fecha y Hora: ${fechA_COTIZACION}"
+                //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
+                binding.tvIdCotizacion.text = StringBuilder().append("NUMERO: ").append(numroCotizacion)
+                binding.tvNameClientCot.text = StringBuilder().append("NOMBRE CLIENTE: ").append(persona)
+                binding.tvRucCot.text = StringBuilder().append("$documento: ").append(ruc)
+                binding.tvTipoMonedaCot.text = StringBuilder().append("MONEDA: ").append(mon)
+                binding.tvCondPagoCot.text = StringBuilder().append("Consicion Pago: ").append("$condicionPago")
+                binding.tvSubtotalCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total - datos.importe_igv))
+                binding.tvValorventaCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total - datos.importe_igv))
+                binding.tvIgvCot.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_igv))
+                binding.tvImporte.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_total))
 
+                tipomoneda = datos.mon
+            }
+        }
     }
 
     fun getData(IDQUOTATION: String) {
@@ -275,15 +283,10 @@ class ActivityEditCotizacion : AppCompatActivity() {
                 }
             }
 
-
-
-
-            CoroutineScope(Dispatchers.IO).launch {
-                println("********* TODOS LAS COTIZACIONES ************")
-                println(database.daoTblBasica().getAllQuotationMaster())
-                println("********** DETALLE DE COTIZACION ************")
-                println(database.daoTblBasica().getAllQuotationDetail())
+            runOnUiThread {
+                iniciarData()
             }
+            
         }
     }
 }

@@ -19,6 +19,7 @@ import com.unosoft.ecomercialapp.ui.Cotizacion.VisorPDFCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 
 class ActivityEditPedido : AppCompatActivity() {
 
@@ -34,13 +35,13 @@ class ActivityEditPedido : AppCompatActivity() {
         setContentView(binding.root)
         apiInterface = APIClient.client?.create(PedidoMaster::class.java) as PedidoMaster
         getData(DATAGLOBAL.prefs.getIdPedido())
-        InitializeUI()
         eventsHandlers()
     }
     private fun getData(IDPEDIDO: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val pedidocabresponse = apiInterface!!.getbyIdPedidoCab("$IDPEDIDO")
             val pedidodetailresponse = apiInterface!!.getbyIdPedidoDetail("$IDPEDIDO")
+
             if (pedidocabresponse.isSuccessful) {
                 var t = pedidocabresponse.body()!!
 
@@ -169,27 +170,47 @@ class ActivityEditPedido : AppCompatActivity() {
                     }
                 }
             }
+            runOnUiThread {
+                InitializeUI()
+            }
         }
     }
 
     private fun InitializeUI() {
+
         val datos = intent.getSerializableExtra("DATOSPEDIDOS") as pedidosDto
 
-        println("$datos")
+        CoroutineScope(Dispatchers.IO).launch {
 
-        binding.tvNumPedido.text = "Numero: "+datos.numero_Pedido
-        binding.tvFechaCreacionPedido.text = "Fecha de creacion "+datos.fecha_pedido
-        binding.tvNomClientePedido.text = "Cliente: "+datos.persona
-        binding.tvRucPedido.text = "RUC: "+datos.ruc
-        binding.tvTipoMonedaPedido.text = "Moneda: ${datos.mon}"
-        binding.tvCondPagoPedido.text = "Condicion Pago: " // hoy hay para setear este campo
+            val datosCPago = database.daoTblBasica().getAllCondicionPago()
+            val datosCotizacionMaster = database.daoTblBasica().getAllPedidoMaster()[0]
 
-        binding.tvSubTotalPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_Total-datos.importe_igv)}"
-        binding.tvValorVentaPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_Total-datos.importe_igv)}"
-        binding.tvIgvPedido.text = "${datos.mon} ${utils().pricetostringformat(datos.importe_igv)}"
-        binding.tvImporteTotalPedido.text = "${datos.mon} ${datos.importe_Total}"
+            val fechA_PEDIDO = datosCotizacionMaster.fechA_PEDIDO
+            val numero_Pedido = datos.numero_Pedido
+            val persona = datosCotizacionMaster.persona
+            val documento = datos.documento
+            val ruc = datos.ruc
+            val mon = datos.mon
+            val codigO_CPAGO = datosCotizacionMaster.codigO_CPAGO
+            var condicionPago = ""
+            datosCPago.forEach { if (it.Numero == codigO_CPAGO){ condicionPago = it.Nombre } }
 
-        tipomoneda = datos.mon
+            runOnUiThread {
+                binding.tvFechaCreacionPedido.text = "Fecha y Hora: ${fechA_PEDIDO}"
+                //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
+                binding.tvNumPedido.text = StringBuilder().append("NUMERO: ").append(numero_Pedido)
+                binding.tvNomClientePedido.text = StringBuilder().append("NOMBRE CLIENTE: ").append(persona)
+                binding.tvRucPedido.text = StringBuilder().append("$documento: ").append(ruc)
+                binding.tvTipoMonedaPedido.text = StringBuilder().append("MONEDA: ").append(mon)
+                binding.tvCondPagoPedido.text = StringBuilder().append("Consicion Pago: ").append("$condicionPago")
+                binding.tvSubTotalPedido.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_Total - datos.importe_igv))
+                binding.tvValorVentaPedido.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_Total - datos.importe_igv))
+                binding.tvIgvPedido.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_igv))
+                binding.tvImporteTotalPedido.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.importe_Total))
+
+                tipomoneda = datos.mon
+            }
+        }
     }
 
     private fun eventsHandlers()
@@ -208,17 +229,11 @@ class ActivityEditPedido : AppCompatActivity() {
         startActivity(intent)
     }
 
-
     //Nuevo Activity
     private fun showactivitydetail()
     {
         val intent = Intent(this, ActivityEditDetallePedido::class.java)
-
         intent.putExtra("TIPOMONEDA",tipomoneda)
-
         startActivity(intent)
     }
-
-
-
 }

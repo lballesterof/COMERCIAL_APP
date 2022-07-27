@@ -116,9 +116,28 @@ class MainActivity : AppCompatActivity() {
                                 database.daoTblBasica().clearPrimaryKeyDataLogin()
 
                                 database.daoTblBasica().insertDataLogin(EntityDataLogin(
-                                    0,user1.usuario,user1.codigO_EMPRESA,user1.iD_CLIENTE,user1.cdgmoneda,user1.validez,user1.cdgpago,
-                                    user1.sucursal,user1.usuarioautoriza,user1.usuariocreacion,user1.tipocambio.toDouble(),user1.iD_COTIZACION,
-                                    user1.redondeo,user1.cdG_VENDEDOR))
+                                    0,
+                                    user1.nombreusuario,
+                                    user1.codigO_EMPRESA,
+                                    user1.iD_CLIENTE,
+                                    user1.poR_IGV,
+                                    user1.cdgmoneda,
+                                    user1.validez,
+                                    user1.cdgpago,
+                                    user1.sucursal,
+                                    user1.usuarioautoriza,
+                                    user1.usuariocreacion,
+                                    user1.descuento,
+                                    user1.seriepedido,
+                                    user1.estadopedido,
+                                    user1.tipocambio,
+                                    user1.jwtToken,
+                                    user1.facturA_ADELANTADA,
+                                    user1.iD_COTIZACION,
+                                    user1.puntO_VENTA,
+                                    user1.redondeo,
+                                    user1.cdG_VENDEDOR
+                                ))
 
                                 println("***************  IMPRIMIENDO DATOS USUARIO  *****************")
                                 println(database.daoTblBasica().getAllDataLogin())
@@ -136,7 +155,7 @@ class MainActivity : AppCompatActivity() {
 
 
                                     prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
-                                    prefs.save_TipoCambio(user1.tipocambio)
+                                    prefs.save_TipoCambio(user1.tipocambio.toString())
 
                                     val i = Intent(applicationContext, InicioActivity::class.java)
                                     startActivity(i)

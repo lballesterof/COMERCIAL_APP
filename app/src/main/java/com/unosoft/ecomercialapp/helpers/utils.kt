@@ -10,7 +10,6 @@ class utils {
         return String.format("%,.2f", valuenumeric)
     }
 
-
     fun calculateigvbypriceunit(price: Double, igv: Double): Double {
         return price.minus(price.div(1 + (igv.div(100))))
     }
@@ -22,4 +21,5 @@ class utils {
     fun getFecha(): String {
         return SimpleDateFormat("dd/MM/yyyy").format(LocalDateTime.now())
     }
+
 }

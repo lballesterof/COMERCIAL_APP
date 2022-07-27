@@ -138,7 +138,7 @@ class EditCabezera : AppCompatActivity() {
                         val item: String = parent!!.getItemAtPosition(position).toString()
                         DatosCabezeraCotizacion.vendedor = item
                         CoroutineScope(Dispatchers.IO).launch {
-                            datosVendedor.forEach { if (it.Nombre == item){DatosCabezeraCotizacion.codVendedor = it.Codigo} }
+                            datosVendedor.forEach { if (it.Nombre == item){DatosCabezeraCotizacion.codVendedor = it.Numero} }
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {

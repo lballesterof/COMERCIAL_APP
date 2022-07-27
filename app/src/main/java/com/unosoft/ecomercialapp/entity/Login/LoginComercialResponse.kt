@@ -21,7 +21,7 @@ data class LoginComercialResponse(
     val descuento: String,
     val seriepedido: String,
     val estadopedido: String,
-    val tipocambio: String,
+    val tipocambio: Double,
     val jwtToken: String,
     val facturA_ADELANTADA: String,
     val iD_COTIZACION: String,

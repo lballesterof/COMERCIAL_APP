@@ -191,7 +191,7 @@ class ActivityAddPedido : AppCompatActivity() {
                                         "0",
                                         it.unidad,
                                         "",
-                                        "${datoslogin.usuario}",
+                                        datoslogin.nombreusuario,
                                         "0001", //******
                                         "",
                                         0,
@@ -253,7 +253,7 @@ class ActivityAddPedido : AppCompatActivity() {
                                 datoslogin.sucursal,
                                 0,
                                 0,
-                                prefs.getCdgVendedor(),
+                                datosCabezera.codVendedor!!,
                                 "${LocalDateTime.now()}",
                                 "",
                                 "",

@@ -127,9 +127,8 @@ class EditCabezeraPedido : AppCompatActivity() {
                         val item: String = parent!!.getItemAtPosition(position).toString()
                         DatosCabezeraPedido.vendedor = item
                         CoroutineScope(Dispatchers.IO).launch {
-                            datosVendedor.forEach { if (it.Nombre == item){DatosCabezeraPedido.codVendedor = it.Codigo} }
+                            datosVendedor.forEach { if (it.Nombre == item){DatosCabezeraPedido.codVendedor = it.Numero} }
                         }
-                        Toast.makeText(this@EditCabezeraPedido,"Lista $item", Toast.LENGTH_SHORT).show()
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("Not yet implemented")
@@ -158,7 +157,6 @@ class EditCabezeraPedido : AppCompatActivity() {
                         CoroutineScope(Dispatchers.IO).launch {
                             datosCondicionPago.forEach { if (it.Nombre == item){DatosCabezeraPedido.codCondicionPago = it.Numero} }
                         }
-                        Toast.makeText(this@EditCabezeraPedido,"Lista $item", Toast.LENGTH_SHORT).show()
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("Not yet implemented")
@@ -221,7 +219,6 @@ class EditCabezeraPedido : AppCompatActivity() {
                         CoroutineScope(Dispatchers.IO).launch {
                             datosListaPrecio.forEach { if (it.nombre == item){DatosCabezeraPedido.codListPrecio = it.codigo} }
                         }
-                        Toast.makeText(this@EditCabezeraPedido, "$item", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -259,7 +256,6 @@ class EditCabezeraPedido : AppCompatActivity() {
                         val item: String = parent!!.getItemAtPosition(position).toString()
                         DatosCabezeraPedido.tipoMoneda = item
                         listaTipoMoneda.forEach { if(it.Nombre == item) {DatosCabezeraPedido.codMoneda = it.Numero} }
-                        Toast.makeText(this@EditCabezeraPedido, item, Toast.LENGTH_SHORT).show()
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
