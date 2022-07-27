@@ -66,6 +66,7 @@ private val listPrecio = ArrayList<ListaPrecioRespuesta>()
 private val listVendedores = ArrayList<VendedorResponse>()
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -73,12 +74,14 @@ class MainActivity : AppCompatActivity() {
         val ingresar = findViewById<Button>(R.id.ingresar)
         val user = findViewById<EditText>(R.id.user)
         val pass = findViewById<EditText>(R.id.pass)
-        apiInterface = client!!.create(LoginApi::class.java)
-        apiInterface2 = client!!.create(TablaBasicaApi::class.java)
-        apiInterface3 = client!!.create(ListaPrecio::class.java)
-        apiInterface4 = client!!.create(VendedorApi::class.java)
+        val host = findViewById<EditText>(R.id.host)
 
-        cargarTablaBasica()
+        if (prefs.getURLBase().isNotEmpty()){
+            host.setText(prefs.getURLBase())
+        }
+        if (prefs.getUser().isNotEmpty()){
+            user.setText(prefs.getUser())
+        }
 
         val pd = ProgressDialog(this)
         pd.setMessage("Validando usuario....")
@@ -89,7 +92,13 @@ class MainActivity : AppCompatActivity() {
                 AlertMessage("Datos inválidos")
                 return@OnClickListener
             } else {
+
+                prefs.save_User(user.text.toString())
+                prefs.save_URLBase(host.text.toString())
+
                 pd.show()
+
+                cargarTablaBasica()
 
                 //*******  MANTENER
                 val _user = DCLoginUser(user.text.toString(), pass.text.toString())
@@ -103,15 +112,13 @@ class MainActivity : AppCompatActivity() {
                             val user1 = response.body()!!
 
                             CoroutineScope(Dispatchers.IO).launch {
-
                                 database.daoTblBasica().deleteTableDataLogin()
                                 database.daoTblBasica().clearPrimaryKeyDataLogin()
 
                                 database.daoTblBasica().insertDataLogin(EntityDataLogin(
                                     0,user1.usuario,user1.codigO_EMPRESA,user1.iD_CLIENTE,user1.cdgmoneda,user1.validez,user1.cdgpago,
                                     user1.sucursal,user1.usuarioautoriza,user1.usuariocreacion,user1.tipocambio.toDouble(),user1.iD_COTIZACION,
-                                    user1.redondeo,user1.cdG_VENDEDOR
-                                ))
+                                    user1.redondeo,user1.cdG_VENDEDOR))
 
                                 println("***************  IMPRIMIENDO DATOS USUARIO  *****************")
                                 println(database.daoTblBasica().getAllDataLogin())
@@ -127,6 +134,7 @@ class MainActivity : AppCompatActivity() {
                                     println(user1.cdG_VENDEDOR)
                                     println(user1.tipocambio)
 
+
                                     prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
                                     prefs.save_TipoCambio(user1.tipocambio)
 
@@ -134,7 +142,6 @@ class MainActivity : AppCompatActivity() {
                                     startActivity(i)
                                     finish()
 
-                                    user.setText("")
                                     pass.setText("")
 
                                     // Toast.makeText(getApplicationContext(), user1.nombreusuario + " " + user1.jwtToken + " " + user1.poR_IGV + " " + user1.refreshToken, Toast.LENGTH_SHORT).show();
@@ -157,6 +164,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun cargarTablaBasica() {
+
+        apiInterface = client!!.create(LoginApi::class.java)
+        apiInterface2 = client!!.create(TablaBasicaApi::class.java)
+        apiInterface3 = client!!.create(ListaPrecio::class.java)
+        apiInterface4 = client!!.create(VendedorApi::class.java)
 
         fun inyectarDataRoom(
             listaCondicionPagoResponse: ArrayList<CondicionPagoResponse>,

@@ -1,5 +1,6 @@
 package com.unosoft.ecomercialapp.api
 
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.OkHttpClient
@@ -18,7 +19,7 @@ object APIClient {
                 .writeTimeout(5, TimeUnit.MINUTES) // AGREGE
                 .readTimeout(5, TimeUnit.MINUTES).build()
             retrofit = Retrofit.Builder()
-                .baseUrl("http://181.224.236.167:6969/")
+                .baseUrl("${prefs.getURLBase()}")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

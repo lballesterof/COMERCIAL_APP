@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.MainActivity
 import com.unosoft.ecomercialapp.databinding.ActivityMainBinding
 import com.unosoft.ecomercialapp.databinding.FragmentCerrarSesionFramentBinding
@@ -81,8 +82,8 @@ class CerrarSesionFrament : Fragment() {
                 println("***************************************")
                 println("*********** CERRAR SESION *************")
                 println("***************************************")
-                startActivity(
-                    Intent(activity, MainActivity::class.java)
+                prefs.wipe()
+                startActivity(Intent(activity, MainActivity::class.java)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 )
                 requireActivity().finish()

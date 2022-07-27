@@ -81,6 +81,9 @@ dependencies {
     //PDF VIEW
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
+    //SEGURIDAD
+    implementation "androidx.security:security-crypto:1.1.0-alpha03"
+
 
 
 }
