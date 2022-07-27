@@ -23,6 +23,7 @@ import com.unosoft.ecomercialapp.db.EntityDataCabezera
 import com.unosoft.ecomercialapp.entity.Cliente.ClientListResponse
 import com.unosoft.ecomercialapp.entity.DatosCabezeraCotizacion.datosCabezera
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
+import com.unosoft.ecomercialapp.ui.Cotizacion.ActivityAddCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -88,10 +89,20 @@ class EditCabezeraPedido : AppCompatActivity() {
             println("***********   DATA CABEZERA   ***************")
             println(DATAGLOBAL.database.daoTblBasica().getAllDataCabezera())
 
+            //************ LIMPIA DATOS LISTA PRODUCTO  *************
+            DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
+            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
+
             runOnUiThread{
-                val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
-                startActivity(intent)
-                finish()
+                if (DatosCabezeraPedido.nombreCliente == "" ||
+                    DatosCabezeraPedido.rucCliente == "" ||
+                    DatosCabezeraPedido.idCliente == ""){
+                    Toast.makeText(this@EditCabezeraPedido, "Falta ingresar datos cliente", Toast.LENGTH_SHORT).show()
+                }else{
+                    val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }

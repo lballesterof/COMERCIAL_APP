@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ClientApi
@@ -47,6 +48,11 @@ class EditCabezera : AppCompatActivity() {
         //***********************************
         apiInterface2 = APIClient.client?.create(ClientApi::class.java)
         eventsHanlder()
+        iniciarDatos()
+    }
+
+    private fun iniciarDatos() {
+
     }
 
 
@@ -68,10 +74,10 @@ class EditCabezera : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch{
 
-            DATAGLOBAL.database.daoTblBasica().deleteTableDataCabezera()
-            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyDataCabezera()
+            database.daoTblBasica().deleteTableDataCabezera()
+            database.daoTblBasica().clearPrimaryKeyDataCabezera()
 
-            DATAGLOBAL.database.daoTblBasica().insertDataCabezera(
+            database.daoTblBasica().insertDataCabezera(
                 EntityDataCabezera(0,
                     DatosCabezeraCotizacion.idCliente,
                     DatosCabezeraCotizacion.nombreCliente,
@@ -90,17 +96,24 @@ class EditCabezera : AppCompatActivity() {
             )
 
             println("***********   DATA CABEZERA   ***************")
-            println(DATAGLOBAL.database.daoTblBasica().getAllDataCabezera())
+            println(database.daoTblBasica().getAllDataCabezera())
+
+            //************ LIMPIA DATOS LISTA PRODUCTO  *************
+            database.daoTblBasica().deleteTableListProct()
+            database.daoTblBasica().clearPrimaryKeyListProct()
 
             runOnUiThread{
-                val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
-                startActivity(intent)
-                finish()
+                if (DatosCabezeraCotizacion.nombreCliente == "" ||
+                    DatosCabezeraCotizacion.rucCliente == "" ||
+                    DatosCabezeraCotizacion.idCliente == ""){
+                    Toast.makeText(this@EditCabezera, "Falta ingresar datos cliente", Toast.LENGTH_SHORT).show()
+                }else{
+                    val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
-
         }
-
-
     }
 
     //****************  SPINNER  ***********************
@@ -108,7 +121,9 @@ class EditCabezera : AppCompatActivity() {
         val listVendedor = ArrayList<String>()
 
         CoroutineScope(Dispatchers.IO).launch {
-            val datosVendedor = DATAGLOBAL.database.daoTblBasica().getAllVendedor()
+
+
+            val datosVendedor = database.daoTblBasica().getAllVendedor()
             runOnUiThread{
                 datosVendedor.forEach {
                     listVendedor.add("${it.Nombre}")
@@ -126,11 +141,9 @@ class EditCabezera : AppCompatActivity() {
                             datosVendedor.forEach { if (it.Nombre == item){DatosCabezeraCotizacion.codVendedor = it.Codigo} }
                         }
                     }
-
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("Not yet implemented")
                     }
-
                 }
             }
         }
@@ -173,12 +186,10 @@ class EditCabezera : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val datosFrecuenciaDia = DATAGLOBAL.database.daoTblBasica().getAllFrecuenciaDias()
-
             runOnUiThread{
                 datosFrecuenciaDia.forEach {
                     listFrecuenciaDia.add("Dias habiles ${it.Nombre}")
                 }
-
                 val sp_ListFrecuenciaDia = binding.spValidezCabezera
                 val AdaptadorListPrecio = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listFrecuenciaDia)
                 sp_ListFrecuenciaDia.adapter = AdaptadorListPrecio
@@ -194,11 +205,9 @@ class EditCabezera : AppCompatActivity() {
                             } }
                         }
                     }
-
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("Not yet implemented")
                     }
-
                 }
 
             }
@@ -226,7 +235,6 @@ class EditCabezera : AppCompatActivity() {
                             datosListaPrecio.forEach { if (it.nombre == item){DatosCabezeraCotizacion.codListPrecio = it.codigo} }
                         }
                     }
-
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("Not yet implemented")
                     }
@@ -243,8 +251,7 @@ class EditCabezera : AppCompatActivity() {
         val listspMoneda = ArrayList<String>()
 
         CoroutineScope(Dispatchers.IO).launch {
-
-            DATAGLOBAL.database.daoTblBasica().getAllMoneda().forEach {
+            database.daoTblBasica().getAllMoneda().forEach {
                 listaTipoMoneda.add(
                     MonedaResponse(it.Nombre,it.Numero,it.Referencia1)
                 )

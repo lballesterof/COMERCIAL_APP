@@ -31,8 +31,6 @@ import java.lang.StringBuilder
 class ActivityEditCotizacion : AppCompatActivity() {
     private lateinit var binding: ActivityEditCotizacionBinding
 
-    private lateinit var adapterCotizaciones: listcotizacionesadapter
-    private val listacotizaciones = ArrayList<cotizacionesDto>()
     private val listaTipoMoneda = ArrayList<MonedaResponse>()
     var apiInterface: CotizacionMaster? = null
 
@@ -44,7 +42,6 @@ class ActivityEditCotizacion : AppCompatActivity() {
         binding = ActivityEditCotizacionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //**********************************************
-
         apiInterface = APIClient.client?.create(CotizacionMaster::class.java) as CotizacionMaster
 
         getData(prefs.getIdPedido())

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +18,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:orientation="vertical">
@@ -157,15 +156,6 @@
                             android:textColorHint="@color/colorPrimary"
                             android:textColorLink="@color/colorPrimary"
                             android:textSize="20sp"/>
-                        <ImageView
-                            android:layout_weight="0.1"
-                            android:id="@+id/ver"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/ic_eye"
-                            app:tint="@color/colorPrimary" />
 
                     </LinearLayout>
 

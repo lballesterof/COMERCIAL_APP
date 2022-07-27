@@ -23,8 +23,9 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_cotizacion" >
         <action
-            android:id="@+id/action_nav_slideshow_to_nav_home"
-            app:destination="@id/nav_home" />
+            android:id="@+id/action_nav_slideshow_pop"
+            app:popUpTo="@id/nav_slideshow"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -53,9 +54,6 @@
         android:name="com.unosoft.ecomercialapp.ui.Cotizacion.FramentCotizacion"
         android:label="Cotizacion"
         tools:layout="@layout/fragment_cotizacion">
-        <action
-            android:id="@+id/nav_slideshow"
-            app:destination="@id/nav_home" />
     </fragment>
 
 
