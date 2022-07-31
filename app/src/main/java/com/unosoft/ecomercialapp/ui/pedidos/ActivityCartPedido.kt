@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -169,6 +170,7 @@ class ActivityCartPedido : AppCompatActivity() {
                         precioTotal
                     )
                 )
+                Toast.makeText(this, "Se agrego ${data.nombre}", Toast.LENGTH_SHORT).show()
                 rv_listproductcot.adapter?.notifyDataSetChanged()
                 rv_listproductcot?.scrollToPosition(listaProductoListados.size - 1)
             } else {
@@ -267,7 +269,7 @@ class ActivityCartPedido : AppCompatActivity() {
             rv_productos.adapter = adapterProductoComercial
 
             CoroutineScope(Dispatchers.IO).launch {
-                val response = apiInterface2!!.getProductoComercial("LPR0000002", "0001", "4.00")
+                val response = apiInterface2!!.getProductoComercial("${DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].codListPrecio}", "${DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].codMoneda}", "${DATAGLOBAL.prefs.getTipoCambio()}")
                 runOnUiThread {
                     if (response.isSuccessful) {
                         listaProductoPedido.clear()
@@ -476,8 +478,8 @@ class ActivityCartPedido : AppCompatActivity() {
     }
     fun calcularMontoTotal(){
         montoTotal = listaProductoListados.sumOf { it.precioTotal }
-        igvTotal = montoTotal*0.18
-        subtotal = montoTotal - igvTotal
+        igvTotal = utils().priceIGV(montoTotal)
+        subtotal = utils().priceSubTotal(montoTotal)
 
         val tv_subtotalCot = binding.tvSubTotalAddCart
         val tv_igvCot = binding.tvIgvAddCart

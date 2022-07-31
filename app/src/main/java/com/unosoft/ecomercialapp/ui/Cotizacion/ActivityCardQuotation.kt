@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -381,6 +382,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                         precioTotal
                     )
                 )
+                Toast.makeText(this, "Se agrego ${data.nombre}", Toast.LENGTH_SHORT).show()
                 rv_listproductcot.adapter?.notifyDataSetChanged()
                 rv_listproductcot?.scrollToPosition(listaProductoListados.size - 1)
             } else {
@@ -461,9 +463,10 @@ class ActivityCardQuotation : AppCompatActivity() {
 
     //************* FUNCIONES ADICIONALES  ****************
     fun calcularMontoTotal(){
+
         montoTotal = listaProductoListados.sumOf { it.precioTotal }
-        igvTotal = montoTotal*0.18
-        subtotal = montoTotal - igvTotal
+        igvTotal = utils().priceIGV(montoTotal)
+        subtotal = utils().priceSubTotal(montoTotal)
 
         val tv_subtotalCot = binding.tvSubTotalAddCart
         val tv_igvCot = binding.tvIgvCotAddCart

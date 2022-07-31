@@ -26,6 +26,7 @@ import com.unosoft.ecomercialapp.entity.DatosCabezeraCotizacion.datosCabezera
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -47,11 +48,44 @@ class EditCabezera : AppCompatActivity() {
         setContentView(binding.root)
         //***********************************
         apiInterface2 = APIClient.client?.create(ClientApi::class.java)
-        eventsHanlder()
         iniciarDatos()
     }
 
     private fun iniciarDatos() {
+        CoroutineScope(Dispatchers.IO).launch{
+
+            println(" *********** EVALUANDO DATOS ***************  ")
+            println(database.daoTblBasica().isExistsEntityDataCabezera())
+
+            if (database.daoTblBasica().isExistsEntityDataCabezera()){
+                database.daoTblBasica().getAllDataCabezera().forEach {
+                    DatosCabezeraCotizacion.idCliente = it.idCliente
+                    DatosCabezeraCotizacion.nombreCliente= it.nombreCliente
+                    DatosCabezeraCotizacion.rucCliente= it.rucCliente
+                    DatosCabezeraCotizacion.tipoMoneda= it.tipoMoneda
+                    DatosCabezeraCotizacion.codMoneda= it.codMoneda
+                    DatosCabezeraCotizacion.listPrecio= it.listPrecio
+                    DatosCabezeraCotizacion.codListPrecio= it.codListPrecio
+                    DatosCabezeraCotizacion.validesDias= it.validesDias
+                    DatosCabezeraCotizacion.codValidesDias= it.codValidesDias
+                    DatosCabezeraCotizacion.condicionPago= it.condicionPago
+                    DatosCabezeraCotizacion.codCondicionPago= it.codCondicionPago
+                    DatosCabezeraCotizacion.vendedor= it.vendedor
+                    DatosCabezeraCotizacion.codVendedor= it.codVendedor
+                }
+
+                runOnUiThread{
+                    binding.tvCliente.text = "Nombre: ${DatosCabezeraCotizacion.nombreCliente}"
+                    binding.tvRuc.text = "RUC: ${DatosCabezeraCotizacion.rucCliente}"
+                    eventsHanlder()
+                }
+
+            }else{
+                runOnUiThread{
+                    eventsHanlder()
+                }
+            }
+        }
 
     }
 
@@ -117,21 +151,73 @@ class EditCabezera : AppCompatActivity() {
     }
 
     //****************  SPINNER  ***********************
-    private fun iniciarSpinnerVendedor() {
-        val listVendedor = ArrayList<String>()
+    private fun iniciarSpinnerMoneda() {
+        val listspMoneda = ArrayList<String>()
 
         CoroutineScope(Dispatchers.IO).launch {
+            database.daoTblBasica().getAllMoneda().forEach {
+                listaTipoMoneda.add(
+                    MonedaResponse(it.Nombre,it.Numero,it.Referencia1)
+                )
+            }
+
+            runOnUiThread{
+                listaTipoMoneda.forEach { listspMoneda.add(it.Nombre) }
+                val sp_filtroMonedaCabezera = binding.spMonedaCabezera
+                val AdaptadorMoneda = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listspMoneda)
+                sp_filtroMonedaCabezera.adapter = AdaptadorMoneda
 
 
+                if(DatosCabezeraCotizacion.tipoMoneda != ""){
+                    for (i in listaTipoMoneda.indices){
+                        if (DatosCabezeraCotizacion.codMoneda == listaTipoMoneda[i].Numero){
+                            sp_filtroMonedaCabezera.setSelection(i)
+                        }
+                    }
+                }
+
+
+                sp_filtroMonedaCabezera.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected( parent: AdapterView<*>?, view: View?, position: Int, id: Long ) {
+                        val item: String = parent!!.getItemAtPosition(position).toString()
+
+                        listaTipoMoneda.forEach { if(it.Nombre == item) {
+                            DatosCabezeraCotizacion.codMoneda = it.Numero
+                            DatosCabezeraCotizacion.tipoMoneda = it.Referencia1
+                        } }
+
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun iniciarSpinnerVendedor() {
+        val listVendedor = ArrayList<String>()
+        CoroutineScope(Dispatchers.IO).launch {
             val datosVendedor = database.daoTblBasica().getAllVendedor()
             runOnUiThread{
                 datosVendedor.forEach {
                     listVendedor.add("${it.Nombre}")
                 }
+
                 val spVendedorasignadoCabezera = binding.spVendedorasignadoCabezera
                 val AdaptadorVendedor = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listVendedor)
                 spVendedorasignadoCabezera.adapter = AdaptadorVendedor
-                spVendedorasignadoCabezera.setSelection(-1)
+
+
+
+                if(DatosCabezeraCotizacion.vendedor != ""){
+                    for (i in listVendedor.indices){
+                        if (DatosCabezeraCotizacion.vendedor == listVendedor[i]){
+                            spVendedorasignadoCabezera.setSelection(i)
+                        }
+                    }
+                }
+
                 spVendedorasignadoCabezera.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
@@ -162,7 +248,17 @@ class EditCabezera : AppCompatActivity() {
                 val sp_ListCondicionPago = binding.spCondicionpagoCabezera
                 val AdaptadorCondicionPago = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listCondicionPago)
                 sp_ListCondicionPago.adapter = AdaptadorCondicionPago
-                sp_ListCondicionPago.setSelection(-1)
+
+
+                if(DatosCabezeraCotizacion.condicionPago != ""){
+                    for (i in listCondicionPago.indices){
+                        if (DatosCabezeraCotizacion.condicionPago == listCondicionPago[i]){
+                            sp_ListCondicionPago.setSelection(i)
+                        }
+                    }
+                }
+
+
                 sp_ListCondicionPago.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
@@ -193,7 +289,17 @@ class EditCabezera : AppCompatActivity() {
                 val sp_ListFrecuenciaDia = binding.spValidezCabezera
                 val AdaptadorListPrecio = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listFrecuenciaDia)
                 sp_ListFrecuenciaDia.adapter = AdaptadorListPrecio
-                sp_ListFrecuenciaDia.setSelection(-1)
+
+
+                if(DatosCabezeraCotizacion.validesDias != ""){
+                    for (i in listFrecuenciaDia.indices){
+                        if ("Dias habiles ${DatosCabezeraCotizacion.validesDias}" == listFrecuenciaDia[i]){
+                            sp_ListFrecuenciaDia.setSelection(i)
+                        }
+                    }
+                }
+
+
                 sp_ListFrecuenciaDia.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
@@ -219,13 +325,23 @@ class EditCabezera : AppCompatActivity() {
         val listspListPrecio = ArrayList<String>()
 
         CoroutineScope(Dispatchers.IO).launch {
-            val datosListaPrecio = DATAGLOBAL.database.daoTblBasica().getAllListaPrecio()
+            val datosListaPrecio = database.daoTblBasica().getAllListaPrecio()
             runOnUiThread{
                 datosListaPrecio.forEach {listspListPrecio.add(it.nombre)}
                 val sp_ListPrecioCabezera = binding.spListPrecioCabezera
                 val AdaptadorListPrecio = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listspListPrecio)
                 sp_ListPrecioCabezera.adapter = AdaptadorListPrecio
-                sp_ListPrecioCabezera.setSelection(-1)
+
+
+                if(DatosCabezeraCotizacion.listPrecio != ""){
+                    for (i in listspListPrecio.indices){
+                        if (DatosCabezeraCotizacion.listPrecio == listspListPrecio[i]){
+                            sp_ListPrecioCabezera.setSelection(i)
+                        }
+                    }
+                }
+
+
                 sp_ListPrecioCabezera.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
@@ -247,42 +363,9 @@ class EditCabezera : AppCompatActivity() {
 
 
     }
-    private fun iniciarSpinnerMoneda() {
-        val listspMoneda = ArrayList<String>()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            database.daoTblBasica().getAllMoneda().forEach {
-                listaTipoMoneda.add(
-                    MonedaResponse(it.Nombre,it.Numero,it.Referencia1)
-                )
-            }
-
-            runOnUiThread{
-                listaTipoMoneda.forEach { listspMoneda.add(it.Nombre) }
-                val sp_filtroMonedaCabezera = binding.spMonedaCabezera
-                val AdaptadorMoneda = ArrayAdapter(this@EditCabezera, android.R.layout.simple_spinner_item, listspMoneda)
-                sp_filtroMonedaCabezera.adapter = AdaptadorMoneda
-                sp_filtroMonedaCabezera.setSelection(-1)
-                sp_filtroMonedaCabezera.onItemSelectedListener = object :
-                    AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected( parent: AdapterView<*>?, view: View?, position: Int, id: Long ) {
-                        val item: String = parent!!.getItemAtPosition(position).toString()
-
-                        listaTipoMoneda.forEach { if(it.Nombre == item) {
-                            DatosCabezeraCotizacion.codMoneda = it.Numero
-                            DatosCabezeraCotizacion.tipoMoneda = it.Referencia1
-                        } }
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-                }
-
-            }
-        }
-    }
-
     //************ CLIENTE ******************
     private fun listarClientes() {
+
         //***********  Alerta de Dialogo  ************
         val builder = AlertDialog.Builder(this@EditCabezera)
         val vista = layoutInflater.inflate(R.layout.dialogue_cliente, null)

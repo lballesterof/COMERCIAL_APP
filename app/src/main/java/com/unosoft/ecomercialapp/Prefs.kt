@@ -17,6 +17,9 @@ class Prefs (contexto:Context){
     val SHARE_USER = "USER"
     val SHARE_COMPANY = "COMPANY"
 
+    val SHARE_PERMISOS = "PERMISOS"
+    val SHARE_IGV = "IGV"
+
 
     //val storege = contexto.getSharedPreferences(SHARE_DB,MODE_PRIVATE)
 
@@ -53,6 +56,15 @@ class Prefs (contexto:Context){
     fun save_User(USER:String){
         storege.edit().putString(SHARE_USER,USER).apply()
     }
+
+    fun save_Permiso(PERMISOS:String){
+        storege.edit().putString(SHARE_PERMISOS,PERMISOS).apply()
+    }
+
+    fun save_IGV(IGV:String){
+        storege.edit().putString(SHARE_IGV,IGV).apply()
+    }
+
     fun save_Company(COMPANY:String){
         storege.edit().putString(SHARE_COMPANY,COMPANY).apply()
     }
@@ -75,6 +87,14 @@ class Prefs (contexto:Context){
     fun getUser(): String {
         return storege.getString(SHARE_USER,"")!!
     }
+
+    fun getPermiso(): String {
+        return storege.getString(SHARE_PERMISOS,"")!!
+    }
+    fun getIGV(): String {
+        return storege.getString(SHARE_IGV,"")!!
+    }
+
     fun getCompany(): String{
         return storege.getString(SHARE_COMPANY,"")!!
     }

@@ -81,8 +81,8 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
     //************* FUNCIONES ADICIONALES  ****************
     fun calcularMontoTotal(){
         montoTotal = listaProductoListados.sumOf { it.precioTotal }
-        igvTotal = montoTotal*0.18
-        subtotal = montoTotal - igvTotal
+        igvTotal = utils().priceIGV(montoTotal)
+        subtotal = utils().priceSubTotal(montoTotal)
 
         val tv_subtotalCot = findViewById<TextView>(R.id.tv_subtotalCotDetailQuotation)
         val tv_igvCot = findViewById<TextView>(R.id.tv_igvCotDetailQuotation)

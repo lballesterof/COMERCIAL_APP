@@ -40,6 +40,7 @@ import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.ProvinciaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.UnidadMedidaResponse
 import com.unosoft.ecomercialapp.entity.Vendedor.VendedorResponse
+import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -156,6 +157,7 @@ class MainActivity : AppCompatActivity() {
 
                                     prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
                                     prefs.save_TipoCambio(user1.tipocambio.toString())
+                                    prefs.save_IGV(user1.poR_IGV)
 
                                     val i = Intent(applicationContext, InicioActivity::class.java)
                                     startActivity(i)

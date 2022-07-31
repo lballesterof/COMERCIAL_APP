@@ -16,6 +16,7 @@ import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.databinding.FragmentCotizacionBinding
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
+import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,6 +47,7 @@ class FramentCotizacion : Fragment() {
         getData(prefs.getCdgVendedor())
 
         eventsHandlers()
+
     }
     private fun eventsHandlers() {
         _binding?.iconAgregarCotizacion?.setOnClickListener { addNewQuatation() }

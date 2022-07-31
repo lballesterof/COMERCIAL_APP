@@ -1,5 +1,6 @@
 package com.unosoft.ecomercialapp.helpers
 
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 
@@ -10,11 +11,13 @@ class utils {
         return String.format("%,.2f", valuenumeric)
     }
 
-    fun calculateigvbypriceunit(price: Double, igv: Double): Double {
+    fun priceSubTotal(price: Double): Double {
+        val igv = prefs.getIGV().toDouble()
         return price.minus(price.div(1 + (igv.div(100))))
     }
 
-    fun calculatepriceunitsubtractigv(price: Double, igv: Double): Double {
+    fun priceIGV(price: Double): Double {
+        val igv = prefs.getIGV().toDouble()
         return (price.div(1 + (igv.div(100))))
     }
 
