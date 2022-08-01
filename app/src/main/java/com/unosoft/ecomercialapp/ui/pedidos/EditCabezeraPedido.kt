@@ -102,6 +102,17 @@ class EditCabezeraPedido : AppCompatActivity() {
     private fun guardarInfo() {
         CoroutineScope(Dispatchers.IO).launch{
 
+            if (DATAGLOBAL.database.daoTblBasica().isExistsEntityDataCabezera()){
+                if(DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].codMoneda != DatosCabezeraPedido.codMoneda){
+                    //************ LIMPIA DATOS LISTA PRODUCTO  *************
+                    if (DATAGLOBAL.database.daoTblBasica().isExistsEntityProductList()){
+                        DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
+                        DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
+                        println("Limpio la tabla")
+                    }
+                }
+            }
+
             DATAGLOBAL.database.daoTblBasica().deleteTableDataCabezera()
             DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyDataCabezera()
 
@@ -126,10 +137,6 @@ class EditCabezeraPedido : AppCompatActivity() {
             println("***********   DATA CABEZERA   ***************")
             println(DATAGLOBAL.database.daoTblBasica().getAllDataCabezera())
 
-            //************ LIMPIA DATOS LISTA PRODUCTO  *************
-            DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
-            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
-
             runOnUiThread{
                 if (DatosCabezeraPedido.nombreCliente == "" ||
                     DatosCabezeraPedido.rucCliente == "" ||
@@ -153,20 +160,19 @@ class EditCabezeraPedido : AppCompatActivity() {
             val datosVendedor = DATAGLOBAL.database.daoTblBasica().getAllVendedor()
             runOnUiThread{
                 datosVendedor.forEach {
-                    listVendedor.add("${it.Nombre}")
+                    listVendedor.add(it.Nombre)
                 }
                 val spVendedorasignadoCabezera = binding.spVendedorasignadoCabezera
                 val AdaptadorVendedor = ArrayAdapter(this@EditCabezeraPedido, android.R.layout.simple_spinner_item, listVendedor)
                 spVendedorasignadoCabezera.adapter = AdaptadorVendedor
 
-                if(DatosCabezeraPedido.tipoMoneda != ""){
-                    for (i in listaTipoMoneda.indices){
-                        if (DatosCabezeraPedido.codMoneda == listaTipoMoneda[i].Numero){
+                if(DatosCabezeraPedido.vendedor != ""){
+                    for (i in listVendedor.indices){
+                        if (DatosCabezeraPedido.vendedor == listVendedor[i]){
                             spVendedorasignadoCabezera.setSelection(i)
                         }
                     }
                 }
-
 
                 spVendedorasignadoCabezera.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
@@ -339,10 +345,14 @@ class EditCabezeraPedido : AppCompatActivity() {
 
                 sp_filtroMonedaCabezera.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long ) {
+                    override fun onItemSelected( parent: AdapterView<*>?, view: View?, position: Int, id: Long ) {
                         val item: String = parent!!.getItemAtPosition(position).toString()
-                        DatosCabezeraPedido.tipoMoneda = item
-                        listaTipoMoneda.forEach { if(it.Nombre == item) {DatosCabezeraPedido.codMoneda = it.Numero} }
+
+                        listaTipoMoneda.forEach { if(it.Nombre == item) {
+                            DatosCabezeraPedido.codMoneda = it.Numero
+                            DatosCabezeraPedido.tipoMoneda = it.Referencia1
+                        } }
+
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }

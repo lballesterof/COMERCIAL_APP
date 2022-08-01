@@ -13,12 +13,12 @@ class utils {
 
     fun priceSubTotal(price: Double): Double {
         val igv = prefs.getIGV().toDouble()
-        return price.minus(price.div(1 + (igv.div(100))))
+        return (price.div(1 + (igv.div(100))))
     }
 
     fun priceIGV(price: Double): Double {
         val igv = prefs.getIGV().toDouble()
-        return (price.div(1 + (igv.div(100))))
+        return price.minus(price.div(1 + (igv.div(100))))
     }
 
     fun getFecha(): String {

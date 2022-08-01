@@ -108,6 +108,17 @@ class EditCabezera : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch{
 
+            if (database.daoTblBasica().isExistsEntityDataCabezera()){
+                if(database.daoTblBasica().getAllDataCabezera()[0].codMoneda != DatosCabezeraCotizacion.codMoneda){
+                    //************ LIMPIA DATOS LISTA PRODUCTO  *************
+                    if (database.daoTblBasica().isExistsEntityProductList()){
+                        database.daoTblBasica().deleteTableListProct()
+                        database.daoTblBasica().clearPrimaryKeyListProct()
+                        println("Limpio la tabla")
+                    }
+                }
+            }
+
             database.daoTblBasica().deleteTableDataCabezera()
             database.daoTblBasica().clearPrimaryKeyDataCabezera()
 
@@ -131,10 +142,6 @@ class EditCabezera : AppCompatActivity() {
 
             println("***********   DATA CABEZERA   ***************")
             println(database.daoTblBasica().getAllDataCabezera())
-
-            //************ LIMPIA DATOS LISTA PRODUCTO  *************
-            database.daoTblBasica().deleteTableListProct()
-            database.daoTblBasica().clearPrimaryKeyListProct()
 
             runOnUiThread{
                 if (DatosCabezeraCotizacion.nombreCliente == "" ||

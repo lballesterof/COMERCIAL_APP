@@ -1,11 +1,14 @@
 package com.example.apppedido
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
+import android.preference.PreferenceManager
+import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 
 class Prefs (contexto:Context){
+
+    val contexto = contexto
 
     val SHARE_DB = "Mydtb"
 
@@ -98,9 +101,8 @@ class Prefs (contexto:Context){
     fun getCompany(): String{
         return storege.getString(SHARE_COMPANY,"")!!
     }
+
     fun wipe(){
-        storege.edit().clear().apply()
+        PreferenceManager.getDefaultSharedPreferences(contexto).edit().clear().apply()
     }
-
-
 }

@@ -136,8 +136,8 @@ class ActivityAddPedido : AppCompatActivity() {
             runOnUiThread {
                 if (valor) {
                     val intent = Intent(this@ActivityAddPedido, ActivityCartPedido::class.java)
-                    startActivity(intent)
                     intent.putExtra("TIPOMONEDA",tipomoneda)
+                    startActivity(intent)
                     finish()
                 } else {
                     Toast.makeText(this@ActivityAddPedido,"Rellenar datos clientes",Toast.LENGTH_SHORT).show()

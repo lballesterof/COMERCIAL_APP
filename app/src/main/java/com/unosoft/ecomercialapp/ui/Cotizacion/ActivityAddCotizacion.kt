@@ -142,11 +142,10 @@ class ActivityAddCotizacion : AppCompatActivity() {
             runOnUiThread {
                if (valor){
                     val intent = Intent(this@ActivityAddCotizacion, ActivityCardQuotation::class.java)
-
-                   intent.putExtra("TIPOMONEDA",tipomoneda)
-
+                    intent.putExtra("TIPOMONEDA",tipomoneda)
                     startActivity(intent)
                     finish()
+
                }else{
                     Toast.makeText(this@ActivityAddCotizacion, "Rellenar datos clientes", Toast.LENGTH_SHORT).show()
                }

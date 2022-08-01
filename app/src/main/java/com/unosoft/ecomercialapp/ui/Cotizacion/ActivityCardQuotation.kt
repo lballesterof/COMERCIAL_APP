@@ -51,6 +51,7 @@ class ActivityCardQuotation : AppCompatActivity() {
         binding = ActivityCardQuotationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         tipomoneda = intent.getStringExtra("TIPOMONEDA").toString()
+
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         //iniciarLista()

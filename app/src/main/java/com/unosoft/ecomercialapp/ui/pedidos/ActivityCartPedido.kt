@@ -50,6 +50,8 @@ class ActivityCartPedido : AppCompatActivity() {
         setContentView(binding.root)
         //*********************************************************
         tipomoneda = intent.getStringExtra("TIPOMONEDA").toString()
+
+
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         getData()
@@ -59,6 +61,7 @@ class ActivityCartPedido : AppCompatActivity() {
     }
 
     fun getData() {
+
         CoroutineScope(Dispatchers.IO).launch {
 
             if (DATAGLOBAL.database.daoTblBasica().isExistsEntityProductList()){
@@ -66,7 +69,7 @@ class ActivityCartPedido : AppCompatActivity() {
                 DATAGLOBAL.database.daoTblBasica().getAllListProct().forEach {
                     listaProductoListados.add(
                         productlistcot(
-                            it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,
+                            it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,tipomoneda,it.precio_Venta,it.factor_Conversion,
                             it.cdg_Unidad,it.unidad,it.moneda_Lp,it.cantidad,it.precioUnidad,it.precioTotal
                         )
                     )
@@ -477,17 +480,18 @@ class ActivityCartPedido : AppCompatActivity() {
         return (Price * Qty.toDouble())
     }
     fun calcularMontoTotal(){
+
         montoTotal = listaProductoListados.sumOf { it.precioTotal }
         igvTotal = utils().priceIGV(montoTotal)
         subtotal = utils().priceSubTotal(montoTotal)
 
-        val tv_subtotalCot = binding.tvSubTotalAddCart
-        val tv_igvCot = binding.tvIgvAddCart
-        val tv_totalCot = binding.tvTotalAddCart
+        val tvSubTotalAddCart = binding.tvSubTotalAddCart
+        val tvIgvAddCart = binding.tvIgvAddCart
+        val tvTotalAddCart = binding.tvTotalAddCart
 
-        tv_totalCot.text = "${tipomoneda} ${utils().pricetostringformat(montoTotal)}"
-        tv_igvCot.text = "${tipomoneda} ${utils().pricetostringformat(igvTotal)}"
-        tv_subtotalCot.text ="${tipomoneda} ${utils().pricetostringformat(subtotal)}"
+        tvTotalAddCart.text = "${tipomoneda} ${utils().pricetostringformat(montoTotal)}"
+        tvIgvAddCart.text = "${tipomoneda} ${utils().pricetostringformat(igvTotal)}"
+        tvSubTotalAddCart.text ="${tipomoneda} ${utils().pricetostringformat(subtotal)}"
     }
 
     //************* GUARDAR ROOM  ****************
