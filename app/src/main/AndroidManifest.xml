@@ -26,6 +26,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.LoginPasscode.ActyLoginPasscode"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.Cliente.ActivityAddCliente"
             android:exported="false" />
         <activity
@@ -69,7 +75,7 @@
             android:name=".ui.pedidos.ActivityEditDetallePedido"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.Empresas.ActySelectEmpresa"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

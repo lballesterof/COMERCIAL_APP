@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Gian/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/drawable/background_label_fab.xml" value="0.188" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_acty_select_empresa.xml" value="0.21875" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_add_cliente.xml" value="0.17395833333333333" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_add_cotizacion.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_add_pedido.xml" value="0.33" />
@@ -18,6 +19,7 @@
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_edit_cabezera_pedido.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_edit_cotizacion.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_inicio.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_login_passcode.xml" value="0.21875" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_pedido_editar.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/activity_visor_pdfcotizacion.xml" value="0.33" />
@@ -28,7 +30,8 @@
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_clientes.xml" value="0.2" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_condiciondepago.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_consultastocks.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_cotizaciones.xml" value="0.67" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_cotizaciones.xml" value="0.33" />
+        <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_empresa.xml" value="0.33" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_pedido.xml" value="0.5" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/cardview_stocks.xml" value="0.1" />
         <entry key="..\:/Users/Gian/Documents/AndroidStudio/Comercial_APP/app/src/main/res/layout/content_inicio.xml" value="0.17831813576494426" />

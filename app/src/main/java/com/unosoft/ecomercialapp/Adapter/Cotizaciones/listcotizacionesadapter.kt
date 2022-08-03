@@ -32,9 +32,12 @@ class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>, priv
             val lblnrazonsocial = view.findViewById<TextView>(R.id.razonsocial)
             val lblnrruc = view.findViewById<TextView>(R.id.ruc)
             val lblntotal = view.findViewById<TextView>(R.id.preciocotizacion)
+            val lblfecha = view.findViewById<TextView>(R.id.fechacotizacion)
+
 
             lblnrocotizacion.text = cotizaciones.numero_Cotizacion
             lblnrazonsocial.text = cotizaciones.persona
+            lblfecha.text = cotizaciones.fecha_Cotizacion
 
             lblnrazonsocial.setTypeface(null, Typeface.BOLD)
             lblntotal.setTypeface(null, Typeface.BOLD)

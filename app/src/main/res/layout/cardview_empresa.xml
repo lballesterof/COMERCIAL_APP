@@ -1,4 +1,4 @@
-<androidx.cardview.widget.CardView android:id="@+id/cardViewCotizaciones"
+<androidx.cardview.widget.CardView android:id="@+id/cardViewEmpresa"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,24 +12,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="153dp"
+        android:layout_height="108dp"
         android:background="#e4e4e4"
         android:orientation="vertical"
         android:padding="20dp">
 
         <RelativeLayout
             android:layout_width="352dp"
-            android:layout_height="102dp">
+            android:layout_height="69dp">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="43dp"
+                android:layout_height="40dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="23dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="34dp"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_list_ot_white"
                 app:tint="@color/colorPrimaryDark" />
 
@@ -41,34 +41,18 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_cliente"
+                    android:id="@+id/tv_empresas"
                     style="@style/sizeTextView"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
                     android:maxLines="1"
                     android:text="ARTEUS COMP SAC"
-                    android:textColor="@color/negro" />
+                    android:textColor="@color/negro"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_numeropedido"
-                    style="@style/sizeTextView"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="PED -00000010"
-                    android:textColor="@color/negro" />
-                <TextView
-                    android:id="@+id/fechapedido"
-                    style="@style/sizeTextView"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Fecha: 11-22-2021"
-                    android:textColor="@color/negro" />
-
-                <TextView
-                    android:id="@+id/ruc"
+                    android:id="@+id/tv_ruc"
                     style="@style/sizeTextView"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
@@ -77,14 +61,13 @@
                     android:textColor="@color/negro" />
 
                 <TextView
-                    android:id="@+id/preciopedido"
+                    android:id="@+id/tv_usuario"
                     style="@style/sizeTextView"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="TOTAL S/.1.500,00"
+                    android:text="GIAN DELGADO"
                     android:textColor="@color/negro" />
-
 
 
             </LinearLayout>

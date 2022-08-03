@@ -56,6 +56,9 @@ interface DAO {
     @Query("SELECT * FROM EntityDataLogin")
     fun getAllDataLogin(): List<EntityDataLogin>
 
+    @Query("SELECT * FROM EntityEmpresa")
+    fun getAllEmpresa(): List<EntityEmpresa>
+
 
     //*************   INSERT DE TABLAS    *********************
     @Insert
@@ -96,6 +99,9 @@ interface DAO {
 
     @Insert
     fun insertDataLogin( insertDataLogin: EntityDataLogin)
+
+    @Insert
+    fun insertEmpresa( insertEmpresa: EntityEmpresa)
 
 
 
@@ -160,6 +166,9 @@ interface DAO {
     @Query("DELETE FROM EntityDataLogin")
     fun deleteTableDataLogin()
 
+    @Query("DELETE FROM EntityEmpresa")
+    fun deleteTableEmpresa()
+
 
 
     //*********  REINICIAR LOS ID AUTOGENERADOS   **************
@@ -209,6 +218,9 @@ interface DAO {
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityDataLogin'")
     fun clearPrimaryKeyDataLogin()
 
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'EntityEmpresa'")
+    fun clearPrimaryKeyEmpresa()
+
 
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
     @Query("SELECT EXISTS(SELECT * FROM EntityCondicionPago)")
@@ -217,6 +229,11 @@ interface DAO {
     //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
     @Query("SELECT EXISTS(SELECT * FROM EntityListProct)")
     fun isExistsEntityListProct(): Boolean
+
+    //*****************  CONSULTA DE LA EXISTENCIA DE DATABASE *******************
+    @Query("SELECT EXISTS(SELECT * FROM EntityEmpresa)")
+    fun isExistsEntityEmpresa(): Boolean
+
 
 
 
