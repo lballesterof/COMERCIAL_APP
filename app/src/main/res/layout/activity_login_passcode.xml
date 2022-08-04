@@ -106,7 +106,7 @@
 
                         <EditText
                             android:layout_weight="0.8"
-                            android:id="@+id/pass"
+                            android:id="@+id/et_pass"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text=""
@@ -139,7 +139,7 @@
 
 
                         <Button
-                            android:id="@+id/ingresar"
+                            android:id="@+id/btn_ingresar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"

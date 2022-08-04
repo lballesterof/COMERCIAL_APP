@@ -14,6 +14,12 @@ data class EntityEmpresa(
     @ColumnInfo
     val ruc: String,
     @ColumnInfo
-    val usuario: String
+    val nameUser:String,
+    @ColumnInfo
+    val usuario: String,
+    @ColumnInfo
+    val url:String,
+    @ColumnInfo
+    val Userkey:String, // User + Url
 
 )

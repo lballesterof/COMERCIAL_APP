@@ -23,6 +23,7 @@ import com.unosoft.ecomercialapp.db.EntityDataLogin
 import com.unosoft.ecomercialapp.db.EntityDepartamento
 import com.unosoft.ecomercialapp.db.EntityDistrito
 import com.unosoft.ecomercialapp.db.EntityDocIdentidad
+import com.unosoft.ecomercialapp.db.EntityEmpresa
 import com.unosoft.ecomercialapp.db.EntityFrecuenciaDias
 import com.unosoft.ecomercialapp.db.EntityListaPrecio
 import com.unosoft.ecomercialapp.db.EntityMoneda
@@ -109,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                         if (response.code() == 400) {
                             AlertMessage("Usuario y/o Contraseña incorrecta")
                             pd.cancel()
-                        }else {
+                        } else {
                             val user1 = response.body()!!
 
                             CoroutineScope(Dispatchers.IO).launch {
@@ -140,6 +141,32 @@ class MainActivity : AppCompatActivity() {
                                     user1.cdG_VENDEDOR
                                 ))
 
+                                if (database.daoTblBasica().isExistsEntityEmpresa()){
+                                    database.daoTblBasica().getAllEmpresa().forEach{
+                                        if (it.Userkey != "123456789${prefs.getUser()}"){
+                                            database.daoTblBasica().insertEmpresa(
+                                                EntityEmpresa(0,
+                                                    "Arteus SAC","123456789",
+                                                    prefs.getUser(),
+                                                    prefs.getUser(),
+                                                    prefs.getURLBase(),
+                                                    "123486788"+prefs.getUser())
+                                            )
+                                        }
+                                    }
+                                }else{
+                                    database.daoTblBasica().insertEmpresa(
+                                        EntityEmpresa(0,
+                                            "Arteus SAC",
+                                            "123456789",
+                                            prefs.getUser(),
+                                            prefs.getUser(),
+                                            prefs.getURLBase(),
+                                            "123486788"+prefs.getUser())
+                                    )
+                                }
+
+
                                 println("***************  IMPRIMIENDO DATOS USUARIO  *****************")
                                 println(database.daoTblBasica().getAllDataLogin())
 
@@ -153,7 +180,6 @@ class MainActivity : AppCompatActivity() {
 
                                     println(user1.cdG_VENDEDOR)
                                     println(user1.tipocambio)
-
 
                                     prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
                                     prefs.save_TipoCambio(user1.tipocambio.toString())

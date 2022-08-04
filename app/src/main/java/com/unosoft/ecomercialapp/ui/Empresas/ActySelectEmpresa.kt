@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.unosoft.ecomercialapp.Activity.inicio.InicioActivity
 import com.unosoft.ecomercialapp.Adapter.Empresa.AdtEmpresa
+import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.MainActivity
 import com.unosoft.ecomercialapp.databinding.ActivityActySelectEmpresaBinding
@@ -28,26 +28,20 @@ class ActySelectEmpresa : AppCompatActivity() {
         binding = ActivityActySelectEmpresaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        INICIARDATAPRUEBA()
+        //INICIARDATAPRUEBA()
         iniciarData()
     }
 
     private fun INICIARDATAPRUEBA() {
-        CoroutineScope(Dispatchers.IO).launch {
-            database.daoTblBasica().insertEmpresa(EntityEmpresa(0,"Arteus SAC","123456789","Jhon"))
-            database.daoTblBasica().insertEmpresa(EntityEmpresa(0,"Arteus COM","123456788","Jhon"))
-        }
     }
 
-
     private fun iniciarData() {
-        CoroutineScope(Dispatchers.IO).launch {
 
+        CoroutineScope(Dispatchers.IO).launch {
             if (database.daoTblBasica().isExistsEntityEmpresa()){
                 database.daoTblBasica().getAllEmpresa().forEach {
-                    listaEmpresa.add(dcEmpresa(it.nameEmpresa, it.ruc, it.usuario))
+                    listaEmpresa.add(dcEmpresa(it.nameEmpresa, it.ruc,it.nameUser,it.usuario,it.url,it.Userkey))
                 }
-
                 runOnUiThread {
                     iniciarEmpresa()
                     adapterEmpresa.notifyDataSetChanged()
@@ -65,12 +59,17 @@ class ActySelectEmpresa : AppCompatActivity() {
 
     private fun iniciarEmpresa() {
         binding.rvEmpresa.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        adapterEmpresa = AdtEmpresa(listaEmpresa) { data -> onItemDatosProductList(data) }
+        adapterEmpresa = AdtEmpresa(listaEmpresa) { data -> onItemDatosEmpresa(data) }
         binding.rvEmpresa.adapter = adapterEmpresa
     }
 
-    private fun onItemDatosProductList(data: dcEmpresa) {
+    private fun onItemDatosEmpresa(data: dcEmpresa) {
+
+        DATAGLOBAL.prefs.save_User(data.usuario)
+        DATAGLOBAL.prefs.save_URLBase(data.url)
+
         val i = Intent(applicationContext, ActyLoginPasscode::class.java)
+
         startActivity(i)
     }
 
