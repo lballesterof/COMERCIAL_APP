@@ -61,6 +61,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
             println("Cotizacion")
             enviarCotizacion()
         }
+
         val btn_cancelCotizacion = findViewById<Button>(R.id.btn_cancelCotizacion)
         btn_cancelCotizacion.setOnClickListener {
             this.onBackPressed()
@@ -282,6 +283,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                       visualizarPDF(response.body()!!.iD_COTIZACION)
 
                                       binding.tvCodCotizacion.text = "N° Cotizacion: ${response.body()!!.iD_COTIZACION}"
+                                      Toast.makeText(this@ActivityAddCotizacion, "${response.body()!!.iD_COTIZACION}", Toast.LENGTH_SHORT).show()
 
                                   }else{
                                      println("**********************************")
@@ -308,6 +310,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
         bundle.putString("ID", "$idCotizacion")
         intent.putExtras(bundle)
         startActivity(intent)
+        finish()
     }
 
     private fun observacion() {

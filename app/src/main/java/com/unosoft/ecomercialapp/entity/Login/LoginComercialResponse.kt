@@ -30,5 +30,7 @@ data class LoginComercialResponse(
     val motivo: Object,
     val correlativo: Object,
     val refreshToken: String,
-    val cdG_VENDEDOR: String
+    val cdG_VENDEDOR: String,
+    val ruc: String,
+    val nombre: String
 )

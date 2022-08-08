@@ -22,6 +22,7 @@ import com.unosoft.ecomercialapp.db.EntityListProct
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
 import com.unosoft.ecomercialapp.helpers.utils
+import com.unosoft.ecomercialapp.ui.Cotizacion.ActivityAddCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -58,6 +59,26 @@ class ActivityCartPedido : AppCompatActivity() {
 
         productosListado()
         abrirListProductos()
+        eventsHandlers()
+    }
+
+    private fun eventsHandlers() {
+        binding.btnGuardarCartPedido.setOnClickListener { guardarDatos() }
+        binding.btnCancelarCartPedido.setOnClickListener { cancelarPedido() }
+    }
+
+    private fun cancelarPedido() {
+        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun guardarDatos() {
+        guardarListRoom()
+
+        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
     }
 
     fun getData() {
@@ -519,6 +540,7 @@ class ActivityCartPedido : AppCompatActivity() {
     }
     override fun onBackPressed() {
         guardarListRoom()
+
         val intent = Intent(this, ActivityAddPedido::class.java)
         startActivity(intent)
         finish()

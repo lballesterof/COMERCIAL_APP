@@ -112,9 +112,9 @@ class EditCabezera : AppCompatActivity() {
                 if(database.daoTblBasica().getAllDataCabezera()[0].codMoneda != DatosCabezeraCotizacion.codMoneda){
                     //************ LIMPIA DATOS LISTA PRODUCTO  *************
                     if (database.daoTblBasica().isExistsEntityProductList()){
-                        database.daoTblBasica().deleteTableListProct()
-                        database.daoTblBasica().clearPrimaryKeyListProct()
-                        println("Limpio la tabla")
+                            database.daoTblBasica().deleteTableListProct()
+                            database.daoTblBasica().clearPrimaryKeyListProct()
+                            println("Limpio la tabla")
                     }
                 }
             }

@@ -3,17 +3,16 @@ package com.unosoft.ecomercialapp
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.unosoft.ecomercialapp.Activity.inicio.InicioActivity
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.api.APIClient.client
-import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
-import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.api.ListaPrecio
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.TablaBasicaApi
@@ -31,6 +30,7 @@ import com.unosoft.ecomercialapp.db.EntityProvincia
 import com.unosoft.ecomercialapp.db.EntityUnidadMedida
 import com.unosoft.ecomercialapp.db.EntityVendedor
 import com.unosoft.ecomercialapp.entity.ListaPrecio.ListaPrecioRespuesta
+import com.unosoft.ecomercialapp.entity.Login.DCLoginUser
 import com.unosoft.ecomercialapp.entity.Login.LoginComercialResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.CondicionPagoResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.DepartamentoResponse
@@ -41,7 +41,6 @@ import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.ProvinciaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.UnidadMedidaResponse
 import com.unosoft.ecomercialapp.entity.Vendedor.VendedorResponse
-import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -141,28 +140,47 @@ class MainActivity : AppCompatActivity() {
                                     user1.cdG_VENDEDOR
                                 ))
 
+                                val preclave = "${prefs.getUser().uppercase()}${user1.ruc}"
+                                val clave = preclave.replace(" ", "")
+                                var validar = 0
+
                                 if (database.daoTblBasica().isExistsEntityEmpresa()){
-                                    database.daoTblBasica().getAllEmpresa().forEach{
-                                        if (it.Userkey != "123456789${prefs.getUser()}"){
+
+                                    println(" *****   TEXTO  *****")
+                                    println(clave)
+
+                                        for(i in database.daoTblBasica().getAllEmpresa().indices){
+
+                                            println(" *****   VALOR DE EVALUACUION  *****")
+                                            println(database.daoTblBasica().getAllEmpresa()[i].Userkey)
+                                            println(clave)
+                                            println(database.daoTblBasica().getAllEmpresa()[i].Userkey != clave)
+
+                                            if (database.daoTblBasica().getAllEmpresa()[i].Userkey == clave){
+                                                validar=+1
+                                            }
+                                        }
+                                        if(validar==0){
                                             database.daoTblBasica().insertEmpresa(
                                                 EntityEmpresa(0,
-                                                    "Arteus SAC","123456789",
-                                                    prefs.getUser(),
-                                                    prefs.getUser(),
+                                                    user1.nombre,
+                                                    user1.ruc,
+                                                    prefs.getUser().uppercase(),
+                                                    prefs.getUser().uppercase(),
                                                     prefs.getURLBase(),
-                                                    "123486788"+prefs.getUser())
+                                                    clave)
                                             )
                                         }
-                                    }
                                 }else{
                                     database.daoTblBasica().insertEmpresa(
                                         EntityEmpresa(0,
-                                            "Arteus SAC",
-                                            "123456789",
-                                            prefs.getUser(),
-                                            prefs.getUser(),
+                                            user1.nombre,
+                                            user1.ruc,
+                                            prefs.getUser().uppercase(),
+                                            prefs.getUser().uppercase(),
                                             prefs.getURLBase(),
-                                            "123486788"+prefs.getUser())
+                                            clave
+                                        )
                                     )
                                 }
 
@@ -184,6 +202,7 @@ class MainActivity : AppCompatActivity() {
                                     prefs.save_CdgVendedor(user1.cdG_VENDEDOR)
                                     prefs.save_TipoCambio(user1.tipocambio.toString())
                                     prefs.save_IGV(user1.poR_IGV)
+                                    prefs.save_Company(user1.nombre)
 
                                     val i = Intent(applicationContext, InicioActivity::class.java)
                                     startActivity(i)
@@ -228,7 +247,6 @@ class MainActivity : AppCompatActivity() {
             listaUnidadMedidaResponse: ArrayList<UnidadMedidaResponse>,
             ListaPrecioRespuesta : ArrayList<ListaPrecioRespuesta>,
             listVendedores: ArrayList<VendedorResponse>
-
         ) {
             GlobalScope.launch(Dispatchers.Default) {
                 database.daoTblBasica().deleteTableCondicionPago()
@@ -328,8 +346,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        fun getDataRoom(){
 
+        fun getDataRoom(){
             CoroutineScope(Dispatchers.IO).launch {
 
                 val response1 = apiInterface2!!.getCondicionPago()
@@ -390,6 +408,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
         CoroutineScope(Dispatchers.IO).launch {
             println("Valor ${!database.daoTblBasica().isExists()}")
             if(!database.daoTblBasica().isExists()) {

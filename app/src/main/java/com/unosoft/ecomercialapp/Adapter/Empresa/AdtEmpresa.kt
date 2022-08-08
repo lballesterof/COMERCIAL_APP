@@ -31,8 +31,8 @@ class AdtEmpresa (var data:ArrayList<dcEmpresa>, private val onClickListener: (d
             val tv_usuario = view.findViewById<TextView>(R.id.tv_usuario)
 
             tv_empresas.text = data.nameEmpresa
-            tv_ruc.text = data.ruc
-            tv_usuario.text = data.usuario
+            tv_ruc.text = "RUC: ${data.ruc}"
+            tv_usuario.text = "Usuario: ${data.usuario}"
 
             itemView.setOnClickListener { onClickListener(data)  }
         }

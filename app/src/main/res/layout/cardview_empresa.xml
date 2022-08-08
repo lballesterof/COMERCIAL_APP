@@ -30,7 +30,7 @@
                 android:layout_marginStart="21dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="16dp"
-                android:src="@drawable/ic_list_ot_white"
+                android:src="@drawable/ic_business"
                 app:tint="@color/colorPrimaryDark" />
 
             <LinearLayout

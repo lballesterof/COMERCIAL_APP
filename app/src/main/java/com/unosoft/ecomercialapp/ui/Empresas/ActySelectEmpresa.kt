@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.unosoft.ecomercialapp.Adapter.Empresa.AdtEmpresa
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.MainActivity
 import com.unosoft.ecomercialapp.databinding.ActivityActySelectEmpresaBinding
 import com.unosoft.ecomercialapp.db.EntityEmpresa
@@ -30,24 +32,47 @@ class ActySelectEmpresa : AppCompatActivity() {
 
         //INICIARDATAPRUEBA()
         iniciarData()
+        eventsHandlers()
+
     }
 
-    private fun INICIARDATAPRUEBA() {
+    private fun eventsHandlers() {
+        binding.btnNuevoUser.setOnClickListener { generarUser() }
+    }
+
+    private fun generarUser() {
+        val i = Intent(applicationContext, MainActivity::class.java)
+        startActivity(i)
     }
 
     private fun iniciarData() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            if (database.daoTblBasica().isExistsEntityEmpresa()){
-                database.daoTblBasica().getAllEmpresa().forEach {
-                    listaEmpresa.add(dcEmpresa(it.nameEmpresa, it.ruc,it.nameUser,it.usuario,it.url,it.Userkey))
-                }
-                runOnUiThread {
-                    iniciarEmpresa()
-                    adapterEmpresa.notifyDataSetChanged()
-                }
 
+            //database.daoTblBasica().deleteTableEmpresa()
+            //database.daoTblBasica().clearPrimaryKeyEmpresa()
+
+
+            if (database.daoTblBasica().isExistsEntityEmpresa()){
+
+                if (prefs.getUser().isEmpty()){
+                    listaEmpresa.clear()
+                    database.daoTblBasica().getAllEmpresa().forEach {
+                        listaEmpresa.add(dcEmpresa(it.nameEmpresa, it.ruc,it.nameUser,it.usuario.uppercase(),it.url,it.Userkey))
+                    }
+                    runOnUiThread {
+                        iniciarEmpresa()
+                        adapterEmpresa.notifyDataSetChanged()
+                    }
+                }else{
+                    runOnUiThread {
+                        val i = Intent(applicationContext, ActyLoginPasscode::class.java)
+                        startActivity(i)
+                        finish()
+                    }
+                }
             }else{
+
                 runOnUiThread {
                     val i = Intent(applicationContext, MainActivity::class.java)
                     startActivity(i)
@@ -65,12 +90,16 @@ class ActySelectEmpresa : AppCompatActivity() {
 
     private fun onItemDatosEmpresa(data: dcEmpresa) {
 
-        DATAGLOBAL.prefs.save_User(data.usuario)
-        DATAGLOBAL.prefs.save_URLBase(data.url)
+        prefs.save_User(data.usuario)
+        prefs.save_URLBase(data.url)
 
         val i = Intent(applicationContext, ActyLoginPasscode::class.java)
-
         startActivity(i)
+        finish()
     }
+
+
+
+
 
 }

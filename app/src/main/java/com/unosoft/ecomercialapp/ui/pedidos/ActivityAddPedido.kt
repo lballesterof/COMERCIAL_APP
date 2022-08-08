@@ -48,7 +48,6 @@ class ActivityAddPedido : AppCompatActivity() {
         binding.ivProductoAddPedido.setOnClickListener { addressCartQuotation() }
         binding.icObsAddPedido.setOnClickListener { observacion() }
 
-
         //** CONSULTAR **
         val btn_savePedido = findViewById<Button>(R.id.btn_savePedido)
         btn_savePedido.setOnClickListener { enviarPedido() }
@@ -282,16 +281,17 @@ class ActivityAddPedido : AppCompatActivity() {
                                     println("**********************************")
                                     println("********      EXITO        *******")
                                     println("**********************************")
-                                    Toast.makeText(this@ActivityAddPedido,"Exito",Toast.LENGTH_SHORT).show()
-
                                     visualizarPDF(response.body()!!.iD_PEDIDO)
 
-                                    binding.tvNumAddPedido.text = "N° Pedido: ${response.body()!!.iD_COTIZACION}"
+                                    binding.tvNumAddPedido.text = "N° Pedido: ${response.body()!!.iD_PEDIDO}"
+
+                                    Toast.makeText(this@ActivityAddPedido, "${response.body()!!.iD_PEDIDO}", Toast.LENGTH_SHORT).show()
 
                                 } else {
                                     println("**********************************")
                                     println("********      ERROR        *******")
                                     println("**********************************")
+
                                     Toast.makeText(this@ActivityAddPedido,"ERROR",Toast.LENGTH_SHORT).show()
                                 }
                             }
@@ -314,6 +314,7 @@ class ActivityAddPedido : AppCompatActivity() {
         bundle.putString("ID", "$idPedido")
         intent.putExtras(bundle)
         startActivity(intent)
+        finish()
     }
 
     fun observacion() {

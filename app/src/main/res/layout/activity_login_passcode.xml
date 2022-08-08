@@ -32,9 +32,6 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/unosoft_logo" />
 
-
-
-
                 <LinearLayout
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -54,6 +51,7 @@
                         android:background="@color/colorPrimary" />
 
                     <TextView
+                        android:id="@+id/tv_usurio"
                         android:layout_weight="0.6"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -64,6 +62,7 @@
                         android:layout_height="wrap_content"
                         android:text="Bienvenidos"
                         />
+
                     <TextView
                         android:layout_gravity="center_vertical"
                         android:layout_weight="0.2"

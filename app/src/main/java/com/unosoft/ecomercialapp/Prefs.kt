@@ -24,9 +24,10 @@ class Prefs (contexto:Context){
     val SHARE_IGV = "IGV"
 
 
-    //val storege = contexto.getSharedPreferences(SHARE_DB,MODE_PRIVATE)
+    val storege = contexto.getSharedPreferences(SHARE_DB,0)
 
     //*********    PRUEBA  ************
+    /*
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
     val storege = EncryptedSharedPreferences.create(
@@ -36,11 +37,8 @@ class Prefs (contexto:Context){
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
+    */
     //*********************************
-
-
-
-
 
     //******************  GUARDAR DATOS  ****************************
     fun save_CdgVendedor(CDGVENDEDOR:String){
@@ -103,6 +101,6 @@ class Prefs (contexto:Context){
     }
 
     fun wipe(){
-        PreferenceManager.getDefaultSharedPreferences(contexto).edit().clear().apply()
+        storege.edit().clear().apply()
     }
 }

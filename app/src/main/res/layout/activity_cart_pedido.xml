@@ -16,7 +16,7 @@ tools:context=".ui.pedidos.ActivityCartPedido">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_listProdut"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="500dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,8 +113,38 @@ tools:context=".ui.pedidos.ActivityCartPedido">
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+
+            <Button
+                android:id="@+id/btn_guardarCartPedido"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/colorBackground"
+                android:background="@color/colorPrimary"
+                android:text="Guardar y Salir"
+                />
+
+            <Button
+                android:id="@+id/btn_cancelarCartPedido"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/colorBackground"
+                android:text="Cancelar"
+                />
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
+
 
 </LinearLayout>
 

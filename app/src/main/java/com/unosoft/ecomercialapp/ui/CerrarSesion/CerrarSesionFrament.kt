@@ -17,6 +17,7 @@ import com.unosoft.ecomercialapp.MainActivity
 import com.unosoft.ecomercialapp.databinding.ActivityMainBinding
 import com.unosoft.ecomercialapp.databinding.FragmentCerrarSesionFramentBinding
 import com.unosoft.ecomercialapp.ui.Cotizacion.ActivityAddCotizacion
+import com.unosoft.ecomercialapp.ui.Empresas.ActySelectEmpresa
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -78,16 +79,18 @@ class CerrarSesionFrament : Fragment() {
             database.daoTblBasica().clearPrimaryKeyListaPrecio()
             database.daoTblBasica().deleteTableVendedor()
             database.daoTblBasica().clearPrimaryKeyVendedor()
+
             activity?.runOnUiThread {
                 println("***************************************")
                 println("*********** CERRAR SESION *************")
                 println("***************************************")
                 prefs.wipe()
-                startActivity(Intent(activity, MainActivity::class.java)
+                startActivity(Intent(activity, ActySelectEmpresa::class.java)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 )
                 requireActivity().finish()
             }
+
         }
     }
 }

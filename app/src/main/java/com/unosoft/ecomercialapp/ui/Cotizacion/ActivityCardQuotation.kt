@@ -59,6 +59,26 @@ class ActivityCardQuotation : AppCompatActivity() {
 
         productosListado()
         abrirListProductos()
+        eventsHandlers()
+    }
+
+    private fun eventsHandlers() {
+        binding.btnGuardarCartCotizacion.setOnClickListener { guardarDatos() }
+        binding.btnCancelarCartCotizacion.setOnClickListener { cancelarPedido() }
+    }
+
+    private fun cancelarPedido() {
+        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun guardarDatos() {
+        guardarListRoom()
+
+        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
     }
 
 
@@ -509,12 +529,10 @@ class ActivityCardQuotation : AppCompatActivity() {
     fun guardarListRoom(){
 
         CoroutineScope(Dispatchers.IO).launch {
-
             database.daoTblBasica().deleteTableListProct()
             database.daoTblBasica().clearPrimaryKeyListProct()
 
             if(listaProductoListados.size>0){
-
                 listaProductoListados.forEach {
                     database.daoTblBasica().insertListProct(
                         EntityListProct(
@@ -524,11 +542,9 @@ class ActivityCardQuotation : AppCompatActivity() {
                         )
                     )
                 }
-
             }
 
             println(database.daoTblBasica().getAllListProct())
-
         }
 
     }
@@ -538,7 +554,6 @@ class ActivityCardQuotation : AppCompatActivity() {
         val intent = Intent(this, ActivityAddCotizacion::class.java)
         startActivity(intent)
         finish()
-
         super.onBackPressed()
     }
 }
