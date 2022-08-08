@@ -532,7 +532,6 @@
         android:id="@+id/linearLayout9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -550,7 +549,7 @@
             android:textColor="@color/colorBackground" />
 
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_cancelCotizacion"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"

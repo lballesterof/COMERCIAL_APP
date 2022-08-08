@@ -49,5 +49,5 @@ data class EntityEditQuotationDetail(
     @ColumnInfo
     val swT_PIGV: String?,
     @ColumnInfo
-    val noM_UNIDAD: String
+    val noM_UNIDAD: String,
 )

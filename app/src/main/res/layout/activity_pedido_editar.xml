@@ -76,7 +76,7 @@
                                 android:layout_below="@+id/ic_info_ot"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
-                                android:text="Cotización" />
+                                android:text="Pedido" />
                         </RelativeLayout>
 
                         <LinearLayout
@@ -351,7 +351,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
-                                android:text="Despachar antes de 24/12/2021" />
+                                android:text="SIN OBSERVACIONES" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

@@ -360,9 +360,9 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="12dp"
+            android:layout_width="170dp"
             android:textColor="@color/colorBackground"
             android:background="@color/colorPrimary"
-            android:layout_width="170dp"
             android:text="Guardar y Salir"
             android:layout_height="wrap_content"/>
 

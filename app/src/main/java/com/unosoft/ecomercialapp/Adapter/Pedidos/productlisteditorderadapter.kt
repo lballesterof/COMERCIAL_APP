@@ -13,7 +13,7 @@ import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
 import com.unosoft.ecomercialapp.helpers.utils
 import java.lang.StringBuilder
 
-class productlisteditorderadapter(var datos: ArrayList<EntityEditPedidoDetail>) : RecyclerView.Adapter<productlisteditorderadapter.ViewHolder>() {
+class productlisteditorderadapter(var datos: ArrayList<productlistcot>) : RecyclerView.Adapter<productlisteditorderadapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -27,18 +27,19 @@ class productlisteditorderadapter(var datos: ArrayList<EntityEditPedidoDetail>) 
     override fun getItemCount(): Int = datos.size
 
     class ViewHolder(val view: View): RecyclerView.ViewHolder(view){
-        fun render (datos: EntityEditPedidoDetail){
+        fun render (datos: productlistcot){
 
             val tv_nameProducto = view.findViewById<TextView>(R.id.tv_nameProducto)
             val tv_codProducto = view.findViewById<TextView>(R.id.tv_codProducto)
             val tv_precioUnidad = view.findViewById<TextView>(R.id.tv_precioUnidad)
             val tv_cantidad = view.findViewById<TextView>(R.id.tv_cantidad)
             val tv_preciototal = view.findViewById<TextView>(R.id.tv_precioTotal)
-            tv_cantidad.text = "${datos.cantidad.toString()} ${datos.unidad}"
+
             tv_nameProducto.text = datos.nombre
-            tv_codProducto.text = datos.iD_PRODUCTO.toString()
-            tv_precioUnidad.text = "${datos.precio!!.toString()}"
-            tv_preciototal.text = "${datos.precio!!.toString()}"
+            tv_codProducto.text = datos.id_Producto.toString()
+            tv_precioUnidad.text = "${datos.mon} ${datos.precioUnidad}"
+            tv_cantidad.text = "${datos.cantidad} ${datos.unidad}"
+            tv_preciototal.text = "${datos.mon} ${datos.precioUnidad*datos.cantidad}"
         }
     }
 }

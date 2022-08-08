@@ -33,11 +33,12 @@ class productlistcotadarte (var datos: ArrayList<productlistcot>, private val on
             val tv_precioUnidad = view.findViewById<TextView>(R.id.tv_precioUnidad)
             val tv_cantidad = view.findViewById<TextView>(R.id.tv_cantidad)
             val tv_preciototal = view.findViewById<TextView>(R.id.tv_precioTotal)
-            tv_cantidad.text = "${datos.cantidad.toString()} ${datos.unidad}"
+
             tv_nameProducto.text = datos.nombre
             tv_codProducto.text = datos.codigo
             tv_precioUnidad.text = "${datos.mon} ${utils().pricetostringformat(datos.precio_Venta)}"
-            tv_preciototal.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.precioTotal))
+            tv_cantidad.text = "${datos.cantidad} ${datos.unidad}"
+            tv_preciototal.text = StringBuilder().append(datos.mon).append(utils().pricetostringformat(datos.precio_Venta*datos.cantidad))
             itemView.setOnClickListener { onClickListener(datos) }
         }
     }

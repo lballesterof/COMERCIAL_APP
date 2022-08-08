@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.unosoft.ecomercialapp"
-        minSdk 22
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -81,6 +81,9 @@ dependencies {
     //PDF VIEW
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
+    //SEGURIDAD
+    implementation "androidx.security:security-crypto:1.1.0-alpha03"
 
-
+    //PICASSO
+    implementation 'com.squareup.picasso:picasso:2.8'
 }

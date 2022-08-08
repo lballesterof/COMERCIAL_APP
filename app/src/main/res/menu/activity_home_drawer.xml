@@ -11,7 +11,7 @@
                 android:title="@string/menu_home" />
         </menu>
     </item>
-    <item android:title="Operaciones">
+    <item android:title="Ventas">
         <menu>
 
 
@@ -21,7 +21,7 @@
                 android:title="Clientes" />
 
             <item
-                android:id="@+id/nav_slideshow"
+                android:id="@+id/activityCotizacion"
                 android:icon="@drawable/ic_list_ot_white"
                 android:title="@string/menu_slideshow" />
 
@@ -38,9 +38,12 @@
                 android:icon="@drawable/ic_out"
                 android:title="@string/menu_gallery" >
             </item>
+
+
+
         </menu>
     </item>
-    <item android:title="Configuraciones">
+    <item android:title="Mantenimientos">
         <menu>
             <item
                 android:id="@+id/sincTablaBassicaFragment"

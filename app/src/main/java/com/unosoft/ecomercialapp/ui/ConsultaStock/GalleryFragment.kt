@@ -1,5 +1,6 @@
 package com.unosoft.ecomercialapp.ui.ConsultaStock
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,8 +30,6 @@ import kotlinx.coroutines.launch
 class GalleryFragment : Fragment() {
 
     private val listaConsultaStocks = ArrayList<ConsultaStocksResponseItem>()
-    private val listaStocksFiltrado = ArrayList<ConsultaStocksResponseItem>()
-    private val listaConsultaStocksData = ArrayList<Almacen>()
     private lateinit var adapterStocks: listconsultastocks
     var apiInterface: StocksApi? = null
     var itemSelect: String? = null
@@ -45,7 +44,6 @@ class GalleryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         apiInterface = APIClient.client?.create(StocksApi::class.java) as StocksApi
         initStocks()
-        //consultarStock()
         buscaStock()
         busquedaSpinner()
     }
@@ -107,14 +105,22 @@ class GalleryFragment : Fragment() {
     }
 
     fun getDataForName(nomeProducto: String) {
+        val pd = ProgressDialog(activity)
+        pd.setMessage("Cargando....")
+        pd.setCancelable(false)
+        pd.create()
+        pd.show()
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForName("$nomeProducto")
             activity?.runOnUiThread {
                 if (response.isSuccessful) {
                     listaConsultaStocks.clear()
                     listaConsultaStocks.addAll(response.body()!!)
+                    pd.cancel()
                     adapterStocks.notifyDataSetChanged()
                 } else {
+                    pd.cancel()
                     println("Error en la conaulta ")
                 }
             }
@@ -122,14 +128,22 @@ class GalleryFragment : Fragment() {
     }
 
     fun getDataForCdgBarra(cdgBarra: String) {
+        val pd = ProgressDialog(activity)
+        pd.setMessage("Cargando....")
+        pd.setCancelable(false)
+        pd.create()
+        pd.show()
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForCdgBarra("$cdgBarra")
             activity?.runOnUiThread {
                 if (response.isSuccessful) {
                     listaConsultaStocks.clear()
                     listaConsultaStocks.addAll(response.body()!!)
+                    pd.cancel()
                     adapterStocks.notifyDataSetChanged()
                 } else {
+                    pd.cancel()
                     println("Error en la conaulta ")
                 }
             }
@@ -137,14 +151,22 @@ class GalleryFragment : Fragment() {
     }
 
     fun getDataForCdgRef(CdgRef: String) {
+        val pd = ProgressDialog(activity)
+        pd.setMessage("Cargando....")
+        pd.setCancelable(false)
+        pd.create()
+        pd.show()
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForCdgRef("$CdgRef")
             activity?.runOnUiThread {
                 if (response.isSuccessful) {
                     listaConsultaStocks.clear()
-                    listaConsultaStocks.addAll(response!!.body()!!)
+                    listaConsultaStocks.addAll(response.body()!!)
+                    pd.cancel()
                     adapterStocks.notifyDataSetChanged()
                 } else {
+                    pd.cancel()
                     println("Error en la conaulta ")
                 }
             }

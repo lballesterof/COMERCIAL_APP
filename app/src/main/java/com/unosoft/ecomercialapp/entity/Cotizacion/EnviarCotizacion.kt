@@ -18,7 +18,7 @@ data class EnviarCotizacion(
     val importE_IGV: Double,
     val importE_TOTAL: Double,
     val porcentajE_DESCUENTO: Int,
-    val porcentajE_IGV: Int,
+    val porcentajE_IGV: Double,
     val observacion: String,
     val estado: String,
     val iD_CLIENTE: Int,

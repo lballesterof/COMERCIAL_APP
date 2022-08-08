@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.LoginPasscode.ActyLoginPasscode">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,9 +32,6 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/unosoft_logo" />
 
-
-
-
                 <LinearLayout
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -53,6 +51,7 @@
                         android:background="@color/colorPrimary" />
 
                     <TextView
+                        android:id="@+id/tv_usurio"
                         android:layout_weight="0.6"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -63,6 +62,7 @@
                         android:layout_height="wrap_content"
                         android:text="Bienvenidos"
                         />
+
                     <TextView
                         android:layout_gravity="center_vertical"
                         android:layout_weight="0.2"
@@ -84,87 +84,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="20dp"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:weightSum="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="61dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/edittext_main_button"
-                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_weight="0.1"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/ic_port"
-                            app:tint="@color/colorPrimary" />
-
-                        <EditText
-                            android:layout_weight="0.9"
-                            android:id="@+id/host"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/edittext_main_button"
-                            android:gravity="center_vertical"
-                            android:hint="URL/Host"
-                            android:inputType="text"
-                            android:text=""
-                            android:textColor="@color/colorPrimary"
-                            android:textColorHighlight="@color/colorPrimary"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textColorLink="@color/colorPrimary"
-                            android:textSize="20sp"/>
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:background="@color/colorPrimary" />
-
-                    <LinearLayout
-                        android:weightSum="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="61dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/edittext_main_button"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_weight="0.1"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/ic_info"
-                            app:tint="@color/colorPrimary" />
-
-                        <EditText
-                            android:layout_weight="0.9"
-                            android:id="@+id/user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/edittext_main_button"
-                            android:gravity="center_vertical"
-                            android:hint="@string/main_id"
-                            android:inputType="text"
-                            android:text=""
-                            android:textColor="@color/colorPrimary"
-                            android:textColorHighlight="@color/colorPrimary"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textColorLink="@color/colorPrimary"
-                            android:textSize="20sp"/>
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:background="@color/colorPrimary" />
 
                     <LinearLayout
                         android:weightSum="1"
@@ -185,7 +105,7 @@
 
                         <EditText
                             android:layout_weight="0.8"
-                            android:id="@+id/pass"
+                            android:id="@+id/et_pass"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text=""
@@ -218,13 +138,13 @@
 
 
                         <Button
-                            android:id="@+id/ingresar"
+                            android:id="@+id/btn_ingresar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_margin="10dp"
                             android:background="@color/colorPrimary"
-                            android:text="INICIAR SESIÓN"
+                            android:text="INGRESAR"
                             android:textAllCaps="false"
                             android:textColor="#ffffff"
                             android:textSize="20sp"
@@ -244,5 +164,6 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

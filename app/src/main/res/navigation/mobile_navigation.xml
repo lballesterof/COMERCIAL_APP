@@ -23,9 +23,11 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_cotizacion" >
         <action
-            android:id="@+id/action_nav_slideshow_to_nav_home"
-            app:destination="@id/nav_home" />
+            android:id="@+id/action_nav_slideshow_pop"
+            app:popUpTo="@id/nav_slideshow"
+            app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/pedidosFragment2"
         android:name="com.unosoft.ecomercialapp.ui.pedidos.PedidosFragment"
@@ -35,6 +37,7 @@
             android:id="@+id/action_pedidosFragment2_to_nav_home"
             app:destination="@id/nav_home" />
     </fragment>
+
     <fragment
         android:id="@+id/activityConsultaCliente"
         android:name="com.unosoft.ecomercialapp.ui.Cliente.ActivityConsultaCliente"
@@ -44,6 +47,16 @@
             android:id="@+id/action_activityConsultaCliente_to_nav_home"
             app:destination="@id/nav_home" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/activityCotizacion"
+        android:name="com.unosoft.ecomercialapp.ui.Cotizacion.FramentCotizacion"
+        android:label="Cotizacion"
+        tools:layout="@layout/fragment_cotizacion">
+    </fragment>
+
+
     <fragment
         android:id="@+id/cerrarSesionFrament"
         android:name="com.unosoft.ecomercialapp.ui.CerrarSesion.CerrarSesionFrament"
@@ -54,4 +67,5 @@
         android:name="com.unosoft.ecomercialapp.ui.SincTablaBasica.SincTablaBassicaFragment"
         android:label="Sincronización Maestros"
         tools:layout="@layout/fragment_sinc_tabla_bassica" />
+
 </navigation>

@@ -4,6 +4,7 @@ import java.io.Serializable
 
 data class cotizacionesDto (val id_cotizacion: Int,
                             val numero_Cotizacion: String,
+                            val fecha_Cotizacion: String,
                             val persona: String,
                             val ruc: String,
                             val documento: String,

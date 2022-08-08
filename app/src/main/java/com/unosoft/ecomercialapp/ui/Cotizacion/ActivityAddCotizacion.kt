@@ -36,6 +36,8 @@ class ActivityAddCotizacion : AppCompatActivity() {
     var apiInterface2: ClientApi? = null
     var apiInterface: ApiCotizacion? = null
 
+    var tipomoneda = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddCotizacionBinding.inflate(layoutInflater)
@@ -57,7 +59,14 @@ class ActivityAddCotizacion : AppCompatActivity() {
         val btnsaveCotizacion = findViewById<Button>(R.id.btn_saveCotizacion)
         btnsaveCotizacion.setOnClickListener {
             println("Cotizacion")
-            enviarCotizacion() }
+            enviarCotizacion()
+        }
+
+        val btn_cancelCotizacion = findViewById<Button>(R.id.btn_cancelCotizacion)
+        btn_cancelCotizacion.setOnClickListener {
+            this.onBackPressed()
+            finish()
+        }
     }
     private fun inicialDatos() {
 
@@ -80,6 +89,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
                 val tipoMoneda = database.daoTblBasica().getAllDataCabezera()[0].tipoMoneda
                 val condicionPago = database.daoTblBasica().getAllDataCabezera()[0].condicionPago
 
+                tipomoneda = tipoMoneda!!
 
                     runOnUiThread {
 
@@ -90,6 +100,10 @@ class ActivityAddCotizacion : AppCompatActivity() {
                         binding.tvMoneda.text = "Moneda: ${tipoMoneda}"
                         binding.tvCondicionPago.text = "Condición de Pago ${condicionPago}"
 
+                        binding.tvSubTotalAddCotizacion.text = "${tipoMoneda} 0.0"
+                        binding.tvValorVentaAddCotizacion.text = "${tipoMoneda} 0.0"
+                        binding.tvValorIGVAddCotizacion.text = "${tipoMoneda} 0.0"
+                        binding.tvImporteTotal.text = "${tipoMoneda} 0.0"
                     }
 
             }
@@ -99,13 +113,15 @@ class ActivityAddCotizacion : AppCompatActivity() {
                 val montoSubTotal = database.daoTblBasica().getAllListProct()[0].montoSubTotal
                 val montoTotalIGV = database.daoTblBasica().getAllListProct()[0].montoTotalIGV
                 val montoTotal = database.daoTblBasica().getAllListProct()[0].montoTotal
+                val tipoMoneda = database.daoTblBasica().getAllDataCabezera()[0].tipoMoneda
+
 
                 runOnUiThread {
 
-                    binding.tvSubTotalAddCotizacion.text = utils().pricetostringformat(montoSubTotal)
-                    binding.tvValorVentaAddCotizacion.text = utils().pricetostringformat(montoSubTotal)
-                    binding.tvValorIGVAddCotizacion.text = utils().pricetostringformat(montoTotalIGV)
-                    binding.tvImporteTotal.text = utils().pricetostringformat(montoTotal)
+                    binding.tvSubTotalAddCotizacion.text = "${tipoMoneda} ${utils().pricetostringformat(montoSubTotal)}"
+                    binding.tvValorVentaAddCotizacion.text = "${tipoMoneda} ${utils().pricetostringformat(montoSubTotal)}"
+                    binding.tvValorIGVAddCotizacion.text = "${tipoMoneda} ${utils().pricetostringformat(montoTotalIGV)}"
+                    binding.tvImporteTotal.text = "${tipoMoneda} ${utils().pricetostringformat(montoTotal)}"
 
                 }
             }
@@ -127,8 +143,10 @@ class ActivityAddCotizacion : AppCompatActivity() {
             runOnUiThread {
                if (valor){
                     val intent = Intent(this@ActivityAddCotizacion, ActivityCardQuotation::class.java)
+                    intent.putExtra("TIPOMONEDA",tipomoneda)
                     startActivity(intent)
                     finish()
+
                }else{
                     Toast.makeText(this@ActivityAddCotizacion, "Rellenar datos clientes", Toast.LENGTH_SHORT).show()
                }
@@ -187,20 +205,20 @@ class ActivityAddCotizacion : AppCompatActivity() {
                             val datosCotizacion = EnviarCotizacion(
                                 datoslogin.iD_COTIZACION.toInt(),
                                 "",
-                                datoslogin.cdG_VENDEDOR,
+                                prefs.getCdgVendedor(),
                                 datosCabezera.codVendedor!!,
                                 datoslogin.cdgpago,
                                 datosCabezera.codMoneda!!,
                                 "${LocalDateTime.now()}",
                                 "",
-                                database.daoTblBasica().getAllListProct()[0].montoSubTotal,
+                                datosLista[0].montoSubTotal,
                                 0,
-                                database.daoTblBasica().getAllListProct()[0].montoSubTotal,
-                                database.daoTblBasica().getAllListProct()[0].montoTotalIGV,
-                                database.daoTblBasica().getAllListProct()[0].montoTotal,
+                                datosLista[0].montoSubTotal,
+                                datosLista[0].montoTotalIGV,
+                                datosLista[0].montoTotal,
                                 0,
-                                0,
-                                "",
+                                datoslogin.poR_IGV.toDouble(),
+                                binding.tvObsCotizacion.text.toString(),
                                 "",
                                 datoslogin.iD_CLIENTE,
                                 datoslogin.iD_CLIENTE,
@@ -249,6 +267,11 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                 "",
                                 listaCotizado
                             )
+                            println("*******************************************************")
+                            println("********     ${datosCabezera.rucCliente!!}      *******")
+                            println("********************************************************")
+
+
                             val response = apiInterface!!.postCreateCotizacion(datosCotizacion)
                                runOnUiThread {
                                   if(response.isSuccessful){
@@ -260,6 +283,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                       visualizarPDF(response.body()!!.iD_COTIZACION)
 
                                       binding.tvCodCotizacion.text = "N° Cotizacion: ${response.body()!!.iD_COTIZACION}"
+                                      Toast.makeText(this@ActivityAddCotizacion, "${response.body()!!.iD_COTIZACION}", Toast.LENGTH_SHORT).show()
 
                                   }else{
                                      println("**********************************")
@@ -286,6 +310,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
         bundle.putString("ID", "$idCotizacion")
         intent.putExtras(bundle)
         startActivity(intent)
+        finish()
     }
 
     private fun observacion() {

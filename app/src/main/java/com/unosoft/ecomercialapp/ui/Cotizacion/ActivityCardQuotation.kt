@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,10 +44,13 @@ class ActivityCardQuotation : AppCompatActivity() {
     var igvTotal:Double = 0.0
     var subtotal:Double = 0.0
 
+    var tipomoneda = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCardQuotationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        tipomoneda = intent.getStringExtra("TIPOMONEDA").toString()
 
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
@@ -55,6 +59,26 @@ class ActivityCardQuotation : AppCompatActivity() {
 
         productosListado()
         abrirListProductos()
+        eventsHandlers()
+    }
+
+    private fun eventsHandlers() {
+        binding.btnGuardarCartCotizacion.setOnClickListener { guardarDatos() }
+        binding.btnCancelarCartCotizacion.setOnClickListener { cancelarPedido() }
+    }
+
+    private fun cancelarPedido() {
+        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun guardarDatos() {
+        guardarListRoom()
+
+        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
     }
 
 
@@ -81,7 +105,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 database.daoTblBasica().getAllListProct().forEach {
                     listaProductoListados.add(
                         productlistcot(
-                            it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,it.mon,it.precio_Venta,it.factor_Conversion,
+                            it.id_Producto,it.codigo,it.codigo_Barra,it.nombre,tipomoneda,it.precio_Venta,it.factor_Conversion,
                             it.cdg_Unidad,it.unidad,it.moneda_Lp,it.cantidad,it.precioUnidad,it.precioTotal
                         )
                     )
@@ -135,26 +159,14 @@ class ActivityCardQuotation : AppCompatActivity() {
         tv_nameProducto.text = data.nombre
         tv_codProducto.text = data.codigo
         tv_precioUnidad.text = "${data.mon} ${pricetostringformat(data.precio_Venta)}"
-        tv_precioTotal.text = "${data.mon} ${
-            pricetostringformat(
-                calculatepricebyqty(
-                    tv_cantidad.text.toString().toInt(), data.precio_Venta
-                )
-            )
-        }"
+        tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
 
         if (action == 0) {
             tv_cantidad.text = "0"
             tv_precioTotal.text = "0"
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
-            tv_precioTotal.text = "${data.mon} ${
-                pricetostringformat(
-                    calculatepricebyqty(
-                        tv_cantidad.text.toString().toInt(), data.precio_Venta
-                    )
-                )
-            }"
+            tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
         }
 
         //********   AUMENTA PRODUCTOS O AGREGA    *************
@@ -391,6 +403,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                         precioTotal
                     )
                 )
+                Toast.makeText(this, "Se agrego ${data.nombre}", Toast.LENGTH_SHORT).show()
                 rv_listproductcot.adapter?.notifyDataSetChanged()
                 rv_listproductcot?.scrollToPosition(listaProductoListados.size - 1)
             } else {
@@ -469,21 +482,20 @@ class ActivityCardQuotation : AppCompatActivity() {
         }
     }
 
-
-
     //************* FUNCIONES ADICIONALES  ****************
     fun calcularMontoTotal(){
+
         montoTotal = listaProductoListados.sumOf { it.precioTotal }
-        igvTotal = montoTotal*0.18
-        subtotal = montoTotal - igvTotal
+        igvTotal = utils().priceIGV(montoTotal)
+        subtotal = utils().priceSubTotal(montoTotal)
 
         val tv_subtotalCot = binding.tvSubTotalAddCart
         val tv_igvCot = binding.tvIgvCotAddCart
         val tv_totalCot = binding.tvTotalCotAddCart
 
-        tv_totalCot.text = utils().pricetostringformat(montoTotal)
-        tv_igvCot.text = utils().pricetostringformat(igvTotal)
-        tv_subtotalCot.text = utils().pricetostringformat(subtotal)
+        tv_totalCot.text = "${tipomoneda} ${utils().pricetostringformat(montoTotal)}"
+        tv_igvCot.text = "${tipomoneda} ${utils().pricetostringformat(igvTotal)}"
+        tv_subtotalCot.text = "${tipomoneda} ${utils().pricetostringformat(subtotal)}"
     }
 
     private fun buscaCoincidencia(dataCodigo:String): List<Int> {
@@ -517,12 +529,10 @@ class ActivityCardQuotation : AppCompatActivity() {
     fun guardarListRoom(){
 
         CoroutineScope(Dispatchers.IO).launch {
-
             database.daoTblBasica().deleteTableListProct()
             database.daoTblBasica().clearPrimaryKeyListProct()
 
             if(listaProductoListados.size>0){
-
                 listaProductoListados.forEach {
                     database.daoTblBasica().insertListProct(
                         EntityListProct(
@@ -532,11 +542,9 @@ class ActivityCardQuotation : AppCompatActivity() {
                         )
                     )
                 }
-
             }
 
             println(database.daoTblBasica().getAllListProct())
-
         }
 
     }
@@ -546,7 +554,6 @@ class ActivityCardQuotation : AppCompatActivity() {
         val intent = Intent(this, ActivityAddCotizacion::class.java)
         startActivity(intent)
         finish()
-
         super.onBackPressed()
     }
 }

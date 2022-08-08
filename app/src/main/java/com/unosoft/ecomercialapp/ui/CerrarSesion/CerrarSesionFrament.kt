@@ -12,10 +12,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.MainActivity
 import com.unosoft.ecomercialapp.databinding.ActivityMainBinding
 import com.unosoft.ecomercialapp.databinding.FragmentCerrarSesionFramentBinding
 import com.unosoft.ecomercialapp.ui.Cotizacion.ActivityAddCotizacion
+import com.unosoft.ecomercialapp.ui.Empresas.ActySelectEmpresa
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,11 +46,10 @@ class CerrarSesionFrament : Fragment() {
         builder.setIcon(android.R.drawable.ic_input_delete)
 
         builder.setPositiveButton("Si") { dialogInterface, which ->
-            Toast.makeText(activity, "clicked yes", Toast.LENGTH_LONG).show()
             cerrarSesion()
         }
         builder.setNegativeButton("No") { dialogInterface, which ->
-            Toast.makeText(activity, "clicked no", Toast.LENGTH_LONG).show()
+            requireActivity().onBackPressed()
         }
 
         val alertDialog: AlertDialog = builder.create()
@@ -78,14 +79,18 @@ class CerrarSesionFrament : Fragment() {
             database.daoTblBasica().clearPrimaryKeyListaPrecio()
             database.daoTblBasica().deleteTableVendedor()
             database.daoTblBasica().clearPrimaryKeyVendedor()
+
             activity?.runOnUiThread {
                 println("***************************************")
                 println("*********** CERRAR SESION *************")
                 println("***************************************")
-                val intent = Intent(activity, MainActivity::class.java)
-                startActivity(intent)
+                prefs.wipe()
+                startActivity(Intent(activity, ActySelectEmpresa::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                )
+                requireActivity().finish()
             }
-        }
 
+        }
     }
 }

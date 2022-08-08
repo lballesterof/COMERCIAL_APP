@@ -1,28 +1,25 @@
-package com.unosoft.ecomercialapp
+package com.unosoft.ecomercialapp.ui.LoginPasscode
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.os.Bundle
-import android.view.Menu
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
 import com.unosoft.ecomercialapp.Activity.inicio.InicioActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
-import com.unosoft.ecomercialapp.api.APIClient.client
+import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ListaPrecio
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.api.TablaBasicaApi
 import com.unosoft.ecomercialapp.api.VendedorApi
+import com.unosoft.ecomercialapp.databinding.ActivityLoginPasscodeBinding
 import com.unosoft.ecomercialapp.db.EntityCondicionPago
 import com.unosoft.ecomercialapp.db.EntityDataLogin
 import com.unosoft.ecomercialapp.db.EntityDepartamento
 import com.unosoft.ecomercialapp.db.EntityDistrito
 import com.unosoft.ecomercialapp.db.EntityDocIdentidad
-import com.unosoft.ecomercialapp.db.EntityEmpresa
 import com.unosoft.ecomercialapp.db.EntityFrecuenciaDias
 import com.unosoft.ecomercialapp.db.EntityListaPrecio
 import com.unosoft.ecomercialapp.db.EntityMoneda
@@ -50,140 +47,99 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-var apiInterface: LoginApi? = null
-var apiInterface2: TablaBasicaApi? = null
-var apiInterface3: ListaPrecio? = null
-var apiInterface4: VendedorApi? = null
 
-private val listCondicionPago = ArrayList<CondicionPagoResponse>()
-private val listDepartamento = ArrayList<DepartamentoResponse>()
-private val listDistrito = ArrayList<DistritoResponse>()
-private val listDocIdentidad = ArrayList<DocIdentidadResponse>()
-private val listFrecuenciaDias = ArrayList<FrecuenciaDiasResponse>()
-private val listMoneda = ArrayList<MonedaResponse>()
-private val listProvincia = ArrayList<ProvinciaResponse>()
-private val listUnidadMedida = ArrayList<UnidadMedidaResponse>()
-private val listPrecio = ArrayList<ListaPrecioRespuesta>()
-private val listVendedores = ArrayList<VendedorResponse>()
+class ActyLoginPasscode : AppCompatActivity() {
 
-class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginPasscodeBinding
+    var apiInterface: LoginApi? = null
+    var apiInterface2: TablaBasicaApi? = null
+    var apiInterface3: ListaPrecio? = null
+    var apiInterface4: VendedorApi? = null
+
+    private val listCondicionPago = ArrayList<CondicionPagoResponse>()
+    private val listDepartamento = ArrayList<DepartamentoResponse>()
+    private val listDistrito = ArrayList<DistritoResponse>()
+    private val listDocIdentidad = ArrayList<DocIdentidadResponse>()
+    private val listFrecuenciaDias = ArrayList<FrecuenciaDiasResponse>()
+    private val listMoneda = ArrayList<MonedaResponse>()
+    private val listProvincia = ArrayList<ProvinciaResponse>()
+    private val listUnidadMedida = ArrayList<UnidadMedidaResponse>()
+    private val listPrecio = ArrayList<ListaPrecioRespuesta>()
+    private val listVendedores = ArrayList<VendedorResponse>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityLoginPasscodeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val ingresar = findViewById<Button>(R.id.ingresar)
-        val user = findViewById<EditText>(R.id.user)
-        val pass = findViewById<EditText>(R.id.pass)
-        val host = findViewById<EditText>(R.id.host)
 
-        if (prefs.getURLBase().isNotEmpty()){
-            host.setText(prefs.getURLBase())
-        }
-        if (prefs.getUser().isNotEmpty()){
-            user.setText(prefs.getUser())
-        }
+        procesoDeLogueo()
+    }
+
+    private fun procesoDeLogueo() {
+        apiInterface = APIClient.client!!.create(LoginApi::class.java)
+
+        binding.tvUsurio.text = prefs.getUser().uppercase()
 
         val pd = ProgressDialog(this)
         pd.setMessage("Validando usuario....")
         pd.setCancelable(false)
         pd.create()
-        ingresar.setOnClickListener(View.OnClickListener {
-            if (user.text.toString().length == 0 || pass.text.toString().length == 0) {
+        binding.btnIngresar.setOnClickListener(View.OnClickListener {
+
+            if (binding.etPass.text.toString().isEmpty()) {
                 AlertMessage("Datos inválidos")
                 return@OnClickListener
             } else {
 
-                prefs.save_User(user.text.toString())
-                prefs.save_URLBase(host.text.toString())
+                println(prefs.getUser())
+                println(prefs.getURLBase())
 
                 pd.show()
 
-                cargarTablaBasica()
-
-                //*******  MANTENER
-                val _user = DCLoginUser(user.text.toString(), pass.text.toString())
+                //***********************  MANTENER   ****************************
+                val _user = DCLoginUser(prefs.getUser(), binding.etPass.text.toString())
                 val call1 = apiInterface!!.login(_user)
                 call1.enqueue(object : Callback<LoginComercialResponse> {
-                    override fun onResponse(call: Call<LoginComercialResponse>,response: Response<LoginComercialResponse>) {
+                    override fun onResponse(call: Call<LoginComercialResponse>, response: Response<LoginComercialResponse>) {
                         if (response.code() == 400) {
                             AlertMessage("Usuario y/o Contraseña incorrecta")
                             pd.cancel()
                         } else {
+
+                            cargarTablaBasica()
+
                             val user1 = response.body()!!
 
                             CoroutineScope(Dispatchers.IO).launch {
                                 database.daoTblBasica().deleteTableDataLogin()
                                 database.daoTblBasica().clearPrimaryKeyDataLogin()
 
-                                database.daoTblBasica().insertDataLogin(EntityDataLogin(
-                                    0,
-                                    user1.nombreusuario,
-                                    user1.codigO_EMPRESA,
-                                    user1.iD_CLIENTE,
-                                    user1.poR_IGV,
-                                    user1.cdgmoneda,
-                                    user1.validez,
-                                    user1.cdgpago,
-                                    user1.sucursal,
-                                    user1.usuarioautoriza,
-                                    user1.usuariocreacion,
-                                    user1.descuento,
-                                    user1.seriepedido,
-                                    user1.estadopedido,
-                                    user1.tipocambio,
-                                    user1.jwtToken,
-                                    user1.facturA_ADELANTADA,
-                                    user1.iD_COTIZACION,
-                                    user1.puntO_VENTA,
-                                    user1.redondeo,
-                                    user1.cdG_VENDEDOR
-                                ))
-
-                                val preclave = "${prefs.getUser().uppercase()}${user1.ruc}"
-                                val clave = preclave.replace(" ", "")
-                                var validar = 0
-
-                                if (database.daoTblBasica().isExistsEntityEmpresa()){
-
-                                    println(" *****   TEXTO  *****")
-                                    println(clave)
-
-                                        for(i in database.daoTblBasica().getAllEmpresa().indices){
-
-                                            println(" *****   VALOR DE EVALUACUION  *****")
-                                            println(database.daoTblBasica().getAllEmpresa()[i].Userkey)
-                                            println(clave)
-                                            println(database.daoTblBasica().getAllEmpresa()[i].Userkey != clave)
-
-                                            if (database.daoTblBasica().getAllEmpresa()[i].Userkey == clave){
-                                                validar=+1
-                                            }
-                                        }
-                                        if(validar==0){
-                                            database.daoTblBasica().insertEmpresa(
-                                                EntityEmpresa(0,
-                                                    user1.nombre,
-                                                    user1.ruc,
-                                                    prefs.getUser().uppercase(),
-                                                    prefs.getUser().uppercase(),
-                                                    prefs.getURLBase(),
-                                                    clave)
-                                            )
-                                        }
-                                }else{
-                                    database.daoTblBasica().insertEmpresa(
-                                        EntityEmpresa(0,
-                                            user1.nombre,
-                                            user1.ruc,
-                                            prefs.getUser().uppercase(),
-                                            prefs.getUser().uppercase(),
-                                            prefs.getURLBase(),
-                                            clave
-                                        )
+                                database.daoTblBasica().insertDataLogin(
+                                    EntityDataLogin(
+                                        0,
+                                        user1.nombreusuario,
+                                        user1.codigO_EMPRESA,
+                                        user1.iD_CLIENTE,
+                                        user1.poR_IGV,
+                                        user1.cdgmoneda,
+                                        user1.validez,
+                                        user1.cdgpago,
+                                        user1.sucursal,
+                                        user1.usuarioautoriza,
+                                        user1.usuariocreacion,
+                                        user1.descuento,
+                                        user1.seriepedido,
+                                        user1.estadopedido,
+                                        user1.tipocambio,
+                                        user1.jwtToken,
+                                        user1.facturA_ADELANTADA,
+                                        user1.iD_COTIZACION,
+                                        user1.puntO_VENTA,
+                                        user1.redondeo,
+                                        user1.cdG_VENDEDOR
                                     )
-                                }
-
+                                )
 
                                 println("***************  IMPRIMIENDO DATOS USUARIO  *****************")
                                 println(database.daoTblBasica().getAllDataLogin())
@@ -208,10 +164,11 @@ class MainActivity : AppCompatActivity() {
                                     startActivity(i)
                                     finish()
 
-                                    pass.setText("")
+                                    pd.cancel()
+
+                                    binding.etPass.setText("")
 
                                     // Toast.makeText(getApplicationContext(), user1.nombreusuario + " " + user1.jwtToken + " " + user1.poR_IGV + " " + user1.refreshToken, Toast.LENGTH_SHORT).show();
-                                    pd.cancel()
 
                                 }
                             }
@@ -219,7 +176,6 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<LoginComercialResponse>, t: Throwable) {
-                        pd.cancel()
                         AlertMessage("Error de Conexión: " + t.message)
                         call.cancel()
                     }
@@ -231,10 +187,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun cargarTablaBasica() {
 
-        apiInterface = client!!.create(LoginApi::class.java)
-        apiInterface2 = client!!.create(TablaBasicaApi::class.java)
-        apiInterface3 = client!!.create(ListaPrecio::class.java)
-        apiInterface4 = client!!.create(VendedorApi::class.java)
+        apiInterface2 = APIClient.client!!.create(TablaBasicaApi::class.java)
+        apiInterface3 = APIClient.client!!.create(ListaPrecio::class.java)
+        apiInterface4 = APIClient.client!!.create(VendedorApi::class.java)
 
         fun inyectarDataRoom(
             listaCondicionPagoResponse: ArrayList<CondicionPagoResponse>,
@@ -273,7 +228,8 @@ class MainActivity : AppCompatActivity() {
                 {
                     listaCondicionPagoResponse.forEach {
                         database.daoTblBasica().insertCondicionPago(
-                            EntityCondicionPago(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1))
+                            EntityCondicionPago(0,it.Codigo,it.Nombre,it.Numero,it.Referencia1)
+                        )
                     }
                     listaDepartamentoResponse.forEach {
                         database.daoTblBasica().insertDepartamento(
@@ -394,7 +350,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
 
-                    inyectarDataRoom(listCondicionPago,
+                    inyectarDataRoom(
+                        listCondicionPago,
                         listDepartamento,
                         listDistrito,
                         listDocIdentidad,
@@ -420,12 +377,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.inicio, menu)
-        return true
-    }
+
     fun AlertMessage(mensaje: String?) {
-        val builder = AlertDialog.Builder(this@MainActivity)
+        val builder = AlertDialog.Builder(this@ActyLoginPasscode)
         builder.setTitle("Información")
         builder.setMessage(mensaje)
         builder.setCancelable(false)
