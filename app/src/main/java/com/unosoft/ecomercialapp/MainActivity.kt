@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.unosoft.ecomercialapp.Activity.inicio.InicioActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
@@ -68,9 +69,13 @@ private val listVendedores = ArrayList<VendedorResponse>()
 
 class MainActivity : AppCompatActivity() {
 
+    var apiInterface: LoginApi? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         val ingresar = findViewById<Button>(R.id.ingresar)
         val user = findViewById<EditText>(R.id.user)
@@ -99,11 +104,16 @@ class MainActivity : AppCompatActivity() {
 
                 pd.show()
 
-                cargarTablaBasica()
+                //cargarTablaBasica()
+
+                apiInterface = client!!.create(LoginApi::class.java)
 
                 //*******  MANTENER
                 val _user = DCLoginUser(user.text.toString(), pass.text.toString())
                 val call1 = apiInterface!!.login(_user)
+
+
+
                 call1.enqueue(object : Callback<LoginComercialResponse> {
                     override fun onResponse(call: Call<LoginComercialResponse>,response: Response<LoginComercialResponse>) {
                         if (response.code() == 400) {
@@ -323,6 +333,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 withContext(Dispatchers.IO) {
+                    //Toast.makeText(, "", Toast.LENGTH_SHORT).show()
                     println("**************  TABLA CONDICION DE PAGO ***************")
                     println(database.daoTblBasica().getAllCondicionPago())
                     println("**************  TABLA CONDICION DE PAGO ***************")

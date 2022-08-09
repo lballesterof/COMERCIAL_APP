@@ -85,6 +85,11 @@ class ActyLoginPasscode : AppCompatActivity() {
         pd.setMessage("Validando usuario....")
         pd.setCancelable(false)
         pd.create()
+
+
+        cargarTablaBasica()
+
+
         binding.btnIngresar.setOnClickListener(View.OnClickListener {
 
             if (binding.etPass.text.toString().isEmpty()) {
@@ -107,7 +112,6 @@ class ActyLoginPasscode : AppCompatActivity() {
                             pd.cancel()
                         } else {
 
-                            cargarTablaBasica()
 
                             val user1 = response.body()!!
 
