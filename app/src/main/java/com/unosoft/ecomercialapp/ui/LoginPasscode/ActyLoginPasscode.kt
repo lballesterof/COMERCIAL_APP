@@ -72,7 +72,6 @@ class ActyLoginPasscode : AppCompatActivity() {
         binding = ActivityLoginPasscodeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         procesoDeLogueo()
     }
 
@@ -85,10 +84,6 @@ class ActyLoginPasscode : AppCompatActivity() {
         pd.setMessage("Validando usuario....")
         pd.setCancelable(false)
         pd.create()
-
-
-        cargarTablaBasica()
-
 
         binding.btnIngresar.setOnClickListener(View.OnClickListener {
 

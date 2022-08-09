@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import com.unosoft.ecomercialapp.*
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.api.*
 import com.unosoft.ecomercialapp.databinding.ActivityInicioBinding
@@ -65,7 +66,10 @@ class InicioActivity : AppCompatActivity() {
 
         iniciarDrawerLayout()
 
+
+
         cargarTablaBasica()
+
 
         val navController = findNavController(R.id.nav_host_fragment_content_inicio)
         appBarConfiguration = AppBarConfiguration(setOf( R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow ), drawerLayout
@@ -82,8 +86,6 @@ class InicioActivity : AppCompatActivity() {
         pd.setCancelable(false)
         pd.create()
         pd.show()
-
-
         apiInterface2 = APIClient.client!!.create(TablaBasicaApi::class.java)
         apiInterface3 = APIClient.client!!.create(ListaPrecio::class.java)
         apiInterface4 = APIClient.client!!.create(VendedorApi::class.java)
@@ -251,6 +253,8 @@ class InicioActivity : AppCompatActivity() {
                     getDataRoom()
                     println("paso aqui")
                 }
+            }else{
+                pd.cancel()
             }
         }
     }
