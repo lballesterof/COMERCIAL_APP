@@ -150,6 +150,7 @@ class ActivityCardQuotation : AppCompatActivity() {
         val tv_cantidad = vista.findViewById<TextView>(R.id.tv_cantidad)
         val iv_btnAutementar = vista.findViewById<ImageView>(R.id.iv_btnAutementar)
         val iv_btnDisminuir = vista.findViewById<ImageView>(R.id.iv_btnDisminuir)
+        val iv_cerrarProducto = vista.findViewById<ImageView>(R.id.iv_cerrarProducto)
 
         //********   SETEA VALORES INICIALES
         val evalua = buscaCoincidencia(data.codigo!!)
@@ -167,6 +168,11 @@ class ActivityCardQuotation : AppCompatActivity() {
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
             tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
+        }
+
+        iv_cerrarProducto.setOnClickListener {
+            dialog.hide()
+            dialog.cancel()
         }
 
         //********   AUMENTA PRODUCTOS O AGREGA    *************
@@ -290,6 +296,12 @@ class ActivityCardQuotation : AppCompatActivity() {
 
             val rv_productos = vista.findViewById<RecyclerView>(R.id.rv_productos)
             val sv_consultasproductos = vista.findViewById<SearchView>(R.id.sv_consultasproductos)
+            val iv_cerrarListProducto = vista.findViewById<ImageView>(R.id.iv_cerrarListProducto)
+
+            iv_cerrarListProducto.setOnClickListener {
+                dialog.hide()
+                dialog.cancel()
+            }
 
             rv_productos.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             adapterProductoComercial = productocomercialadapter(listaProductoCotizacion) { data ->
@@ -352,6 +364,8 @@ class ActivityCardQuotation : AppCompatActivity() {
         val tv_cantidad = vista.findViewById<TextView>(R.id.tv_cantidad)
         val iv_btnAutementar = vista.findViewById<ImageView>(R.id.iv_btnAutementar)
         val iv_btnDisminuir = vista.findViewById<ImageView>(R.id.iv_btnDisminuir)
+        val iv_cerrarProducto = vista.findViewById<ImageView>(R.id.iv_cerrarProducto)
+
 
         //********   SETEA VALORES INICIALES
         val evalua = buscaCoincidencia(data.codigo)
@@ -369,6 +383,11 @@ class ActivityCardQuotation : AppCompatActivity() {
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
             tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
+        }
+
+        iv_cerrarProducto.setOnClickListener {
+            dialog.hide()
+            dialog.cancel()
         }
 
         //********   AUMENTA PRODUCTOS O AGREGA    *************

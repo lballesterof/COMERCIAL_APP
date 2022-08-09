@@ -344,39 +344,41 @@
             <!--sección TOTALES-->
             <!--FIN TOTALES-->
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_guardarCabeceraCot"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="@color/colorPrimary"
+                    android:text="Guardar y Salir"
+                    android:textColor="@color/colorBackground"/>
+
+                <Button
+                    android:id="@+id/btn_cancelCabezeraCot"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="@color/colorBackground"
+                    android:text="Cancelar"
+                    android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+
         </LinearLayout>
+
+
 
 
         <!---->
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_guardarCabeceraCot"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_width="170dp"
-            android:textColor="@color/colorBackground"
-            android:background="@color/colorPrimary"
-            android:text="Guardar y Salir"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btn_cancelCabezeraCot"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/colorPrimary"
-            android:background="@color/colorBackground"
-            android:layout_width="170dp"
-            android:text="Cancelar"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
 
 </LinearLayout>

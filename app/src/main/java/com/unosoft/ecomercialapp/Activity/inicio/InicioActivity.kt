@@ -34,7 +34,6 @@ class InicioActivity : AppCompatActivity() {
 
     var apiInterface: LogoApi? = null
 
-
     var apiInterface2: TablaBasicaApi? = null
     var apiInterface3: ListaPrecio? = null
     var apiInterface4: VendedorApi? = null
@@ -63,13 +62,9 @@ class InicioActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
 
-
         iniciarDrawerLayout()
 
-
-
         cargarTablaBasica()
-
 
         val navController = findNavController(R.id.nav_host_fragment_content_inicio)
         appBarConfiguration = AppBarConfiguration(setOf( R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow ), drawerLayout

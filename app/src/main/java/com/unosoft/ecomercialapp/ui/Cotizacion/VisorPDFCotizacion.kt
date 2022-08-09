@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.github.barteksc.pdfviewer.PDFView
+import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.databinding.ActivityVisorPdfcotizacionBinding
 import com.unosoft.ecomercialapp.helpers.VisorPDF
@@ -37,7 +38,7 @@ class VisorPDFCotizacion : AppCompatActivity() {
     private fun iniciarPDF() {
         val datos = intent.getStringExtra("ID")
         val pdfView = findViewById<PDFView>(R.id.pdfView);
-        val urlPdf = "http://181.224.236.167:6969/api/Cotizacion/pdf/$datos"
+        val urlPdf = "${DATAGLOBAL.prefs.getURLBase()}api/Cotizacion/pdf/$datos"
         VisorPDF(pdfView).execute(urlPdf)
     }
 
@@ -53,7 +54,7 @@ class VisorPDFCotizacion : AppCompatActivity() {
     private fun descargarPDF() {
 
         val datos = intent.getStringExtra("ID")
-        val urlPdf = "http://181.224.236.167:6969/api/Cotizacion/pdf/$datos"
+        val urlPdf = "${DATAGLOBAL.prefs.getURLBase()}api/Cotizacion/pdf/$datos"
 
         try{
             val request = DownloadManager.Request(Uri.parse(urlPdf))

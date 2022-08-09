@@ -99,10 +99,8 @@ class SincTablaBassicaFragment : Fragment() {
 
         builder.setPositiveButton("Si"){dialogInterface, which ->
             cargarTablaBasica()
-            Toast.makeText(activity,"clicked yes",Toast.LENGTH_LONG).show()
         }
         builder.setNegativeButton("No"){dialogInterface, which ->
-            Toast.makeText(activity,"clicked No",Toast.LENGTH_LONG).show()
             requireActivity().onBackPressed()
         }
 

@@ -95,8 +95,15 @@ class EditCabezeraPedido : AppCompatActivity() {
         iniciarSpinnerCondicionPago()
         iniciarSpinnerVendedor()
 
-        val btn_guardarCabeceraCot = findViewById<Button>(R.id.btn_guardarCabeceraPedido)
-        btn_guardarCabeceraCot.setOnClickListener { guardarInfo() }
+        binding.btnCancelCabezeraPedido.setOnClickListener { cancelar() }
+        binding.btnGuardarCabeceraPedido.setOnClickListener { guardarInfo() }
+
+    }
+
+    private fun cancelar() {
+        val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun guardarInfo() {

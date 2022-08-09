@@ -103,7 +103,17 @@ class EditCabezera : AppCompatActivity() {
 
         val btn_guardarCabeceraCot = findViewById<Button>(R.id.btn_guardarCabeceraCot)
         btn_guardarCabeceraCot.setOnClickListener { guardarInfo() }
+
+        binding.btnGuardarCabeceraCot.setOnClickListener { guardarInfo() }
+        binding.btnCancelCabezeraCot.setOnClickListener { cancelar() }
     }
+
+    private fun cancelar() {
+        val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun guardarInfo() {
 
         CoroutineScope(Dispatchers.IO).launch{
