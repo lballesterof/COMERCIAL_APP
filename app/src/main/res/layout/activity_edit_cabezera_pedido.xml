@@ -358,7 +358,7 @@ tools:context=".ui.pedidos.EditCabezeraPedido">
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/colorPrimary"
-                android:text="Guardar y Salir"
+                android:text="Guardar"
                 android:textColor="@color/colorBackground"/>
 
             <Button
@@ -367,7 +367,7 @@ tools:context=".ui.pedidos.EditCabezeraPedido">
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/colorBackground"
-                android:text="Cancelar"
+                android:text="Retroceder"
                 android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>

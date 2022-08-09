@@ -117,7 +117,8 @@ tools:context=".ui.pedidos.ActivityCartPedido">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginVertical="5dp">
 
             <Button
                 android:id="@+id/btn_guardarCartPedido"
@@ -125,7 +126,7 @@ tools:context=".ui.pedidos.ActivityCartPedido">
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/colorPrimary"
-                android:text="Guardar y Salir"
+                android:text="Guardar"
                 android:textColor="@color/colorBackground" />
 
             <Button
@@ -134,7 +135,7 @@ tools:context=".ui.pedidos.ActivityCartPedido">
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:background="@color/colorBackground"
-                android:text="Cancelar"
+                android:text="Retroceder"
                 android:textColor="@color/colorPrimary" />
 
         </LinearLayout>

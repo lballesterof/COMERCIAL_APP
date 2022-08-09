@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -392,6 +389,7 @@ class EditCabezera : AppCompatActivity() {
         builder.setView(vista)
         //*********************************************
         val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
+        val iv_cerrarCliente = vista.findViewById<ImageView>(R.id.iv_cerrarCliente)
 
         //Creamos dialogue
         val dialog = builder.create()
@@ -443,6 +441,10 @@ class EditCabezera : AppCompatActivity() {
                 return false
             }
         })
+        iv_cerrarCliente.setOnClickListener {
+            dialog.hide()
+            dialog.cancel()
+        }
     }
 
 

@@ -29,7 +29,6 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_info_client"
                 app:tint="@color/colorPrimaryDark" />
-
             <TextView
                 android:id="@+id/name"
                 style="@style/sizeTextView"
@@ -50,12 +49,8 @@
                 android:text="20600114299"
                 android:textColor="@color/negro"
                 style="@style/sizeTextView"  />
-
-
-
         </RelativeLayout>
         <View
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/colorPrimaryDark"/>

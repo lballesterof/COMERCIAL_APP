@@ -522,7 +522,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginRight="16dp"
             android:background="@color/colorPrimary"
-            android:text="Guardar y Salir"
+            android:text="Generar"
             android:textColor="@color/colorBackground" />
 
         <Button

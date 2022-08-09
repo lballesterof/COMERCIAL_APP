@@ -165,7 +165,9 @@ class ActivityAddCotizacion : AppCompatActivity() {
                             val datosLista = database.daoTblBasica().getAllListProct()
                             val datosCabezera = database.daoTblBasica().getAllDataCabezera()[0]
                             val datoslogin = database.daoTblBasica().getAllDataLogin()[0]
+                            var secuencia = 0
                             datosLista.forEach {
+                                secuencia += 1
                                 listaCotizado.add(DetCotizacion(
                                     0,
                                     it.id_Producto,
@@ -175,7 +177,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                     it.precioUnidad*it.cantidad*1.18,
                                     it.precioUnidad*it.cantidad,
                                     "",
-                                    0,
+                                    secuencia,
                                     it.precio_Venta,
                                     "1",
                                     1,
