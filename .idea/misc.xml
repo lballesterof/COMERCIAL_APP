@@ -93,12 +93,22 @@
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/activity_edit_cotizacion.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/activity_inicio.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/cardview_clientes.xml" value="0.371875" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/cardview_consultastocks.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/cardview_cotizaciones.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/cardview_pedido.xml" value="0.371875" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/cardview_stocks.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/dialogue_cliente.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/dialogue_detalle_cotizacion_productos.xml" value="0.371875" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/fragment_activity_consulta_cliente.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/fragment_cotizacion.xml" value="0.371875" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/fragment_pedidos.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/fragment_sinc_tabla_bassica.xml" value="0.371875" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/fragment_stocks.xml" value="0.371875" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/item_cargando_cliente.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/item_cargando_cotizacion.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/item_cargando_pedido.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/item_cargando_productos.xml" value="0.2791666666666667" />
+        <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/item_cargando_stock.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/item_productocomercial.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/item_productocomericaldetallado.xml" value="0.371875" />
         <entry key="..\:/Users/buhor/Documents/Kotlin/AppComercial/app/src/main/res/layout/item_productocomericaldetalladocot.xml" value="0.371875" />

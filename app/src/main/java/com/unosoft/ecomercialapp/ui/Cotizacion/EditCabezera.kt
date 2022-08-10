@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
@@ -390,6 +391,9 @@ class EditCabezera : AppCompatActivity() {
         //*********************************************
         val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
         val iv_cerrarCliente = vista.findViewById<ImageView>(R.id.iv_cerrarCliente)
+        val ll_cargando = vista.findViewById<LinearLayout>(R.id.ll_cargando)
+        val ll_contenedor = vista.findViewById<LinearLayout>(R.id.ll_contenedor)
+
 
         //Creamos dialogue
         val dialog = builder.create()
@@ -422,6 +426,10 @@ class EditCabezera : AppCompatActivity() {
             val response = apiInterface2!!.getAllClients()
             runOnUiThread{
                 if(response.isSuccessful){
+
+                    ll_cargando.isVisible = false
+                    ll_contenedor.isVisible = true
+
                     listaClient.clear()
                     listaClient.addAll(response.body()!!)
                     adapterCliente.notifyDataSetChanged()

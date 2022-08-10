@@ -48,11 +48,8 @@ class ActivityAddPedido : AppCompatActivity() {
         binding.ivProductoAddPedido.setOnClickListener { addressCartQuotation() }
         binding.icObsAddPedido.setOnClickListener { observacion() }
 
-        //** CONSULTAR **
-        val btn_savePedido = findViewById<Button>(R.id.btn_savePedido)
-        btn_savePedido.setOnClickListener { enviarPedido() }
-        val btn_cancelPedido = findViewById<Button>(R.id.btn_cancelPedido)
-        btn_cancelPedido.setOnClickListener {
+        binding.btnSavePedido.setOnClickListener { enviarPedido() }
+        binding.btnCancelPedido.setOnClickListener {
             this.onBackPressed()
             finish()
         }

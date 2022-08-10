@@ -34,15 +34,61 @@
         app:layout_constraintVertical_bias="0.0"
         app:queryHint="Busqueda productos" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_productos"
+
+    <LinearLayout
+        android:id="@+id/ll_contenedor"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="60dp"
-        tools:ignore="MissingConstraints" />
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_productos"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="60dp"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_cargando"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+            <include layout="@layout/item_cargando_productos"/>
+
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+
+
 
 </LinearLayout>

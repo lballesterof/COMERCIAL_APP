@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
@@ -292,6 +294,8 @@ class ActivityCartPedido : AppCompatActivity() {
             val rv_productos = vista.findViewById<RecyclerView>(R.id.rv_productos)
             val sv_consultasproductos = vista.findViewById<SearchView>(R.id.sv_consultasproductos)
             val iv_cerrarListProducto = vista.findViewById<ImageView>(R.id.iv_cerrarListProducto)
+            val ll_contenedor = vista.findViewById<LinearLayout>(R.id.ll_contenedor)
+            val ll_cargando = vista.findViewById<LinearLayout>(R.id.ll_cargando)
 
             iv_cerrarListProducto.setOnClickListener {
                 dialog.hide()
@@ -309,6 +313,10 @@ class ActivityCartPedido : AppCompatActivity() {
                 val response = apiInterface2!!.getProductoComercial("${DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].codListPrecio}", "${DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].codMoneda}", "${DATAGLOBAL.prefs.getTipoCambio()}")
                 runOnUiThread {
                     if (response.isSuccessful) {
+
+                        ll_contenedor.isVisible = true
+                        ll_cargando.isVisible = false
+
                         listaProductoPedido.clear()
                         listaProductoPedido.addAll(response.body()!!)
                         adapterProductoComercial.notifyDataSetChanged()

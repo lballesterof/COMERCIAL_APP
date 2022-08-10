@@ -7,12 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +40,9 @@ class GalleryFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         apiInterface = APIClient.client?.create(StocksApi::class.java) as StocksApi
+
+
+
         initStocks()
         buscaStock()
         busquedaSpinner()
@@ -74,12 +74,15 @@ class GalleryFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-
+        val llCargando = requireView().findViewById<LinearLayout>(R.id.ll_cargando)
+        llCargando.isVisible = false
 
         bt_buscar?.setOnClickListener {
             val imm =
                 requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+
+            llCargando.isVisible = true
 
             val filtro = et_filtro?.text.toString()
 
@@ -111,10 +114,17 @@ class GalleryFragment : Fragment() {
         pd.create()
         pd.show()
 
+        val llContenedor = requireView().findViewById<LinearLayout>(R.id.ll_contenedor)
+        val llCargando = requireView().findViewById<LinearLayout>(R.id.ll_cargando)
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForName("$nomeProducto")
             activity?.runOnUiThread {
                 if (response.isSuccessful) {
+
+                    llContenedor.isVisible = true
+                    llCargando.isVisible = false
+
                     listaConsultaStocks.clear()
                     listaConsultaStocks.addAll(response.body()!!)
                     pd.cancel()
@@ -134,10 +144,17 @@ class GalleryFragment : Fragment() {
         pd.create()
         pd.show()
 
+        val llContenedor = requireView().findViewById<LinearLayout>(R.id.ll_contenedor)
+        val llCargando = requireView().findViewById<LinearLayout>(R.id.ll_cargando)
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForCdgBarra("$cdgBarra")
             activity?.runOnUiThread {
                 if (response.isSuccessful) {
+
+                    llContenedor.isVisible = true
+                    llCargando.isVisible = false
+
                     listaConsultaStocks.clear()
                     listaConsultaStocks.addAll(response.body()!!)
                     pd.cancel()
@@ -157,10 +174,18 @@ class GalleryFragment : Fragment() {
         pd.create()
         pd.show()
 
+        val llContenedor = requireView().findViewById<LinearLayout>(R.id.ll_contenedor)
+        val llCargando = requireView().findViewById<LinearLayout>(R.id.ll_cargando)
+
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiInterface!!.getStockForCdgRef("$CdgRef")
             activity?.runOnUiThread {
                 if (response.isSuccessful) {
+
+                    llContenedor.isVisible = true
+                    llCargando.isVisible = false
+
+
                     listaConsultaStocks.clear()
                     listaConsultaStocks.addAll(response.body()!!)
                     pd.cancel()

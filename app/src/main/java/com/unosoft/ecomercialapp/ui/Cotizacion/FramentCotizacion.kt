@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -90,8 +91,12 @@ class FramentCotizacion : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val cotizaciones = apiInterface!!.fetchAllCotizaciones("$cdg_ven")
             activity?.runOnUiThread {
-                println("paso por aca")
+
                 if(cotizaciones.isSuccessful){
+                    
+                    binding.llCargando.isVisible = false
+                    binding.llContenedor.isVisible = true
+
                     listacotizaciones.clear()
                     listacotizaciones.addAll(cotizaciones.body()!!)
                     adapterCotizaciones.notifyDataSetChanged()

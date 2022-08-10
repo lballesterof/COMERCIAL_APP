@@ -54,16 +54,8 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding.ivDatosClientAddCot.setOnClickListener { editDateClient() }
         binding.ivProductoAddCot.setOnClickListener { addressCartQuotation() }
         binding.icObservacion.setOnClickListener { observacion() }
-
-        //****  CONSULTAR  ****
-        val btnsaveCotizacion = findViewById<Button>(R.id.btn_saveCotizacion)
-        btnsaveCotizacion.setOnClickListener {
-            println("Cotizacion")
-            enviarCotizacion()
-        }
-
-        val btn_cancelCotizacion = findViewById<Button>(R.id.btn_cancelCotizacion)
-        btn_cancelCotizacion.setOnClickListener {
+        binding.btnSaveCotizacion.setOnClickListener { enviarCotizacion() }
+        binding.btnCancelCotizacion.setOnClickListener {
             this.onBackPressed()
             finish()
         }
