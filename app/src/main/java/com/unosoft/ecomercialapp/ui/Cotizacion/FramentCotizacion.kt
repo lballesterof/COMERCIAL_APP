@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
+import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
@@ -17,7 +18,7 @@ import com.unosoft.ecomercialapp.api.ApiCotizacion
 import com.unosoft.ecomercialapp.api.LoginApi
 import com.unosoft.ecomercialapp.databinding.FragmentCotizacionBinding
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
-import com.unosoft.ecomercialapp.helpers.utils
+import com.unosoft.ecomercialapp.ui.pedidos.ActivityAddPedido
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,8 +55,16 @@ class FramentCotizacion : Fragment() {
         _binding?.iconAgregarCotizacion?.setOnClickListener { addNewQuatation() }
     }
     private fun addNewQuatation() {
-        val intent = Intent(activity, ActivityAddCotizacion::class.java)
-        startActivity(intent)
+        CoroutineScope(Dispatchers.IO).launch {
+            DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
+            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
+            DATAGLOBAL.database.daoTblBasica().deleteTableDataCabezera()
+            DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyDataCabezera()
+            requireActivity().runOnUiThread {
+                val intent = Intent(activity, ActivityAddCotizacion::class.java)
+                startActivity(intent)
+            }
+        }
     }
     private fun buscarCotizacion() {
         var sv_buscadorCotizacion = view?.findViewById<androidx.appcompat.widget.SearchView>(R.id.sv_buscadorCotizacion)
@@ -104,6 +113,7 @@ class FramentCotizacion : Fragment() {
             }
         }
     }
+
     fun onItemDatosCotizacion(dataclassCotizacion: cotizacionesDto) {
         prefs.save_IdPedido(dataclassCotizacion.id_cotizacion.toString())
         val intent = Intent(activity, ActivityEditCotizacion::class.java)
@@ -116,6 +126,8 @@ class FramentCotizacion : Fragment() {
         startActivity(intent)
     }
 
-
-
+    override fun onResume() {
+        getData(prefs.getCdgVendedor())
+        super.onResume()
+    }
 }

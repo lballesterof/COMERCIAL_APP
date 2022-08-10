@@ -1,6 +1,7 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.R
@@ -99,9 +101,74 @@ class EditCabezeraPedido : AppCompatActivity() {
     }
 
     private fun cancelar() {
-        val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
-        startActivity(intent)
-        finish()
+        CoroutineScope(Dispatchers.IO).launch{
+            if(DATAGLOBAL.database.daoTblBasica().isExistsEntityDataCabezera()){
+                val datos = DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0]
+                if (DatosCabezeraPedido.idCliente == datos.idCliente &&
+                    DatosCabezeraPedido.nombreCliente == datos.nombreCliente &&
+                    DatosCabezeraPedido.rucCliente == datos.rucCliente &&
+                    DatosCabezeraPedido.tipoMoneda == datos.tipoMoneda &&
+                    DatosCabezeraPedido.codMoneda == datos.codMoneda &&
+                    DatosCabezeraPedido.listPrecio == datos.listPrecio &&
+                    DatosCabezeraPedido.codListPrecio == datos.codListPrecio &&
+                    DatosCabezeraPedido.validesDias == datos.validesDias &&
+                    DatosCabezeraPedido.codValidesDias == datos.codValidesDias &&
+                    DatosCabezeraPedido.condicionPago == datos.condicionPago &&
+                    DatosCabezeraPedido.codCondicionPago == datos.codCondicionPago &&
+                    DatosCabezeraPedido.vendedor == datos.vendedor &&
+                    DatosCabezeraPedido.codVendedor == datos.codVendedor){
+                    val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    runOnUiThread {
+                        alerDialogue()
+                    }
+                }
+            }else{
+                runOnUiThread {
+                    val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
+                    startActivity(intent)
+                    finish()
+                    super.onBackPressed()
+                }
+            }
+        }
+    }
+
+    private fun alerDialogue() {
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.setTitleText("Cancelar")
+        dialog.setContentText("Si retrocede, se perdera todo el cambios ¿Desea retroceder?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
+            sDialog.cancel()
+            CoroutineScope(Dispatchers.IO).launch{
+                DATAGLOBAL.database.daoTblBasica().deleteTableDataCabezera()
+                DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyDataCabezera()
+                DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
+                DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
+                runOnUiThread {
+                    val intent = Intent(this@EditCabezeraPedido, ActivityAddPedido::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun guardarInfo() {

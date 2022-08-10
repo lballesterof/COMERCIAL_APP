@@ -1,6 +1,7 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
 import com.unosoft.ecomercialapp.Adapter.ProductoComercial.productocomercialadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
@@ -54,7 +56,6 @@ class ActivityCartPedido : AppCompatActivity() {
         //*********************************************************
         tipomoneda = intent.getStringExtra("TIPOMONEDA").toString()
 
-
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         getData()
@@ -70,15 +71,60 @@ class ActivityCartPedido : AppCompatActivity() {
     }
 
     private fun cancelarPedido() {
-        val intent = Intent(this, ActivityAddCotizacion::class.java)
-        startActivity(intent)
-        finish()
+        CoroutineScope(Dispatchers.IO).launch{
+            if(listaProductoListados.isNotEmpty()){
+                runOnUiThread {
+                    alerDialogueCard()
+                }
+            }else{
+                runOnUiThread {
+                    val intent = Intent(this@ActivityCartPedido, ActivityAddPedido::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+    }
+
+    private fun alerDialogueCard() {
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.titleText = "Cancelar"
+        dialog.contentText = "Si retrocede, se perdera todo el cambios ¿Desea retroceder?"
+
+        dialog.confirmText = "SI"
+        dialog.confirmButtonBackgroundColor = Color.parseColor("#013ADF")
+        dialog.confirmButtonTextColor = Color.parseColor("#ffffff")
+
+        dialog.cancelText = "NO"
+        dialog.cancelButtonBackgroundColor = Color.parseColor("#c8c8c8")
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
+            sDialog.cancel()
+            CoroutineScope(Dispatchers.IO).launch{
+                DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
+                DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
+                runOnUiThread {
+                    val intent = Intent(this@ActivityCartPedido, ActivityAddPedido::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun guardarDatos() {
         guardarListRoom()
 
-        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        val intent = Intent(this, ActivityAddPedido::class.java)
         startActivity(intent)
         finish()
     }
@@ -567,11 +613,16 @@ class ActivityCartPedido : AppCompatActivity() {
 
     }
     override fun onBackPressed() {
-        guardarListRoom()
-
-        val intent = Intent(this, ActivityAddPedido::class.java)
-        startActivity(intent)
-        finish()
-        super.onBackPressed()
+        CoroutineScope(Dispatchers.IO).launch {
+            if(listaProductoListados.isNotEmpty()){
+                runOnUiThread {
+                    cancelarPedido()
+                }
+            }else{
+                runOnUiThread {
+                    super.onBackPressed()
+                }
+            }
+        }
     }
 }

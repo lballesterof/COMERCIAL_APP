@@ -2,6 +2,7 @@ package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -9,6 +10,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import cn.pedant.SweetAlert.SweetAlertDialog
+import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
@@ -55,11 +58,50 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding.ivProductoAddCot.setOnClickListener { addressCartQuotation() }
         binding.icObservacion.setOnClickListener { observacion() }
         binding.btnSaveCotizacion.setOnClickListener { enviarCotizacion() }
-        binding.btnCancelCotizacion.setOnClickListener {
-            this.onBackPressed()
-            finish()
+        binding.btnCancelCotizacion.setOnClickListener { cancelarCotizacion() }
+    }
+
+    private fun cancelarCotizacion() {
+        CoroutineScope(Dispatchers.IO).launch{
+            if(database.daoTblBasica().isExistsEntityDataCabezera() || database.daoTblBasica().isExistsEntityListProct()){
+                runOnUiThread {
+                    alerDialogue()
+                }
+            }else{
+                runOnUiThread {
+                    super.onBackPressed()
+                }
+            }
         }
     }
+
+    private fun alerDialogue() {
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.setTitleText("Cancelar")
+        dialog.setContentText("Si cancela, se perdera todo el progreso ¿Desea cancelar?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
+            this.onBackPressed()
+            finish()
+            sDialog.cancel()
+        }
+
+        dialog.show()
+    }
+
+
     private fun inicialDatos() {
 
         val date = Date()

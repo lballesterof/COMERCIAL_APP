@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unosoft.ecomercialapp.Adapter.Pedidos.listpedidosadapter
+import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
@@ -20,6 +21,7 @@ import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class PedidosFragment : Fragment() {
     private var _binding: FragmentPedidosBinding? = null
@@ -58,8 +60,18 @@ class PedidosFragment : Fragment() {
     }
 
     private fun addNewPedido() {
-        val intent = Intent(activity, ActivityAddPedido::class.java)
-        startActivity(intent)
+        CoroutineScope(Dispatchers.IO).launch {
+
+            database.daoTblBasica().deleteTableListProct()
+            database.daoTblBasica().clearPrimaryKeyListProct()
+            database.daoTblBasica().deleteTableDataCabezera()
+            database.daoTblBasica().clearPrimaryKeyDataCabezera()
+
+            requireActivity().runOnUiThread {
+                val intent = Intent(activity, ActivityAddPedido::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun buscarCotizacion() {
@@ -121,6 +133,11 @@ class PedidosFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        getDataPedido(prefs.getCdgVendedor())
+        super.onResume()
     }
 
 }

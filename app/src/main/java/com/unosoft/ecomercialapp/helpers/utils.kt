@@ -3,6 +3,7 @@ package com.unosoft.ecomercialapp.helpers
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class utils {
 
@@ -24,5 +25,13 @@ class utils {
     fun getFecha(): String {
         return SimpleDateFormat("dd/MM/yyyy").format(LocalDateTime.now())
     }
+
+    fun converFechaString(date:LocalDateTime): String {
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val formattedDate = date.format(formatter)
+        return formattedDate.toString()
+    }
+
+
 
 }

@@ -2,6 +2,7 @@ package com.unosoft.ecomercialapp.ui.SincTablaBasica
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.MainActivity
+import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.api.APIClient
 import com.unosoft.ecomercialapp.api.ListaPrecio
 import com.unosoft.ecomercialapp.api.LoginApi
@@ -53,7 +56,6 @@ class SincTablaBassicaFragment : Fragment() {
     var apiInterface3: ListaPrecio? = null
     var apiInterface4: VendedorApi? = null
 
-
     private val listCondicionPago = ArrayList<CondicionPagoResponse>()
     private val listDepartamento = ArrayList<DepartamentoResponse>()
     private val listDistrito = ArrayList<DistritoResponse>()
@@ -92,21 +94,28 @@ class SincTablaBassicaFragment : Fragment() {
     }
 
     private fun sincronizarTablaBasica() {
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.setTitle("Desea Sincronizar todos los datos")
-        builder.setMessage("Se actualizara toda la informacion")
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        val dialog = SweetAlertDialog(requireActivity(), SweetAlertDialog.WARNING_TYPE,)
 
-        builder.setPositiveButton("Si"){dialogInterface, which ->
-            cargarTablaBasica()
-        }
-        builder.setNegativeButton("No"){dialogInterface, which ->
+        dialog.setTitleText("Actualizar tabla maestro")
+        dialog.setContentText("Se sincronizara la tabla maestro ¿Desea continuar?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
             requireActivity().onBackPressed()
+            sDialog.cancel()
         }
 
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
+        dialog.setConfirmClickListener { sDialog ->
+            cargarTablaBasica()
+            sDialog.cancel()
+        }
+
+        dialog.show()
     }
 
     private fun cargarTablaBasica() {

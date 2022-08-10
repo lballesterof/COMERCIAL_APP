@@ -1,6 +1,7 @@
 package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -13,9 +14,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
 import com.unosoft.ecomercialapp.Adapter.ProductoComercial.productocomercialadapter
+import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
@@ -26,6 +29,7 @@ import com.unosoft.ecomercialapp.db.EntityListProct
 import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
 import com.unosoft.ecomercialapp.helpers.utils
+import com.unosoft.ecomercialapp.ui.pedidos.ActivityAddPedido
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,13 +71,57 @@ class ActivityCardQuotation : AppCompatActivity() {
 
     private fun eventsHandlers() {
         binding.btnGuardarCartCotizacion.setOnClickListener { guardarDatos() }
-        binding.btnCancelarCartCotizacion.setOnClickListener { cancelarPedido() }
+        binding.btnCancelarCartCotizacion.setOnClickListener { cancelarCotizacion() }
     }
 
-    private fun cancelarPedido() {
-        val intent = Intent(this, ActivityAddCotizacion::class.java)
-        startActivity(intent)
-        finish()
+    private fun cancelarCotizacion() {
+        CoroutineScope(Dispatchers.IO).launch{
+            if(listaProductoListados.isNotEmpty()){
+                runOnUiThread {
+                    alerDialogueCard()
+                }
+            }else{
+                runOnUiThread {
+                    val intent = Intent(this@ActivityCardQuotation, ActivityAddCotizacion::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+
+    }
+
+    fun alerDialogueCard(){
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.setTitleText("Cancelar")
+        dialog.setContentText("Si retrocede, se perdera todo el cambios ¿Desea retroceder?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
+            sDialog.cancel()
+            CoroutineScope(Dispatchers.IO).launch{
+                database.daoTblBasica().deleteTableListProct()
+                database.daoTblBasica().clearPrimaryKeyListProct()
+                runOnUiThread {
+                    val intent = Intent(this@ActivityCardQuotation, ActivityAddCotizacion::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+        dialog.show()
     }
 
     private fun guardarDatos() {
@@ -579,11 +627,16 @@ class ActivityCardQuotation : AppCompatActivity() {
 
     }
     override fun onBackPressed() {
-        guardarListRoom()
-
-        val intent = Intent(this, ActivityAddCotizacion::class.java)
-        startActivity(intent)
-        finish()
-        super.onBackPressed()
+        CoroutineScope(Dispatchers.IO).launch {
+            if(listaProductoListados.isNotEmpty()){
+                runOnUiThread {
+                    cancelarCotizacion()
+                }
+            }else{
+                runOnUiThread {
+                    super.onBackPressed()
+                }
+            }
+        }
     }
 }

@@ -2,12 +2,14 @@ package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
@@ -49,10 +51,50 @@ class ActivityAddPedido : AppCompatActivity() {
         binding.icObsAddPedido.setOnClickListener { observacion() }
 
         binding.btnSavePedido.setOnClickListener { enviarPedido() }
-        binding.btnCancelPedido.setOnClickListener {
+        binding.btnCancelPedido.setOnClickListener { cancelar()
+
+        }
+    }
+
+    private fun cancelar() {
+        CoroutineScope(Dispatchers.IO).launch{
+            if(database.daoTblBasica().isExistsEntityDataCabezera() || database.daoTblBasica().isExistsEntityListProct()){
+                runOnUiThread {
+                    alerDialogue()
+                }
+            }else{
+                runOnUiThread {
+                    super.onBackPressed()
+                }
+            }
+        }
+
+    }
+
+    private fun alerDialogue() {
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.setTitleText("Cancelar")
+        dialog.setContentText("Si cancela, se perdera todo el progreso ¿Desea cancelar?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
             this.onBackPressed()
             finish()
+            sDialog.cancel()
         }
+
+        dialog.show()
     }
 
     private fun inicialDatos() {

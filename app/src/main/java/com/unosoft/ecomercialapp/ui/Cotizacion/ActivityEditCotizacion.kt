@@ -2,16 +2,13 @@ package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.app.Dialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import com.getbase.floatingactionbutton.FloatingActionsMenu
-import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
-import com.unosoft.ecomercialapp.DATAGLOBAL
+import androidx.appcompat.app.AppCompatActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
@@ -26,7 +23,6 @@ import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 
 class ActivityEditCotizacion : AppCompatActivity() {
     private lateinit var binding: ActivityEditCotizacionBinding
@@ -131,6 +127,7 @@ class ActivityEditCotizacion : AppCompatActivity() {
             val datosCotizacionMaster = database.daoTblBasica().getAllQuotationMaster()[0]
 
             val fechA_COTIZACION = datosCotizacionMaster.fechA_COTIZACION
+
             val numroCotizacion = datos.numero_Cotizacion
             val persona = datosCotizacionMaster.persona
             val documento = datos.documento
@@ -141,7 +138,8 @@ class ActivityEditCotizacion : AppCompatActivity() {
             datosCPago.forEach { if (it.Numero == codigO_CPAGO){ condicionPago = it.Nombre } }
 
             runOnUiThread {
-                binding.tvFechaCreacionCot.text = "Fecha y Hora: ${fechA_COTIZACION}"
+
+                binding.tvFechaCreacionCot.text = "Fecha: ${fechA_COTIZACION}"
                 //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
                 binding.tvIdCotizacion.text = StringBuilder().append("NUMERO: ").append(numroCotizacion)
                 binding.tvNameClientCot.text = StringBuilder().append("NOMBRE CLIENTE: ").append(persona)
@@ -162,7 +160,6 @@ class ActivityEditCotizacion : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
 
             val quotationcabresponse = apiInterface!!.getbyIdQuotationCab("$IDQUOTATION")
-
             val quotationdetailresponse = apiInterface!!.getbyIdQuotationDetail("$IDQUOTATION")
 
             if (quotationcabresponse.isSuccessful) {
@@ -175,15 +172,17 @@ class ActivityEditCotizacion : AppCompatActivity() {
                     daoTblBasica().deleteTableQuotationMaster()
 
                     t.forEach {
+
                         daoTblBasica().insertQuotationMaster(
-                            EntityQuotationMaster(0,
+                            EntityQuotationMaster(
+                                0,
                                 it.iD_COTIZACION,
                                 it.numerO_COTIZACION,
                                 it.codigO_VENDEDOR,
                                 it.codigO_VENDEDOR_ASIGNADO,
                                 it.codigO_CPAGO,
                                 it.codigO_MONEDA,
-                                it.fechA_COTIZACION,
+                                it.fechA_COTIZACION.toString(),
                                 it.numerO_OCLIENTE,
                                 it.importE_STOT,
                                 it.importE_DESCUENTO,

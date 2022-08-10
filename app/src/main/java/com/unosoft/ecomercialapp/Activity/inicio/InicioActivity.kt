@@ -77,10 +77,11 @@ class InicioActivity : AppCompatActivity() {
     private fun cargarTablaBasica() {
 
         val pd = ProgressDialog(this)
-        pd.setMessage("Cargando tabla maestro....")
-        pd.setCancelable(false)
-        pd.create()
         pd.show()
+        pd.setContentView(R.layout.dialogue_progress)
+        pd.setCancelable(false)
+        pd.window!!.setBackgroundDrawableResource(R.color.transparent)
+
         apiInterface2 = APIClient.client!!.create(TablaBasicaApi::class.java)
         apiInterface3 = APIClient.client!!.create(ListaPrecio::class.java)
         apiInterface4 = APIClient.client!!.create(VendedorApi::class.java)
