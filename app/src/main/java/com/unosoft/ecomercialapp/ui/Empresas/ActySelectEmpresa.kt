@@ -1,11 +1,14 @@
 package com.unosoft.ecomercialapp.ui.Empresas
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.unosoft.ecomercialapp.Adapter.Empresa.AdtEmpresa
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
@@ -38,6 +41,46 @@ class ActySelectEmpresa : AppCompatActivity() {
 
     private fun eventsHandlers() {
         binding.btnNuevoUser.setOnClickListener { generarUser() }
+        binding.btnLimpiarEmpresa.setOnClickListener { limpiarListaEmpresa() }
+    }
+
+    private fun limpiarListaEmpresa() {
+
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.setTitleText("Limpiar Lista")
+        dialog.setContentText("Se eliminara todos los datos de las empresas ¿Desea limpiar la lista?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
+            CoroutineScope(Dispatchers.IO).launch {
+                database.daoTblBasica().deleteTableEmpresa()
+                database.daoTblBasica().clearPrimaryKeyEmpresa()
+                runOnUiThread {
+                    listaEmpresa.clear()
+                    iniciarData()
+                }
+            }
+            sDialog.cancel()
+        }
+
+        dialog.show()
+
+
+
+
+
+
     }
 
     private fun generarUser() {
@@ -48,10 +91,6 @@ class ActySelectEmpresa : AppCompatActivity() {
     private fun iniciarData() {
 
         CoroutineScope(Dispatchers.IO).launch {
-
-            //database.daoTblBasica().deleteTableEmpresa()
-            //database.daoTblBasica().clearPrimaryKeyEmpresa()
-
 
             if (database.daoTblBasica().isExistsEntityEmpresa()){
 
@@ -86,6 +125,27 @@ class ActySelectEmpresa : AppCompatActivity() {
         binding.rvEmpresa.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         adapterEmpresa = AdtEmpresa(listaEmpresa) { data -> onItemDatosEmpresa(data) }
         binding.rvEmpresa.adapter = adapterEmpresa
+
+        //**************** Implementacion de Swiped ********************
+        val itemswipe = object : ItemTouchHelper.SimpleCallback(0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean { return false }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                listaEmpresa.removeAt(viewHolder.bindingAdapterPosition)
+                if(listaEmpresa.isEmpty()){
+                    iniciarData()
+                }
+                binding.rvEmpresa.adapter?.notifyDataSetChanged()
+            }
+        }
+        val swap =  ItemTouchHelper(itemswipe)
+        swap.attachToRecyclerView(binding.rvEmpresa)
     }
 
     private fun onItemDatosEmpresa(data: dcEmpresa) {

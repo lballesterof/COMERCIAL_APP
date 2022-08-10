@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -132,21 +133,6 @@ class ActivityCardQuotation : AppCompatActivity() {
         finish()
     }
 
-
-    private fun iniciarLista() {
-        /*
-        CoroutineScope(Dispatchers.IO).launch {
-            if (database.daoTblBasica().isExistsEntityListProctCot())
-            {
-                database.daoTblBasica().deleteTableListProctCot()
-                database.daoTblBasica().clearPrimaryKeyListProctCot()
-            }
-
-        }
-        */
-
-    }
-
     //********* INICIA DATOS  **************
     fun getData() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -179,6 +165,27 @@ class ActivityCardQuotation : AppCompatActivity() {
         rv_listproductcot.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         productlistcotadarte = productlistcotadarte(listaProductoListados) { data -> onItemDatosProductList(data) }
         rv_listproductcot.adapter = productlistcotadarte
+
+        //**************** Implementacion de Swiped ********************
+        val itemswipe = object : ItemTouchHelper.SimpleCallback(0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean { return false }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                listaProductoListados.removeAt(viewHolder.bindingAdapterPosition)
+                calcularMontoTotal()
+                rv_listproductcot?.adapter?.notifyDataSetChanged()
+            }
+        }
+        val swap =  ItemTouchHelper(itemswipe)
+        swap.attachToRecyclerView(rv_listproductcot)
+
+
     }
     fun onItemDatosProductList(data: productlistcot) {
         //***********  Alerta de Dialogo  ***********
