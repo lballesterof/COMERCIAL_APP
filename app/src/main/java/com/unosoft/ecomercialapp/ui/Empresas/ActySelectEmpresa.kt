@@ -73,14 +73,7 @@ class ActySelectEmpresa : AppCompatActivity() {
             }
             sDialog.cancel()
         }
-
         dialog.show()
-
-
-
-
-
-
     }
 
     private fun generarUser() {
@@ -99,11 +92,21 @@ class ActySelectEmpresa : AppCompatActivity() {
                     database.daoTblBasica().getAllEmpresa().forEach {
                         listaEmpresa.add(dcEmpresa(it.nameEmpresa, it.ruc,it.nameUser,it.usuario.uppercase(),it.url,it.Userkey))
                     }
+
+                    println("********************************")
+                    println("*******TABLA EMPRESA************")
+                    println("********************************")
+                    println(database.daoTblBasica().getAllEmpresa())
+
+                    println("Paso por aqui verdadero")
                     runOnUiThread {
+                        println("Paso por aqui")
                         iniciarEmpresa()
-                        adapterEmpresa.notifyDataSetChanged()
+
                     }
                 }else{
+                    println("Paso por aqui false")
+
                     runOnUiThread {
                         val i = Intent(applicationContext, ActyLoginPasscode::class.java)
                         startActivity(i)
@@ -111,7 +114,6 @@ class ActySelectEmpresa : AppCompatActivity() {
                     }
                 }
             }else{
-
                 runOnUiThread {
                     val i = Intent(applicationContext, MainActivity::class.java)
                     startActivity(i)
@@ -138,18 +140,42 @@ class ActySelectEmpresa : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 listaEmpresa.removeAt(viewHolder.bindingAdapterPosition)
-                if(listaEmpresa.isEmpty()){
-                    iniciarData()
+                binding.rvEmpresa?.adapter?.notifyDataSetChanged()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    database.daoTblBasica().deleteTableEmpresa()
+                    database.daoTblBasica().clearPrimaryKeyEmpresa()
+
+                    listaEmpresa.forEach {
+                        database.daoTblBasica().insertEmpresa(
+                            EntityEmpresa(id=0,
+                                nameEmpresa = it.nameEmpresa,
+                                ruc = it.ruc,
+                                nameUser = it.nameUser.uppercase(),
+                                usuario = it.nameUser.uppercase(),
+                                url = it.url,
+                                Userkey = it.Userkey
+                            )
+                        )
+                    }
+
+                    val datos = database.daoTblBasica().getAllEmpresa()
+
+                    runOnUiThread {
+                        if (listaEmpresa.isEmpty()){
+                            iniciarData()
+                        }
+                    }
+
                 }
-                binding.rvEmpresa.adapter?.notifyDataSetChanged()
             }
         }
         val swap =  ItemTouchHelper(itemswipe)
         swap.attachToRecyclerView(binding.rvEmpresa)
+        binding.rvEmpresa?.adapter?.notifyDataSetChanged()
     }
 
     private fun onItemDatosEmpresa(data: dcEmpresa) {
-
         prefs.save_User(data.usuario)
         prefs.save_URLBase(data.url)
 
@@ -157,9 +183,4 @@ class ActySelectEmpresa : AppCompatActivity() {
         startActivity(i)
         finish()
     }
-
-
-
-
-
 }

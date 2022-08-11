@@ -97,9 +97,9 @@ class CerrarSesionFrament : Fragment() {
                 println("*********** CERRAR SESION *************")
                 println("***************************************")
                 prefs.wipe()
-                startActivity(Intent(activity, ActySelectEmpresa::class.java)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                )
+                val intent = Intent(activity, ActySelectEmpresa::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
                 requireActivity().finish()
             }
 

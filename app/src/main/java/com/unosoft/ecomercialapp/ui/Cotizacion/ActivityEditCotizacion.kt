@@ -23,6 +23,11 @@ import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ActivityEditCotizacion : AppCompatActivity() {
     private lateinit var binding: ActivityEditCotizacionBinding
@@ -126,7 +131,7 @@ class ActivityEditCotizacion : AppCompatActivity() {
             val datosCPago = database.daoTblBasica().getAllCondicionPago()
             val datosCotizacionMaster = database.daoTblBasica().getAllQuotationMaster()[0]
 
-            val fechA_COTIZACION = datosCotizacionMaster.fechA_COTIZACION
+            var fechA_COTIZACION = datosCotizacionMaster.fechA_COTIZACION
 
             val numroCotizacion = datos.numero_Cotizacion
             val persona = datosCotizacionMaster.persona
@@ -139,7 +144,12 @@ class ActivityEditCotizacion : AppCompatActivity() {
 
             runOnUiThread {
 
-                binding.tvFechaCreacionCot.text = "Fecha: ${fechA_COTIZACION}"
+                println("***************************")
+                println("********* FECHA ***********")
+                println("***************************")
+                println(fechA_COTIZACION)
+
+                binding.tvFechaCreacionCot.text = "Fecha: ${utils().formatearFecha(fechA_COTIZACION.toString())}"
                 //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
                 binding.tvIdCotizacion.text = StringBuilder().append("NUMERO: ").append(numroCotizacion)
                 binding.tvNameClientCot.text = StringBuilder().append("NOMBRE CLIENTE: ").append(persona)

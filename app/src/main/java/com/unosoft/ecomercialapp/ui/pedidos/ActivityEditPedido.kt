@@ -2,7 +2,6 @@ package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
@@ -14,12 +13,13 @@ import com.unosoft.ecomercialapp.db.EntityPedidoMaster
 import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
 import com.unosoft.ecomercialapp.entity.Pedidos.pedidosDto
 import com.unosoft.ecomercialapp.helpers.utils
-import com.unosoft.ecomercialapp.ui.Cotizacion.ActivityAddCotizacion
-import com.unosoft.ecomercialapp.ui.Cotizacion.VisorPDFCotizacion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class ActivityEditPedido : AppCompatActivity() {
 
@@ -180,6 +180,14 @@ class ActivityEditPedido : AppCompatActivity() {
 
         val datos = intent.getSerializableExtra("DATOSPEDIDOS") as pedidosDto
 
+
+        println("********************************")
+        println("********* IniciarDatos UI ************")
+        println("********************************")
+
+        println(datos)
+
+
         CoroutineScope(Dispatchers.IO).launch {
 
             val datosCPago = database.daoTblBasica().getAllCondicionPago()
@@ -195,8 +203,9 @@ class ActivityEditPedido : AppCompatActivity() {
             var condicionPago = ""
             datosCPago.forEach { if (it.Numero == codigO_CPAGO){ condicionPago = it.Nombre } }
 
+
             runOnUiThread {
-                binding.tvFechaCreacionPedido.text = "Fecha y Hora: ${fechA_PEDIDO}"
+                binding.tvFechaCreacionPedido.text = "Fecha: ${utils().formatearFecha(fechA_PEDIDO.toString())}"
                 //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"
                 binding.tvNumPedido.text = StringBuilder().append("NUMERO: ").append(numero_Pedido)
                 binding.tvNomClientePedido.text = StringBuilder().append("NOMBRE CLIENTE: ").append(persona)

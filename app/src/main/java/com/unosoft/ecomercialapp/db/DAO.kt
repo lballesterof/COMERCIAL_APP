@@ -1,13 +1,11 @@
 package com.unosoft.ecomercialapp.db
 
-import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.unosoft.ecomercialapp.db.cotizacion.EntityEditQuotationDetail
 import com.unosoft.ecomercialapp.db.cotizacion.EntityQuotationMaster
 import com.unosoft.ecomercialapp.db.pedido.EntityEditPedidoDetail
-import com.unosoft.ecomercialapp.entity.ProductListCot.productlistcot
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 
 @Dao
@@ -168,6 +166,9 @@ interface DAO {
 
     @Query("DELETE FROM EntityEmpresa")
     fun deleteTableEmpresa()
+
+    @Query("DELETE FROM EntityEmpresa WHERE id=:id")
+    fun deleteTableEmpresaID(id: Int)
 
 
 

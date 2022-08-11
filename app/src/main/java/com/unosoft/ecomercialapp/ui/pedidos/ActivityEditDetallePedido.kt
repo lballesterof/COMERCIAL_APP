@@ -65,9 +65,20 @@ class ActivityEditDetallePedido : AppCompatActivity() {
                 database.daoTblBasica().getAllDetail().forEach {
                     listaProductoListados.add(
                         productlistcot(
-                        it.iD_PRODUCTO!!,it.iD_PRODUCTO!!.toString(),it.codigO_BARRA!!,it.nombre.toString(),tipoMoneda,
-                            it.precio!!,it.factoR_CONVERSION!!,it.unidad!!,it.noM_UNIDAD!!,"",it.cantidad!!.toInt(),it.preciO_ORIGINAL!!,it.preciO_ORIGINAL*it.cantidad
-                    )
+                        id_Producto = it.iD_PRODUCTO!!,
+                        codigo = it.iD_PRODUCTO.toString(),
+                        codigo_Barra = it.codigO_BARRA!!,
+                        nombre =it.nombre.toString(),
+                        mon = tipoMoneda,
+                        precio_Venta = it.precio!!,
+                        factor_Conversion = it.factoR_CONVERSION!!,
+                        cdg_Unidad = it.unidad!!,
+                        unidad = it.noM_UNIDAD!!,
+                        moneda_Lp = "",
+                        cantidad = it.cantidad!!.toInt(),
+                        precioUnidad = it.precio,
+                        precioTotal = it.precio*it.cantidad
+                        )
                     )
                 }
 

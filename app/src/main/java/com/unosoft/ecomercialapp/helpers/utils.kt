@@ -2,8 +2,10 @@ package com.unosoft.ecomercialapp.helpers
 
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class utils {
 
@@ -26,10 +28,22 @@ class utils {
         return SimpleDateFormat("dd/MM/yyyy").format(LocalDateTime.now())
     }
 
-    fun converFechaString(date:LocalDateTime): String {
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        val formattedDate = date.format(formatter)
-        return formattedDate.toString()
+    fun fechaActual(): LocalDateTime {
+        val fechaActual = LocalDateTime.now()
+        val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+        val fechaSalida = fechaActual.format(dtf)
+
+        return LocalDateTime.parse(fechaSalida)
+    }
+
+    fun formatearFecha(fecha:String):String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val output = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+
+        val d: Date = sdf.parse(fecha)
+        val formattedTime = output.format(d)
+
+        return formattedTime
     }
 
 

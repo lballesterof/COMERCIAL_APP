@@ -10,6 +10,7 @@ import com.unosoft.ecomercialapp.Adapter.Cotizaciones.listcotizacionesadapter
 import com.unosoft.ecomercialapp.R
 import com.unosoft.ecomercialapp.entity.Cotizacion.cotizacionesDto
 import com.unosoft.ecomercialapp.entity.ProductoComercial.productocomercial
+import com.unosoft.ecomercialapp.helpers.utils
 
 class productocomercialadapter (var datos: ArrayList<productocomercial>, private val onClickListener: (productocomercial) -> Unit) : RecyclerView.Adapter<productocomercialadapter.ViewHolder>() {
 
@@ -34,7 +35,7 @@ class productocomercialadapter (var datos: ArrayList<productocomercial>, private
 
             tv_nameProductoComercial.text = datos.nombre
             tv_codProductoComercial.text = datos.codigo
-            tv_precioUnit.text = "${datos.mon} ${datos.precio_Venta}"
+            tv_precioUnit.text = "${datos.mon} ${utils().pricetostringformat(datos.precio_Venta!!)}"
           //  tv_precioTotal.text = "${datos.mon} ${datos.precio_Venta}"
 
             itemView.setOnClickListener { onClickListener(datos) }

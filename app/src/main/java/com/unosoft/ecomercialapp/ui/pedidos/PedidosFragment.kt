@@ -115,6 +115,13 @@ class PedidosFragment : Fragment() {
         bundle.putSerializable("DATOSPEDIDOS", dataclassPedido)
         intent.putExtras(bundle)
 
+
+        println("********************************")
+        println("********* DOCUMENTO ************")
+        println("********************************")
+
+        println(dataclassPedido)
+
         startActivity(intent)
     }
 
