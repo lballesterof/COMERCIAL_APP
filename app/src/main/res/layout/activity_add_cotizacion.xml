@@ -519,6 +519,43 @@
                 </androidx.cardview.widget.CardView>
                 <!--FIN TOTALES-->
 
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/linearLayout9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <Button
+                        android:id="@+id/btn_saveCotizacion"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@color/colorPrimary"
+                        android:text="Generar"
+                        android:textColor="@color/colorBackground" />
+
+                    <Button
+                        android:id="@+id/btn_cancelCotizacion"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@color/colorBackground"
+                        android:text="Cancelar"
+                        android:textColor="@color/colorPrimary" />
+
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <!---->
@@ -528,38 +565,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/btn_saveCotizacion"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Generar"
-            android:textColor="@color/colorBackground" />
-
-        <Button
-            android:id="@+id/btn_cancelCotizacion"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="16dp"
-            android:background="@color/colorBackground"
-            android:text="Cancelar"
-            android:textColor="@color/colorPrimary" />
-
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

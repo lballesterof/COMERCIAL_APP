@@ -67,7 +67,19 @@ class ActivityDetalleCotizacion : AppCompatActivity() {
                     database.daoTblBasica().getAllQuotationDetail().forEach {
                         listaProductoListados.add(
                             productlistcot(
-                            it.iD_PRODUCTO,it.codigo,it.codigO_BARRA,it.nombre,tipoMoneda,it.preciO_ORIGINAL,0.0,it.unidad,it.noM_UNIDAD,"",it.cantidad,it.preciO_ORIGINAL,it.preciO_ORIGINAL*it.cantidad
+                                id_Producto = it.iD_PRODUCTO,
+                                codigo =it.iD_PRODUCTO.toString(),
+                                codigo_Barra = it.codigO_BARRA,
+                                nombre = it.nombre,
+                                mon = tipoMoneda,
+                                precio_Venta = it.precio,
+                                factor_Conversion = 0.0,
+                                cdg_Unidad = it.unidad,
+                                unidad = it.noM_UNIDAD,
+                                moneda_Lp = "",
+                                cantidad = it.cantidad,
+                                precioUnidad = it.precio,
+                                precioTotal = it.precio*it.cantidad
                             )
                         )
                     }

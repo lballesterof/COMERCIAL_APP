@@ -38,6 +38,7 @@ import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.ProvinciaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.UnidadMedidaResponse
 import com.unosoft.ecomercialapp.entity.Vendedor.VendedorResponse
+import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -46,6 +47,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ActyLoginPasscode : AppCompatActivity() {
@@ -73,6 +77,20 @@ class ActyLoginPasscode : AppCompatActivity() {
         setContentView(binding.root)
 
         procesoDeLogueo()
+
+        println("************************************")
+        println("******* fecha actual ***************")
+        println("************************************")
+
+        try {
+            println(utils().fechaActual())
+        }catch (e:Exception){
+            println(e)
+        }
+
+
+
+
     }
 
     private fun procesoDeLogueo() {

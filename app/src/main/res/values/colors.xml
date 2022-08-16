@@ -23,4 +23,6 @@
 
     <color name="negro_semitransparente">#B2000000</color>
 
+    <color name="transparente">#FF0000</color>
+
 </resources>

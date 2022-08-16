@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBindings
@@ -58,6 +59,10 @@ class ActivityConsultaCliente : Fragment() {
                 if(response.isSuccessful){
                     listaClient.clear()
                     listaClient.addAll(response.body()!!)
+
+                    binding.llCargando.isVisible = false
+                    binding.llContenedor.isVisible = true
+
                     adapterCliente.notifyDataSetChanged()
                 }else{
                     Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()

@@ -1,6 +1,7 @@
 package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -8,8 +9,10 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.unosoft.ecomercialapp.Adapter.Clientes.listclientesadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
@@ -21,6 +24,7 @@ import com.unosoft.ecomercialapp.db.EntityDataCabezera
 import com.unosoft.ecomercialapp.entity.Cliente.ClientListResponse
 import com.unosoft.ecomercialapp.entity.DatosCabezeraCotizacion.datosCabezera
 import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
+import com.unosoft.ecomercialapp.ui.pedidos.ActivityAddPedido
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -98,17 +102,78 @@ class EditCabezera : AppCompatActivity() {
         iniciarSpinnerCondicionPago()
         iniciarSpinnerVendedor()
 
-        val btn_guardarCabeceraCot = findViewById<Button>(R.id.btn_guardarCabeceraCot)
-        btn_guardarCabeceraCot.setOnClickListener { guardarInfo() }
-
         binding.btnGuardarCabeceraCot.setOnClickListener { guardarInfo() }
         binding.btnCancelCabezeraCot.setOnClickListener { cancelar() }
     }
 
     private fun cancelar() {
-        val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
-        startActivity(intent)
-        finish()
+        CoroutineScope(Dispatchers.IO).launch{
+            if(database.daoTblBasica().isExistsEntityDataCabezera()){
+                val datos = database.daoTblBasica().getAllDataCabezera()[0]
+                if (DatosCabezeraCotizacion.idCliente == datos.idCliente &&
+                    DatosCabezeraCotizacion.nombreCliente == datos.nombreCliente &&
+                    DatosCabezeraCotizacion.rucCliente == datos.rucCliente &&
+                    DatosCabezeraCotizacion.tipoMoneda == datos.tipoMoneda &&
+                    DatosCabezeraCotizacion.codMoneda == datos.codMoneda &&
+                    DatosCabezeraCotizacion.listPrecio == datos.listPrecio &&
+                    DatosCabezeraCotizacion.codListPrecio == datos.codListPrecio &&
+                    DatosCabezeraCotizacion.validesDias == datos.validesDias &&
+                    DatosCabezeraCotizacion.codValidesDias == datos.codValidesDias &&
+                    DatosCabezeraCotizacion.condicionPago == datos.condicionPago &&
+                    DatosCabezeraCotizacion.codCondicionPago == datos.codCondicionPago &&
+                    DatosCabezeraCotizacion.vendedor == datos.vendedor &&
+                    DatosCabezeraCotizacion.codVendedor == datos.codVendedor){
+                    val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    runOnUiThread {
+                        alerDialogue()
+                    }
+                }
+            }else{
+                runOnUiThread {
+                    val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+    }
+
+    fun alerDialogue(){
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.setTitleText("Cancelar")
+        dialog.setContentText("Si retrocede, se perdera todo el cambios ¿Desea retroceder?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
+            sDialog.cancel()
+            CoroutineScope(Dispatchers.IO).launch{
+                database.daoTblBasica().deleteTableDataCabezera()
+                database.daoTblBasica().clearPrimaryKeyDataCabezera()
+                database.daoTblBasica().deleteTableListProct()
+                database.daoTblBasica().clearPrimaryKeyListProct()
+                runOnUiThread {
+                    val intent = Intent(this@EditCabezera, ActivityAddCotizacion::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun guardarInfo() {
@@ -390,6 +455,9 @@ class EditCabezera : AppCompatActivity() {
         //*********************************************
         val sv_buscadorCliente = vista.findViewById<SearchView>(R.id.sv_buscadorCliente)
         val iv_cerrarCliente = vista.findViewById<ImageView>(R.id.iv_cerrarCliente)
+        val ll_cargando = vista.findViewById<LinearLayout>(R.id.ll_cargando)
+        val ll_contenedor = vista.findViewById<LinearLayout>(R.id.ll_contenedor)
+
 
         //Creamos dialogue
         val dialog = builder.create()
@@ -422,6 +490,10 @@ class EditCabezera : AppCompatActivity() {
             val response = apiInterface2!!.getAllClients()
             runOnUiThread{
                 if(response.isSuccessful){
+
+                    ll_cargando.isVisible = false
+                    ll_contenedor.isVisible = true
+
                     listaClient.clear()
                     listaClient.addAll(response.body()!!)
                     adapterCliente.notifyDataSetChanged()

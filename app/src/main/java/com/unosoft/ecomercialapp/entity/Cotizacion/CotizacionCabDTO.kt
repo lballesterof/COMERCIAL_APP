@@ -1,5 +1,9 @@
 package com.unosoft.ecomercialapp.entity.Cotizacion
 
+import java.sql.Date
+import java.time.LocalDateTime
+import java.util.*
+
 data class CotizacionCabDTO(
     val centrO_COSTO: String,
     val codigO_CPAGO: String,
@@ -19,7 +23,7 @@ data class CotizacionCabDTO(
     val emaiL_CONTACTO: String,
     val estado:String?,
     val fechA_AUTORIZACION:String?,
-    val fechA_COTIZACION: String,
+    val fechA_COTIZACION: String?,
     val fechA_CREACION:String?,
     val fechA_ENTREGA: String,
     val fechA_MODIFICACION: String,

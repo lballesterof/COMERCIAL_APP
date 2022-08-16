@@ -2,12 +2,14 @@ package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
@@ -22,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
 
@@ -48,14 +51,51 @@ class ActivityAddPedido : AppCompatActivity() {
         binding.ivProductoAddPedido.setOnClickListener { addressCartQuotation() }
         binding.icObsAddPedido.setOnClickListener { observacion() }
 
-        //** CONSULTAR **
-        val btn_savePedido = findViewById<Button>(R.id.btn_savePedido)
-        btn_savePedido.setOnClickListener { enviarPedido() }
-        val btn_cancelPedido = findViewById<Button>(R.id.btn_cancelPedido)
-        btn_cancelPedido.setOnClickListener {
+        binding.btnSavePedido.setOnClickListener { enviarPedido() }
+        binding.btnCancelPedido.setOnClickListener { cancelar()
+
+        }
+    }
+
+    private fun cancelar() {
+        CoroutineScope(Dispatchers.IO).launch{
+            if(database.daoTblBasica().isExistsEntityDataCabezera() || database.daoTblBasica().isExistsEntityListProct()){
+                runOnUiThread {
+                    alerDialogue()
+                }
+            }else{
+                runOnUiThread {
+                    super.onBackPressed()
+                }
+            }
+        }
+
+    }
+
+    private fun alerDialogue() {
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.setTitleText("Cancelar")
+        dialog.setContentText("Si cancela, se perdera todo el progreso ¿Desea cancelar?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
             this.onBackPressed()
             finish()
+            sDialog.cancel()
         }
+
+        dialog.show()
     }
 
     private fun inicialDatos() {
@@ -197,7 +237,7 @@ class ActivityAddPedido : AppCompatActivity() {
                                         0,
                                         0,
                                         "",
-                                        "${LocalDateTime.now()}",
+                                        "${utils().fechaActual()}",
                                         1,
                                         "",
                                         "S",
@@ -211,7 +251,7 @@ class ActivityAddPedido : AppCompatActivity() {
                                         0,
                                         0,
                                         "",
-                                        "${LocalDateTime.now()}",
+                                        "${utils().fechaActual()}",
                                         0,
                                         0,
                                         0
@@ -226,12 +266,12 @@ class ActivityAddPedido : AppCompatActivity() {
                                 "",
                                 "",
                                 "",
-                                "",
+                                datosCabezera.rucCliente!!,
                                 "",
                                 prefs.getCdgVendedor(),
                                 datosCabezera.codCondicionPago!!,
                                 datosCabezera.codMoneda!!,
-                                "${LocalDateTime.now()}",
+                                "${utils().fechaActual()}",
                                 "",
                                 database.daoTblBasica().getAllListProct()[0].montoSubTotal,
                                 database.daoTblBasica().getAllListProct()[0].montoTotalIGV,
@@ -246,14 +286,14 @@ class ActivityAddPedido : AppCompatActivity() {
                                 0,
                                 datoslogin.usuariocreacion,
                                 datoslogin.usuarioautoriza,
-                                "${LocalDateTime.now()}",
-                                "${LocalDateTime.now()}",
+                                "${utils().fechaActual()}",
+                                "${utils().fechaActual()}",
                                 datoslogin.codigO_EMPRESA,
                                 datoslogin.sucursal,
                                 0,
                                 0,
                                 datosCabezera.codVendedor!!,
-                                "${LocalDateTime.now()}",
+                                "${utils().fechaActual()}",
                                 "",
                                 "",
                                 "",

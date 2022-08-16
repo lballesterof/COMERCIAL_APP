@@ -40,4 +40,10 @@
     <string name="fecha_11_22_2021">Fecha: 11-22-2021</string>
     <string name="title_activity_add_pedido">ActivityAddPedido</string>
 
+    <string name="Cerrar_Sesión">Cerrar Sesión</string>
+    <string name="Cerrar_Sesión_Mensaje">Se eliminara todos los datos temporales</string>
+    <string name="Cerrar_Sesión_Boton_Yes">No, Cancelar</string>
+    <string name="Cerrar_Sesión_Boton_No">Si,Cerrar y eliminar</string>
+
+
 </resources>

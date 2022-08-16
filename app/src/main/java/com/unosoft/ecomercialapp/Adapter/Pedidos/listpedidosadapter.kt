@@ -44,9 +44,15 @@ class listpedidosadapter(var datos: ArrayList<pedidosDto>, private val onClickLi
             else {
                 tv_numeropedido.text = datos.numero_Pedido
             }
-            ruc.text = "RUC:  ${datos.ruc}"
+            ruc.text = "${datos.documento}: ${datos.ruc}"
             preciocotizacion.text =  StringBuilder().append("IMPORTE TOTAL ").append(datos.mon+". ").append(String.format("%,.2f", datos.importe_Total))
-            fechapedido.text = "FECHA: ${datos.fecha_pedido}"
+
+
+            val originalString = StringBuffer(datos.fecha_pedido)
+            val neworiginalString = originalString.replace(10, 22, "").toString()
+
+
+            fechapedido.text = "FECHA: ${neworiginalString}"
 
             itemView.setOnClickListener {
                 onClickListener(datos)

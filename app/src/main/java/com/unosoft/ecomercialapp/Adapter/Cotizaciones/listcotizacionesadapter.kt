@@ -37,7 +37,11 @@ class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>, priv
 
             lblnrocotizacion.text = cotizaciones.numero_Cotizacion
             lblnrazonsocial.text = cotizaciones.persona
-            lblfecha.text = cotizaciones.fecha_Cotizacion
+
+            val originalString = StringBuffer(cotizaciones.fecha_Cotizacion)
+            val neworiginalString = originalString.replace(10, 22, "").toString()
+
+            lblfecha.text = "FECHA: "+neworiginalString
 
             lblnrazonsocial.setTypeface(null, Typeface.BOLD)
             lblntotal.setTypeface(null, Typeface.BOLD)

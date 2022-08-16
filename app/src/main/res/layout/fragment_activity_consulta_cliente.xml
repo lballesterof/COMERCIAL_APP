@@ -7,6 +7,8 @@
     tools:context=".ui.Cliente.ActivityConsultaCliente">
 
     <LinearLayout
+        android:id="@+id/ll_contenedor"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -37,5 +39,48 @@
             tools:layout_editor_absoluteX="1dp" />
 
     </LinearLayout>
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_auto_start="true">
+
+        <LinearLayout
+            android:id="@+id/ll_cargando"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.SearchView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:iconifiedByDefault="false"/>
+
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+            <include layout="@layout/item_cargando_cliente"/>
+
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

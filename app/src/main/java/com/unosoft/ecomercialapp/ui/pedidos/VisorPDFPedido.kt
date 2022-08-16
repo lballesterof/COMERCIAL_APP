@@ -39,6 +39,7 @@ class VisorPDFPedido : AppCompatActivity() {
         val datos = intent.getStringExtra("ID")
         val pdfView = findViewById<PDFView>(R.id.pdfView);
         val urlPdf = "${DATAGLOBAL.prefs.getURLBase()}api/PedidoComercial/pdf/$datos"
+        Toast.makeText(this, "${DATAGLOBAL.prefs.getURLBase()}api/PedidoComercial/pdf/$datos", Toast.LENGTH_SHORT).show()
         VisorPDF(pdfView).execute(urlPdf)
     }
 

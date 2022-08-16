@@ -36,10 +36,13 @@ class productlisteditorderadapter(var datos: ArrayList<productlistcot>) : Recycl
             val tv_preciototal = view.findViewById<TextView>(R.id.tv_precioTotal)
 
             tv_nameProducto.text = datos.nombre
-            tv_codProducto.text = datos.id_Producto.toString()
-            tv_precioUnidad.text = "${datos.mon} ${datos.precioUnidad}"
+            tv_codProducto.text = "COD: "+datos.id_Producto.toString()
+
+            println(datos.precioUnidad)
+
+            tv_precioUnidad.text = "${datos.mon} ${utils().pricetostringformat(datos.precioUnidad)}"
             tv_cantidad.text = "${datos.cantidad} ${datos.unidad}"
-            tv_preciototal.text = "${datos.mon} ${datos.precioUnidad*datos.cantidad}"
+            tv_preciototal.text = "${datos.mon} ${utils().pricetostringformat(datos.precioUnidad*datos.cantidad)}"
         }
     }
 }

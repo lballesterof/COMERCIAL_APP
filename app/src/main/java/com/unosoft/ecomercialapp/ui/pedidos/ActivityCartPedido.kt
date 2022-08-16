@@ -1,16 +1,21 @@
 package com.unosoft.ecomercialapp.ui.pedidos
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.unosoft.ecomercialapp.Adapter.ProductListCot.productlistcotadarte
 import com.unosoft.ecomercialapp.Adapter.ProductoComercial.productocomercialadapter
 import com.unosoft.ecomercialapp.DATAGLOBAL
@@ -52,7 +57,6 @@ class ActivityCartPedido : AppCompatActivity() {
         //*********************************************************
         tipomoneda = intent.getStringExtra("TIPOMONEDA").toString()
 
-
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         getData()
@@ -68,15 +72,60 @@ class ActivityCartPedido : AppCompatActivity() {
     }
 
     private fun cancelarPedido() {
-        val intent = Intent(this, ActivityAddCotizacion::class.java)
-        startActivity(intent)
-        finish()
+        CoroutineScope(Dispatchers.IO).launch{
+            if(listaProductoListados.isNotEmpty()){
+                runOnUiThread {
+                    alerDialogueCard()
+                }
+            }else{
+                runOnUiThread {
+                    val intent = Intent(this@ActivityCartPedido, ActivityAddPedido::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+    }
+
+    private fun alerDialogueCard() {
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.titleText = "Cancelar"
+        dialog.contentText = "Si retrocede, se perdera todo el cambios ¿Desea retroceder?"
+
+        dialog.confirmText = "SI"
+        dialog.confirmButtonBackgroundColor = Color.parseColor("#013ADF")
+        dialog.confirmButtonTextColor = Color.parseColor("#ffffff")
+
+        dialog.cancelText = "NO"
+        dialog.cancelButtonBackgroundColor = Color.parseColor("#c8c8c8")
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
+            sDialog.cancel()
+            CoroutineScope(Dispatchers.IO).launch{
+                DATAGLOBAL.database.daoTblBasica().deleteTableListProct()
+                DATAGLOBAL.database.daoTblBasica().clearPrimaryKeyListProct()
+                runOnUiThread {
+                    val intent = Intent(this@ActivityCartPedido, ActivityAddPedido::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun guardarDatos() {
         guardarListRoom()
 
-        val intent = Intent(this, ActivityAddCotizacion::class.java)
+        val intent = Intent(this, ActivityAddPedido::class.java)
         startActivity(intent)
         finish()
     }
@@ -115,6 +164,26 @@ class ActivityCartPedido : AppCompatActivity() {
         rv_listproductpedido.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         productlistcotadarte = productlistcotadarte(listaProductoListados) { data -> onItemDatosProductList(data) }
         rv_listproductpedido.adapter = productlistcotadarte
+
+        //**************** Implementacion de Swiped ********************
+        val itemswipe = object : ItemTouchHelper.SimpleCallback(0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean { return false }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                listaProductoListados.removeAt(viewHolder.bindingAdapterPosition)
+                calcularMontoTotal()
+                rv_listproductpedido?.adapter?.notifyDataSetChanged()
+            }
+        }
+        val swap =  ItemTouchHelper(itemswipe)
+        swap.attachToRecyclerView(rv_listproductpedido)
+
     }
     fun onItemDatosProductList(data: productlistcot) {
         //***********  Alerta de Dialogo  ***********
@@ -292,6 +361,8 @@ class ActivityCartPedido : AppCompatActivity() {
             val rv_productos = vista.findViewById<RecyclerView>(R.id.rv_productos)
             val sv_consultasproductos = vista.findViewById<SearchView>(R.id.sv_consultasproductos)
             val iv_cerrarListProducto = vista.findViewById<ImageView>(R.id.iv_cerrarListProducto)
+            val ll_contenedor = vista.findViewById<LinearLayout>(R.id.ll_contenedor)
+            val ll_cargando = vista.findViewById<LinearLayout>(R.id.ll_cargando)
 
             iv_cerrarListProducto.setOnClickListener {
                 dialog.hide()
@@ -309,6 +380,10 @@ class ActivityCartPedido : AppCompatActivity() {
                 val response = apiInterface2!!.getProductoComercial("${DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].codListPrecio}", "${DATAGLOBAL.database.daoTblBasica().getAllDataCabezera()[0].codMoneda}", "${DATAGLOBAL.prefs.getTipoCambio()}")
                 runOnUiThread {
                     if (response.isSuccessful) {
+
+                        ll_contenedor.isVisible = true
+                        ll_cargando.isVisible = false
+
                         listaProductoPedido.clear()
                         listaProductoPedido.addAll(response.body()!!)
                         adapterProductoComercial.notifyDataSetChanged()
@@ -559,11 +634,16 @@ class ActivityCartPedido : AppCompatActivity() {
 
     }
     override fun onBackPressed() {
-        guardarListRoom()
-
-        val intent = Intent(this, ActivityAddPedido::class.java)
-        startActivity(intent)
-        finish()
-        super.onBackPressed()
+        CoroutineScope(Dispatchers.IO).launch {
+            if(listaProductoListados.isNotEmpty()){
+                runOnUiThread {
+                    cancelarPedido()
+                }
+            }else{
+                runOnUiThread {
+                    super.onBackPressed()
+                }
+            }
+        }
     }
 }

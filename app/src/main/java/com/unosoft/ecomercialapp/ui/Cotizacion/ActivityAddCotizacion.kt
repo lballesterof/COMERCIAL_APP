@@ -2,6 +2,7 @@ package com.unosoft.ecomercialapp.ui.Cotizacion
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -9,6 +10,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import cn.pedant.SweetAlert.SweetAlertDialog
+import com.unosoft.ecomercialapp.DATAGLOBAL
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.database
 import com.unosoft.ecomercialapp.DATAGLOBAL.Companion.prefs
 import com.unosoft.ecomercialapp.R
@@ -24,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
@@ -54,20 +58,51 @@ class ActivityAddCotizacion : AppCompatActivity() {
         binding.ivDatosClientAddCot.setOnClickListener { editDateClient() }
         binding.ivProductoAddCot.setOnClickListener { addressCartQuotation() }
         binding.icObservacion.setOnClickListener { observacion() }
+        binding.btnSaveCotizacion.setOnClickListener { enviarCotizacion() }
+        binding.btnCancelCotizacion.setOnClickListener { cancelarCotizacion() }
+    }
 
-        //****  CONSULTAR  ****
-        val btnsaveCotizacion = findViewById<Button>(R.id.btn_saveCotizacion)
-        btnsaveCotizacion.setOnClickListener {
-            println("Cotizacion")
-            enviarCotizacion()
-        }
-
-        val btn_cancelCotizacion = findViewById<Button>(R.id.btn_cancelCotizacion)
-        btn_cancelCotizacion.setOnClickListener {
-            this.onBackPressed()
-            finish()
+    private fun cancelarCotizacion() {
+        CoroutineScope(Dispatchers.IO).launch{
+            if(database.daoTblBasica().isExistsEntityDataCabezera() || database.daoTblBasica().isExistsEntityListProct()){
+                runOnUiThread {
+                    alerDialogue()
+                }
+            }else{
+                runOnUiThread {
+                    super.onBackPressed()
+                }
+            }
         }
     }
+
+    private fun alerDialogue() {
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE,)
+
+        dialog.setTitleText("Cancelar")
+        dialog.setContentText("Si cancela, se perdera todo el progreso ¿Desea cancelar?")
+
+        dialog.setConfirmText("SI").setConfirmButtonBackgroundColor(Color.parseColor("#013ADF"))
+        dialog.setConfirmButtonTextColor(Color.parseColor("#ffffff"))
+
+        dialog.setCancelText("NO").setCancelButtonBackgroundColor(Color.parseColor("#c8c8c8"))
+
+        dialog.setCancelable(false)
+
+        dialog.setCancelClickListener { sDialog -> // Showing simple toast message to user
+            sDialog.cancel()
+        }
+
+        dialog.setConfirmClickListener { sDialog ->
+            this.onBackPressed()
+            finish()
+            sDialog.cancel()
+        }
+
+        dialog.show()
+    }
+
+
     private fun inicialDatos() {
 
         val date = Date()
@@ -166,6 +201,10 @@ class ActivityAddCotizacion : AppCompatActivity() {
                             val datosCabezera = database.daoTblBasica().getAllDataCabezera()[0]
                             val datoslogin = database.daoTblBasica().getAllDataLogin()[0]
                             var secuencia = 0
+
+
+
+
                             datosLista.forEach {
                                 secuencia += 1
                                 listaCotizado.add(DetCotizacion(
@@ -192,7 +231,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                     0,
                                     it.precioUnidad,
                                     it.cdg_Unidad,
-                                    "${LocalDateTime.now()}",
+                                    "${utils().fechaActual()}",
                                     "",
                                     "S",
                                     0,
@@ -205,70 +244,71 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                 ))
                             }
                             val datosCotizacion = EnviarCotizacion(
-                                datoslogin.iD_COTIZACION.toInt(),
-                                "",
-                                prefs.getCdgVendedor(),
-                                datosCabezera.codVendedor!!,
-                                datoslogin.cdgpago,
-                                datosCabezera.codMoneda!!,
-                                "${LocalDateTime.now()}",
-                                "",
-                                datosLista[0].montoSubTotal,
-                                0,
-                                datosLista[0].montoSubTotal,
-                                datosLista[0].montoTotalIGV,
-                                datosLista[0].montoTotal,
-                                0,
-                                datoslogin.poR_IGV.toDouble(),
-                                binding.tvObsCotizacion.text.toString(),
-                                "",
-                                datoslogin.iD_CLIENTE,
-                                datoslogin.iD_CLIENTE,
-                                0,
-                                "",
-                                "",
-                                datoslogin.usuariocreacion,
-                                "${LocalDateTime.now()}",
-                                "",
-                                "${LocalDateTime.now()}",
-                                datoslogin.codigO_EMPRESA,
-                                datoslogin.sucursal,
-                                "",
-                                0,
-                                "${LocalDateTime.now()}",
-                                datoslogin.usuarioautoriza,
-                                "${LocalDateTime.now()}",
-                                "",
-                                0,
-                                datoslogin.redondeo,
-                                datoslogin.validez,
-                                "",
-                                "",
-                                "",
-                                datoslogin.tipocambio,
-                                0,
-                                "",
-                                datoslogin.sucursal,
-                                "",
-                                0,
-                                "",
-                                0,
-                                0,
-                                "",
-                                "",
-                                "",
-                                "",
-                                "",
-                                0,
-                                "",
-                                prefs.getCdgVendedor(),
-                                "",
-                                "",
-                                datosCabezera.rucCliente!!,
-                                "",
-                                "",
-                                listaCotizado
+                                iD_COTIZACION = datoslogin.iD_COTIZACION.toInt(),
+                                numerO_COTIZACION="",
+                                codigO_VENDEDOR=prefs.getCdgVendedor(),
+                                codigO_VENDEDOR_ASIGNADO=datosCabezera.codVendedor!!,
+                                codigO_CPAGO=datoslogin.cdgpago,
+                                codigO_MONEDA=datosCabezera.codMoneda!!,
+                                fechA_COTIZACION="${utils().fechaActual()}",
+                                numerO_OCLIENTE="",
+                                importE_STOT=datosLista[0].montoSubTotal,
+                                importE_DESCUENTO=0,
+                                valoR_VENTA=datosLista[0].montoSubTotal,
+                                importE_IGV=datosLista[0].montoTotalIGV,
+                                importE_TOTAL=datosLista[0].montoTotal,
+                                porcentajE_DESCUENTO=0,
+                                porcentajE_IGV=datoslogin.poR_IGV.toDouble(),
+                                observacion=binding.tvObsCotizacion.text.toString(),
+                                estado="",
+                                iD_CLIENTE=datoslogin.iD_CLIENTE,
+                                iD_CLIENTE_FACTURA=datoslogin.iD_CLIENTE,
+                                importE_ISC=0,
+                                contacto="",
+                                emaiL_CONTACTO="",
+                                usuariO_CREACION=datoslogin.usuariocreacion,
+                                fechA_CREACION="${utils().fechaActual()}",
+                                usuariO_MODIFICACION="",
+                                fechA_MODIFICACION="${utils().fechaActual()}",
+                                codigO_EMPRESA=datoslogin.codigO_EMPRESA,
+                                codigO_SUCURSAL=datoslogin.sucursal,
+                                tipO_FECHA_ENTREGA="",
+                                diaS_ENTREGA=0,
+                                fechA_ENTREGA="${utils().fechaActual()}",
+                                usuariO_AUTORIZA=datoslogin.usuarioautoriza,
+                                fechA_AUTORIZACION="${utils().fechaActual()}",
+                                lugaR_ENTREGA="",
+                                comision=0,
+                                redondeo=datoslogin.redondeo,
+                                validez=datoslogin.validez,
+                                motivo="",
+                                correlativo="",
+                                centrO_COSTO="",
+                                tipO_CAMBIO=datoslogin.tipocambio,
+                                iD_COTIZACION_PARENT=0,
+                                telefonos="",
+                                sucursal=datoslogin.sucursal,
+                                tipO_ENTREGA="",
+                                diaS_ENTREGA2=0,
+                                observacioN2="",
+                                costo=0,
+                                iD_OPORTUNIDAD=0,
+                                motivO_PERDIDA="",
+                                competencia="",
+                                notA_PERDIDA="",
+                                separaR_STOCK="",
+                                tipO_DSCTO="",
+                                iD_PROYECTO=0,
+                                swT_VISADO="",
+                                usuario=prefs.getCdgVendedor(),
+                                noM_MONEDA="",
+                                direccion="",
+                                ruc=datosCabezera.rucCliente!!,
+                                persona="",
+                                tipO_CLIENTE="",
+                                detCotizacion=listaCotizado
                             )
+
                             println("*******************************************************")
                             println("********     ${datosCabezera.rucCliente!!}      *******")
                             println("********************************************************")
