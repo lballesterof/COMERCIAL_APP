@@ -202,9 +202,6 @@ class ActivityAddCotizacion : AppCompatActivity() {
                             val datoslogin = database.daoTblBasica().getAllDataLogin()[0]
                             var secuencia = 0
 
-
-
-
                             datosLista.forEach {
                                 secuencia += 1
                                 listaCotizado.add(DetCotizacion(
@@ -243,6 +240,7 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                     0
                                 ))
                             }
+
                             val datosCotizacion = EnviarCotizacion(
                                 iD_COTIZACION = datoslogin.iD_COTIZACION.toInt(),
                                 numerO_COTIZACION="",
@@ -261,8 +259,8 @@ class ActivityAddCotizacion : AppCompatActivity() {
                                 porcentajE_IGV=datoslogin.poR_IGV.toDouble(),
                                 observacion=binding.tvObsCotizacion.text.toString(),
                                 estado="",
-                                iD_CLIENTE=datoslogin.iD_CLIENTE,
-                                iD_CLIENTE_FACTURA=datoslogin.iD_CLIENTE,
+                                iD_CLIENTE=datosCabezera.idCliente!!.toInt(),
+                                iD_CLIENTE_FACTURA= datosCabezera.idCliente!!.toInt(),
                                 importE_ISC=0,
                                 contacto="",
                                 emaiL_CONTACTO="",

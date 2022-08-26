@@ -38,6 +38,7 @@ import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.ProvinciaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.UnidadMedidaResponse
 import com.unosoft.ecomercialapp.entity.Vendedor.VendedorResponse
+import com.unosoft.ecomercialapp.helpers.ErrorType
 import com.unosoft.ecomercialapp.helpers.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,19 +77,13 @@ class ActyLoginPasscode : AppCompatActivity() {
         binding = ActivityLoginPasscodeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
+        val error = ErrorType.CONNECTIVITY_ERROR.message
+        println(error)
+
+
         procesoDeLogueo()
-
-        println("************************************")
-        println("******* fecha actual ***************")
-        println("************************************")
-
-        try {
-            println(utils().fechaActual())
-        }catch (e:Exception){
-            println(e)
-        }
-
-
 
 
     }

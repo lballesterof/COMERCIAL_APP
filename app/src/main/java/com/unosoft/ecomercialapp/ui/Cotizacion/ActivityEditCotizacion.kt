@@ -131,7 +131,7 @@ class ActivityEditCotizacion : AppCompatActivity() {
             val datosCPago = database.daoTblBasica().getAllCondicionPago()
             val datosCotizacionMaster = database.daoTblBasica().getAllQuotationMaster()[0]
 
-            var fechA_COTIZACION = datosCotizacionMaster.fechA_COTIZACION
+            val fechA_COTIZACION = datosCotizacionMaster.fechA_COTIZACION
 
             val numroCotizacion = datos.numero_Cotizacion
             val persona = datosCotizacionMaster.persona
@@ -144,10 +144,9 @@ class ActivityEditCotizacion : AppCompatActivity() {
 
             runOnUiThread {
 
-                println("***************************")
-                println("********* FECHA ***********")
-                println("***************************")
                 println(fechA_COTIZACION)
+
+
 
                 binding.tvFechaCreacionCot.text = "Fecha: ${utils().formatearFecha(fechA_COTIZACION.toString())}"
                 //tv_fechaCreacionCot?.text = "Fecha Creacion: ${LocalDateTime.now()}"

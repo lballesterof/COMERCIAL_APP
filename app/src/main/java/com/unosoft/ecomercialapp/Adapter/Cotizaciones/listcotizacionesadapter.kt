@@ -34,7 +34,6 @@ class listcotizacionesadapter(var cotizaciones: ArrayList<cotizacionesDto>, priv
             val lblntotal = view.findViewById<TextView>(R.id.preciocotizacion)
             val lblfecha = view.findViewById<TextView>(R.id.fechacotizacion)
 
-
             lblnrocotizacion.text = cotizaciones.numero_Cotizacion
             lblnrazonsocial.text = cotizaciones.persona
 

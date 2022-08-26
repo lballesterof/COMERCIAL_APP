@@ -60,7 +60,6 @@ class ActivityCartPedido : AppCompatActivity() {
         apiInterface2 = APIClient.client?.create(ProductoComercial::class.java)
 
         getData()
-
         productosListado()
         abrirListProductos()
         eventsHandlers()

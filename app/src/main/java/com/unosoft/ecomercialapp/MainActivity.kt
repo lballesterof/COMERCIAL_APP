@@ -42,6 +42,7 @@ import com.unosoft.ecomercialapp.entity.TableBasic.MonedaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.ProvinciaResponse
 import com.unosoft.ecomercialapp.entity.TableBasic.UnidadMedidaResponse
 import com.unosoft.ecomercialapp.entity.Vendedor.VendedorResponse
+import com.unosoft.ecomercialapp.helpers.ErrorType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -74,6 +75,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -111,9 +124,6 @@ class MainActivity : AppCompatActivity() {
                 //*******  MANTENER
                 val _user = DCLoginUser(user.text.toString(), pass.text.toString())
                 val call1 = apiInterface!!.login(_user)
-
-
-
                 call1.enqueue(object : Callback<LoginComercialResponse> {
                     override fun onResponse(call: Call<LoginComercialResponse>,response: Response<LoginComercialResponse>) {
                         if (response.code() == 400) {

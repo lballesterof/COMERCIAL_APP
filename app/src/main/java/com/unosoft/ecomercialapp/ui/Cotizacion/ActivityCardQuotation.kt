@@ -217,15 +217,15 @@ class ActivityCardQuotation : AppCompatActivity() {
 
         tv_nameProducto.text = data.nombre
         tv_codProducto.text = data.codigo
-        tv_precioUnidad.text = "${data.mon} ${pricetostringformat(data.precio_Venta)}"
-        tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
+        tv_precioUnidad.text = "${data.mon} ${utils().pricetostringformat(data.precio_Venta)}"
+        tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
 
         if (action == 0) {
             tv_cantidad.text = "0"
             tv_precioTotal.text = "0"
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
-            tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
+            tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
         }
 
         iv_cerrarProducto.setOnClickListener {
@@ -247,7 +247,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 cantidad += 1
                 tv_cantidad.text = cantidad.toString()
                 val precioTotal: Double = calculatepricebyqty(cantidad, data.precio_Venta)
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 listaProductoListados.add(
                     productlistcot(
                         data.id_Producto,
@@ -272,7 +272,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 var cantidad = lt.cantidad + 1
                 tv_cantidad.text = cantidad.toString()
                 val precioTotal: Double = calculatepricebyqty(cantidad, data.precio_Venta)
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 listaProductoListados[pos] = productlistcot(
                     data.id_Producto,
                     data.codigo,
@@ -323,7 +323,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                     data.precio_Venta,
                     precioTotal)
                 tv_cantidad.text = cantidad.toString()
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 rv_listproductcot?.adapter?.notifyDataSetChanged()
                 if (cantidad == 0) {
                     listaProductoListados.removeAt(pos)
@@ -440,15 +440,15 @@ class ActivityCardQuotation : AppCompatActivity() {
 
         tv_nameProducto.text = data.nombre
         tv_codProducto.text = data.codigo
-        tv_precioUnidad.text = "${data.mon} ${pricetostringformat(data.precio_Venta!!)}"
-        tv_precioTotal.text = "${data.mon} ${ pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
+        tv_precioUnidad.text = "${data.mon} ${utils().pricetostringformat(data.precio_Venta!!)}"
+        tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
 
         if (action == 0) {
             tv_cantidad.text = "0"
             tv_precioTotal.text = "0"
         } else {
             tv_cantidad.text = listaProductoListados[pos].cantidad.toString()
-            tv_precioTotal.text = "${data.mon} ${pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
+            tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(calculatepricebyqty(tv_cantidad.text.toString().toInt(), data.precio_Venta))}"
         }
 
         iv_cerrarProducto.setOnClickListener {
@@ -470,7 +470,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 cantidad += 1
                 tv_cantidad.text = cantidad.toString()
                 val precioTotal: Double = calculatepricebyqty(cantidad, data.precio_Venta)
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 listaProductoListados.add(
                     productlistcot(
                         data.id_Producto,
@@ -496,7 +496,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                 var cantidad = lt.cantidad + 1
                 tv_cantidad.text = cantidad.toString()
                 val precioTotal: Double = calculatepricebyqty(cantidad, data.precio_Venta)
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 listaProductoListados.set(
                     pos,
                     productlistcot(
@@ -552,7 +552,7 @@ class ActivityCardQuotation : AppCompatActivity() {
                     precioTotal
                 )
                 tv_cantidad.text = cantidad.toString()
-                tv_precioTotal.text = "${data.mon} ${pricetostringformat(precioTotal)}"
+                tv_precioTotal.text = "${data.mon} ${utils().pricetostringformat(precioTotal)}"
                 rv_listproductcot?.adapter?.notifyDataSetChanged()
                 if (cantidad == 0) {
                     listaProductoListados.removeAt(pos)
@@ -605,9 +605,6 @@ class ActivityCardQuotation : AppCompatActivity() {
     }
     private fun calculatepricebyqty(Qty: Int, Price: Double): Double {
         return (Price * Qty.toDouble())
-    }
-    private fun pricetostringformat(valuenumeric: Double): String {
-        return String.format("%,.2f", valuenumeric)
     }
 
     //************* GUARDAR ROOM  ****************
